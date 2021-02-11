@@ -25,8 +25,8 @@ remDr <- remoteDriver(
   browserName = "chrome", extraCapabilities = eCaps)
 
 q <- remDr$open()
-q <- remDr$maxWindowSize()
-q <- remDr$setWindowSize(1920, 1080)
+#q <- remDr$maxWindowSize()
+#q <- remDr$setWindowSize(1920, 1080)
 #q <- remDr$setTimeout(type = "page load", milliseconds = 500000)
 #q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 #q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
