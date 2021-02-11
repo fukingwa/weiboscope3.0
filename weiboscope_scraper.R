@@ -99,8 +99,8 @@ for (i in 1:length(each_post)){
 	created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
 ## Href
 	href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
-	user_id <- strsplit(href,"/|\\?")[[1]][2]
-	id <- mid2id(strsplit(href,"/|\\?")[[1]][3])
+	user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
+	id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
 ## text
 	text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
 ## Img
@@ -117,7 +117,7 @@ for (i in 1:length(each_post)){
 		retweeted_status_user_id <- NA
 		retweeted_status <- NA
 	} else {
-		retweeted_status_user_id <- strsplit(rt_href,"/|\\?")[[1]][2]
+		retweeted_status_user_id <- as.character(strsplit(rt_href,"/|\\?")[[1]][2])
 		retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
 	}
 ## RT text
