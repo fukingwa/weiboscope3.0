@@ -34,6 +34,8 @@ q <- remDr$open()
 censored <- c()
 all <- data.frame()
 
+Sys.sleep(10)	
+	
 remDr$navigate("https://weibo.com/login.php")
 
 cont <- readline("1) Login Weibo \n")
