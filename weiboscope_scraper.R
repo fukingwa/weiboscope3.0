@@ -25,11 +25,11 @@ remDr <- remoteDriver(
   browserName = "chrome", extraCapabilities = eCaps)
 
 q <- remDr$open()
-#q <- remDr$maxWindowSize()
-#q <- remDr$setWindowSize(1920, 1080)
-#q <- remDr$setTimeout(type = "page load", milliseconds = 500000)
-#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
-#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
+q <- remDr$maxWindowSize()
+q <- remDr$setWindowSize(1920, 1080)
+q <- remDr$setTimeout(type = "page load", milliseconds = 500000)
+q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
+q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 
 censored <- c()
 all <- data.frame()
@@ -192,7 +192,8 @@ InsertDB <- function(df){
 
 cont <- readline("Press Return to continue \n")
 
-while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
+while (1) {
+#while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
 	click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 	click$clickElement()
 #	remDr$refresh()
