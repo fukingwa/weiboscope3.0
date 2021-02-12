@@ -8,8 +8,12 @@ require("RJSONIO")
 start <- readline("1 - cold start  2 - jump start\n")
 
 ## Envirnoment constants
-load("WB.RData")
-
+if (file.exists("WB.RData")){
+	load("WB.RData")
+} else {
+	print("Missing WB.RData")
+	quit()
+}
 if (start == 1) {
 
 Sys.setlocale(category = "LC_ALL", locale = "C")
@@ -32,8 +36,11 @@ q <- remDr$setTimeout(type = "page load", milliseconds = 500000)
 #q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 
 censored <- c()
-all <- data.frame()
-
+if file.exists("all.rds"){
+	all <- readRDS("all.rds")
+} else {
+	all <- data.frame()
+}
 Sys.sleep(10)	
 	
 remDr$navigate("https://weibo.com/login.php")
@@ -260,7 +267,9 @@ while (1) {
 	}
 	click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 	click$clickElement()
-	Sys.sleep(60)	
+	Sys.sleep(60)
+	all <- all[all$created_at >= (Sys.time() - (2*60*60*24)),]  # two days
+	saveRDS(all,"all.rds")
 }
 
 #InsertDB(tm_wb)
