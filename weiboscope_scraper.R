@@ -36,7 +36,7 @@ q <- remDr$setTimeout(type = "page load", milliseconds = 500000)
 #q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 
 censored <- c()
-if file.exists("all.rds"){
+if (file.exists("all.rds")){
 	all <- readRDS("all.rds")
 } else {
 	all <- data.frame()
