@@ -55,7 +55,7 @@ mid2id <- function(num){
   str1 <- substr(num,1,length-8)
   str2 <- substr(num,length-7,length-4)
   str3 <- substr(num,length-3,length)
-  return(paste(to10(str1),to10(str2),to10(str3),sep=""))
+  return(paste(sprintf("%02d",to10(str1)),sprintf("%07d",to10(str2)),sprintf("%07d",to10(str3)),sep=""))
 }
 
 toBase <- function(num, base=62) {
