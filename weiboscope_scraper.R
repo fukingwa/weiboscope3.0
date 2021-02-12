@@ -188,6 +188,25 @@ InsertDB <- function(df){
   dbDisconnect(con)
 }
 
+chk_missing <- function(x){
+	r <- rep(F,length(x))
+	dx <- diff(x)
+	begin <- length(dx) + 1
+	for (i in 1:length(dx)){
+		if (dx[i] == -1){
+			begin <- i
+			next
+		} else if (dx[i] == 1){
+			if (begin < i){
+				for (j in (begin+1):i){
+					r[j] <- TRUE
+				}
+			}
+		}
+	}
+	return(r)
+}
+
 #remDr$navigate("https://weibo.com/login.php")
 
 cont <- readline("Press Return to continue \n")
@@ -225,8 +244,9 @@ while (1) {
 	for (u in unique(wb_df$user_id)){
 		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
 		ref  <- sort(unique(as.character(all$id[all$user_id == u])))
-		if (sum(grepl('TRUE-FALSE-TRUE',paste(ref %in% u_posts,collapse='-'))) > 0){
-			c <- as.character(ref[!(ref %in% u_posts)])
+		r_missing <- chk_missing(ref %in% u_posts)
+		if (sum(r_missing) > 0){
+			c <- ref[r_missing]
 			for (cc in c){
 				if (testid(cc)){
 					print(paste0("Not found via link: ",cc))
