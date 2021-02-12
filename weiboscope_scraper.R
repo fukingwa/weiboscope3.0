@@ -166,7 +166,7 @@ testid <- function(testid){
 }
 
 check_censored <- function(id){
-	url <- paste0('https://api.weibo.com/2/statuses/show.json?source=',token,'&id=',as.character(id))
+	url <- paste0('https://api.weibo.com/2/statuses/show.json?source=',sample(token,1),'&id=',as.character(id))
 	r <- fromJSON(getURL(url,ssl.verifypeer=TRUE))
 	if ( r$error_code == 20112){
 		return(TRUE)
