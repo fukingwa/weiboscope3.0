@@ -196,6 +196,9 @@ InsertDB <- function(df){
 }
 
 chk_missing <- function(x){
+	if (length(x) == 1){
+		return(FALSE)
+	}
 	r <- rep(F,length(x))
 	dx <- diff(x)
 	begin <- length(dx) + 1
