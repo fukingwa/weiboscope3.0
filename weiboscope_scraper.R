@@ -229,9 +229,10 @@ while (1) {
 			c <- as.character(ref[!(ref %in% u_posts)])
 			for (cc in c){
 				if (testid(cc)){
+					print(paste0("Not found via link: ",cc))
 					if ( check_censored(cc)){
-						print(c)
-						censored <- c(censored,c)
+						print(paste0("Permission denied: ",cc))
+						censored <- c(censored,cc)
 					}	
 				}
 			}
