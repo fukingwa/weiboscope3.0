@@ -223,7 +223,7 @@ Set_EC <- function(id,ecode){
   con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
   dbGetQuery(con, "set client_encoding to 'utf-8'")
   current_time <- as.character(Sys.time())
-  strSQL <- paste0("update rp_sinaweibo set (ecode,dbinserted) = ('",ecode,",'",current_time,"') where id = ",id)
+  strSQL <- paste0("update rp_sinaweibo set (ecode,dbinserted) = ('",ifelse(is.na(ecode),"NULL",ecode),"','",current_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
   dbDisconnect(con)
 }
