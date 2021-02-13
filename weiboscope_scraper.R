@@ -182,6 +182,7 @@ check_censored <- function(id){
 InsertDB <- function(df){
   tona <- function(x){
     x[x == ""] <- NA
+    return(x)
   }
   con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
   dbGetQuery(con, "set client_encoding to 'utf-8'")
