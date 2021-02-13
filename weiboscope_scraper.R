@@ -199,6 +199,15 @@ InsertDB <- function(df){
   dbDisconnect(con)
 }
 
+Set_PD <- function(id){
+  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  dbGetQuery(con, "set client_encoding to 'utf-8'")
+  censored_time <- as.character(Sys.time())
+  strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted_last_seen) = (TRUE,'",censored_time,"') where id = ",id)
+  dbSendQuery(con, strSQL)
+  dbDisconnect(con)
+}
+
 chk_missing <- function(x){
 	if (length(x) == 1){
 		return(FALSE)
@@ -267,6 +276,7 @@ while (1) {
 					if ( check_censored(cc)){
 						print(paste0("Permission denied: ",cc))
 						censored <- c(censored,cc)
+						Set_PD(cc)
 					}	
 				}
 			}
