@@ -169,13 +169,14 @@ check_censored <- function(id){
 	tryCatch({
 		url <- paste0('https://api.weibo.com/2/statuses/show.json?source=',sample(token,1),'&id=',as.character(id))
 		r <- fromJSON(getURL(url,ssl.verifypeer=TRUE))
-		if ( r$error_code == 20112){
-			return(TRUE)
+		if ("error_code" %in% names(r)){
+			return(r$error_code)	
 		} else {
-			return(FALSE)
+			return(NA)
 		}
+#		if ( r$error_code == 20112){
 	}, error = function(e){
-		return(FALSE)
+		return(NA)
 	})
 }
 
@@ -205,6 +206,24 @@ Set_PD <- function(id){
   dbGetQuery(con, "set client_encoding to 'utf-8'")
   censored_time <- as.character(Sys.time())
   strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted_last_seen) = (TRUE,'",censored_time,"') where id = ",id)
+  dbSendQuery(con, strSQL)
+  dbDisconnect(con)
+}
+
+Set_DP <- function(id){
+  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  dbGetQuery(con, "set client_encoding to 'utf-8'")
+  deleted_time <- as.character(Sys.time())
+  strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (NULL,'",deleted_time,"') where id = ",id)
+  dbSendQuery(con, strSQL)
+  dbDisconnect(con)
+}
+
+Set_EC <- function(id,ecode){
+  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  dbGetQuery(con, "set client_encoding to 'utf-8'")
+  current_time <- as.character(Sys.time())
+  strSQL <- paste0("update rp_sinaweibo set (ecode,dbinserted) = ('",ecode,"'",current_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
   dbDisconnect(con)
 }
@@ -274,10 +293,17 @@ while (1) {
 			for (cc in c){
 				if (testid(cc)){
 					print(paste0("Not found via link: ",cc))
-					if ( check_censored(cc)){
-						print(paste0("Permission denied: ",cc))
-						censored <- c(censored,cc)
-						Set_PD(cc)
+					chk_result <- check_censored(cc)
+					Set_EC(cc,chk_result)
+					if (!is.na(chk_result)){
+						if (chk_result == 20112){
+							print(paste0("Permission denied: ",cc))
+							censored <- c(censored,cc)
+							Set_PD(cc)
+						} else if (chk_result == 20101){
+							print(paste0("target weibo does not exist: ",cc))
+							Set_DP(cc)
+						} 
 					}	
 				}
 			}
