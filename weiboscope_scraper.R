@@ -176,7 +176,7 @@ check_censored <- function(id){
 		}
 #		if ( r$error_code == 20112){
 	}, error = function(e){
-		return(99999) $ runtime error
+		return(99999) # runtime error
 	})
 }
 
