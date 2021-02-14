@@ -291,8 +291,23 @@ while (1) {
 		r_missing <- chk_missing(ref %in% u_posts)
 		if (sum(r_missing) > 0){
 			c <- ref[r_missing]
-			for (cc in c){
-				if (testid(cc)){
+			#### Check the existence of the "disappeared" posts from the user timeline
+			remDr$navigate(paste0("https://weibo.com/u/",u))
+			Sys.sleep(5)
+			webElem <- remDr$findElement("css", "body")
+			webElem$sendKeysToElement(list("\uE010"))
+			Sys.sleep(2)
+			webElem <- remDr$findElement("css", "body")
+			webElem$sendKeysToElement(list("\uE010"))
+			u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
+			Sys.sleep(2)
+			chk_again <- sort(sapply(1:length(u_id), function(i){
+				u_id[[i]]$getElementAttribute("name")[[1]]
+			}))
+			c <- c[!(c %in% chk_again)]
+			####
+			if (length(c) != 0){
+				for (cc in c){
 					print(paste0("Not found via link: ",cc))
 					chk_result <- check_censored(cc)
 					Set_EC(cc,chk_result)
@@ -306,6 +321,7 @@ while (1) {
 							Set_DP(cc)
 						} 
 					}	
+			
 				}
 			}
 		}
