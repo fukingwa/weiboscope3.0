@@ -172,11 +172,11 @@ check_censored <- function(id){
 		if ("error_code" %in% names(r)){
 			return(r$error_code)	
 		} else {
-			return(NA)
+			return(99999) # Nothing returned
 		}
 #		if ( r$error_code == 20112){
 	}, error = function(e){
-		return(NA)
+		return(99999) $ runtime error
 	})
 }
 
