@@ -308,6 +308,9 @@ while (1) {
 			####
 			if (length(c) != 0){
 				for (cc in c){
+					if (cc %in% censored){
+						next
+					}
 					print(paste0("Not found via link: ",cc))
 					chk_result <- check_censored(cc)
 					Set_EC(cc,chk_result)
