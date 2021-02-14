@@ -223,7 +223,7 @@ Set_EC <- function(id,ecode){
   con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
   dbGetQuery(con, "set client_encoding to 'utf-8'")
   current_time <- as.character(Sys.time())
-  strSQL <- paste0("update rp_sinaweibo set (ecode,dbinserted) = ('",ifelse(is.na(ecode),"NULL",ecode),"','",current_time,"') where id = ",id)
+  strSQL <- paste0("update rp_sinaweibo set (ecode,dbinserted) = (",ifelse(is.na(ecode),"NULL",paste0("'",ecode,"'")),",'",current_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
   dbDisconnect(con)
 }
@@ -256,9 +256,10 @@ cont <- readline("Press Return to continue \n")
 
 while (1) {
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
+	remDr$refresh()
+	Sys.sleep(30)
 	click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 	click$clickElement()
-#	remDr$refresh()
 	Sys.sleep(60)
 	webElem <- remDr$findElement("css", "body")
 	webElem$sendKeysToElement(list("\uE010"))
@@ -309,6 +310,8 @@ while (1) {
 			}
 		}
 	}
+	remDr$refresh()
+	Sys.sleep(30)
 	click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 	click$clickElement()
 	Sys.sleep(60)
