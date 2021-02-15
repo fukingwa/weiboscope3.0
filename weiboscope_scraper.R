@@ -258,35 +258,35 @@ cont <- readline("Press Return to continue \n")
 while (1) {
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
 	tryCatch({
-	remDr$refresh()
-	Sys.sleep(30)
-	click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
-	click$clickElement()
-	Sys.sleep(60)
-	webElem <- remDr$findElement("css", "body")
-	webElem$sendKeysToElement(list("\uE010"))
-	Sys.sleep(60)
-	webElem <- remDr$findElement("css", "body")
-	webElem$sendKeysToElement(list("\uE010"))
-	Sys.sleep(60)
-	webElem <- remDr$findElement("css", "body")
-	webElem$sendKeysToElement(list("\uE010"))
-	Sys.sleep(60)
-	webElem <- remDr$findElement("css", "body")
-	webElem$sendKeysToElement(list("\uE010"))
-	Sys.sleep(60)
-	whole_body <- remDr$findElement(using = "xpath","//body")
-	text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
-	wb_df <- parse_wb_rds(text_html)
-	wb_df <- wb_df[!duplicated(wb_df$id),]
-	if (nrow(wb_df)!=0){
-		InsertDB(wb_df)
-	}
-	if (nrow(all)==0){
-		all <- wb_df
-	} else {
-		all <- rbind(all,wb_df[!(wb_df$id %in% all$id),])
-	}
+		remDr$refresh()
+		Sys.sleep(30)
+		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
+		click$clickElement()
+		Sys.sleep(60)
+		webElem <- remDr$findElement("css", "body")
+		webElem$sendKeysToElement(list("\uE010"))
+		Sys.sleep(60)
+		webElem <- remDr$findElement("css", "body")
+		webElem$sendKeysToElement(list("\uE010"))
+		Sys.sleep(60)
+		webElem <- remDr$findElement("css", "body")
+		webElem$sendKeysToElement(list("\uE010"))
+		Sys.sleep(60)
+		webElem <- remDr$findElement("css", "body")
+		webElem$sendKeysToElement(list("\uE010"))
+		Sys.sleep(60)
+		whole_body <- remDr$findElement(using = "xpath","//body")
+		text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
+		wb_df <- parse_wb_rds(text_html)
+		wb_df <- wb_df[!duplicated(wb_df$id),]
+		if (nrow(wb_df)!=0){
+			InsertDB(wb_df)
+		}
+		if (nrow(all)==0){
+			all <- wb_df
+		} else {
+			all <- rbind(all,wb_df[!(wb_df$id %in% all$id),])
+		}
 	}, error = function(e){
 		print(e)
 		print("First block error")
