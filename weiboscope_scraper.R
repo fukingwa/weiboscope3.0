@@ -300,6 +300,14 @@ while (1) {
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
 			u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
+			if (length(u_id) == 0) {  ### Retry if no data
+				remDr$refresh()
+				Sys.sleep(5)
+				u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
+				if (length(u_id) == 0) {
+					next
+				}
+			}
 			Sys.sleep(2)
 			chk_again <- sort(sapply(1:length(u_id), function(i){
 				u_id[[i]]$getElementAttribute("name")[[1]]
