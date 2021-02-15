@@ -19,8 +19,9 @@ if (start == 1) {
 Sys.setlocale(category = "LC_ALL", locale = "C")
 
 eCaps <- list(chromeOptions = list(
-	prefs = list("detach" = TRUE),
-	detach = TRUE
+	args = c('--disable-gpu', '--no-sandbox','--disable-extensions','--dns-prefetch-disable')
+#	prefs = list("detach" = TRUE),
+#	detach = TRUE
 ))
 
 remDr <- remoteDriver(
