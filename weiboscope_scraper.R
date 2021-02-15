@@ -257,6 +257,7 @@ cont <- readline("Press Return to continue \n")
 
 while (1) {
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
+	tryCatch({
 	remDr$refresh()
 	Sys.sleep(30)
 	click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
@@ -286,6 +287,11 @@ while (1) {
 	} else {
 		all <- rbind(all,wb_df[!(wb_df$id %in% all$id),])
 	}
+	}, error = function(e){
+		print(e)
+		print("First block error")
+		next
+	})
 	for (u in unique(wb_df$user_id)){
 		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
 		ref  <- sort(unique(as.character(all$id[all$user_id == u])))
@@ -343,13 +349,19 @@ while (1) {
 			}
 		}
 	}
-	remDr$refresh()
-	Sys.sleep(30)
-	click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
-	click$clickElement()
-	Sys.sleep(60)
-	all <- all[all$created_at >= (Sys.time() - (3*60*60)),]  # Three hours only
-	saveRDS(all,"all.rds")
+	tryCatch({	 
+		remDr$refresh()
+		Sys.sleep(30)
+		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
+		click$clickElement()
+		Sys.sleep(60)
+		all <- all[all$created_at >= (Sys.time() - (3*60*60)),]  # Three hours only
+		saveRDS(all,"all.rds")
+	}, error = function(e){
+		print(e)
+		print("Second block error")
+		next
+	})
 }
 
 #InsertDB(tm_wb)
