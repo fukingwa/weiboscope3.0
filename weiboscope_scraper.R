@@ -321,10 +321,10 @@ while (1) {
 					u_id[[i]]$getElementAttribute("name")[[1]]
 				}))
 				c <- c[!(c %in% chk_again)]
-			}), error = function(e){
+			}, error = function(e){
 				print(paste0("Can't reach https://weibo.com/u/",u))
 				next
-			}
+			})
 			####
 			if (length(c) != 0){
 				for (cc in c){
