@@ -293,27 +293,32 @@ while (1) {
 		if (sum(r_missing) > 0){
 			c <- ref[r_missing]
 			#### Check the existence of the "disappeared" posts from the user timeline
-			remDr$navigate(paste0("https://weibo.com/u/",u))
-			Sys.sleep(5)
-			webElem <- remDr$findElement("css", "body")
-			webElem$sendKeysToElement(list("\uE010"))
-			Sys.sleep(2)
-			webElem <- remDr$findElement("css", "body")
-			webElem$sendKeysToElement(list("\uE010"))
-			u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
-			if (length(u_id) == 0) {  ### Retry if no data
-				remDr$refresh()
+			tryCatch({
+				remDr$navigate(paste0("https://weibo.com/u/",u))
 				Sys.sleep(5)
+				webElem <- remDr$findElement("css", "body")
+				webElem$sendKeysToElement(list("\uE010"))
+				Sys.sleep(2)
+				webElem <- remDr$findElement("css", "body")
+				webElem$sendKeysToElement(list("\uE010"))
 				u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
-				if (length(u_id) == 0) {
-					next
+				if (length(u_id) == 0) {  ### Retry if no data
+					remDr$refresh()
+					Sys.sleep(5)
+					u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
+					if (length(u_id) == 0) {
+						next
+					}
 				}
+				Sys.sleep(2)
+				chk_again <- sort(sapply(1:length(u_id), function(i){
+					u_id[[i]]$getElementAttribute("name")[[1]]
+				}))
+				c <- c[!(c %in% chk_again)]
+			}), error = function(e){
+				print(paste0("Can't reach https://weibo.com/u/",u))
+				next
 			}
-			Sys.sleep(2)
-			chk_again <- sort(sapply(1:length(u_id), function(i){
-				u_id[[i]]$getElementAttribute("name")[[1]]
-			}))
-			c <- c[!(c %in% chk_again)]
 			####
 			if (length(c) != 0){
 				for (cc in c){
