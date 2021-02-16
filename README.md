@@ -8,7 +8,7 @@ sudo apt-get install r-base r-base-dev or sudo yum install r-base r-base-dev
 
 2) Install the following R packages
 
-Rscript -e "install.packages(c("RSelenium","stringr","RPostgreSQL","rvest","RCurl","RJSONIO"),dependencies=T)"
+Rscript -e 'install.packages(c("RSelenium","stringr","RPostgreSQL","rvest","RCurl","RJSONIO"), dependencies=T, repos="http://cloud.r-project.org")'
 
 3) Install google-chrome and download chromedriver from the source https://chromedriver.chromium.org/downloads. Make sure both have same versions, i.e. say both version 88.
 
