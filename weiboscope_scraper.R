@@ -19,11 +19,11 @@ if (start == 1) {
 Sys.setlocale(category = "LC_ALL", locale = "C")
 
 eCaps <- list(chromeOptions = list(
-	args = c('--disable-gpu', '--no-sandbox','--disable-extensions','--dns-prefetch-disable')
+	args = c('start-maximized','enable-automation','--disable-gpu', '--no-sandbox','--disable-extensions','--dns-prefetch-disable','--disable-infobars','--disable-dev-shm-usage','--disable-browser-side-navigation')
 #	prefs = list("detach" = TRUE),
 #	detach = TRUE
 ))
-
+	
 remDr <- remoteDriver(
   remoteServerAddr = "localhost",
   port = 4444,
@@ -291,7 +291,7 @@ while (1) {
 		print(e)
 		print("First block error")
 		Sys.sleep(300)
-		next
+		wb_df <- data.frame()
 	})
 	for (u in unique(wb_df$user_id)){
 		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
