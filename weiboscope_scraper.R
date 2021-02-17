@@ -296,7 +296,11 @@ while (1) {
 	for (u in unique(wb_df$user_id)){
 		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
 		ref  <- sort(unique(as.character(all$id[all$user_id == u])))
-		r_missing <- chk_missing(ref %in% u_posts)
+		if (length(ref) != 0){
+			r_missing <- chk_missing(ref %in% u_posts)
+		} else {
+			next
+		}
 		if (sum(r_missing) > 0){
 			c <- ref[r_missing]
 			#### Check the existence of the "disappeared" posts from the user timeline
