@@ -290,6 +290,7 @@ while (1) {
 	}, error = function(e){
 		print(e)
 		print("First block error")
+		Sys.sleep(300)
 		next
 	})
 	for (u in unique(wb_df$user_id)){
@@ -360,7 +361,7 @@ while (1) {
 	}, error = function(e){
 		print(e)
 		print("Second block error")
-		next
+		Sys.sleep(300)
 	})
 }
 
