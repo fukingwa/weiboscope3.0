@@ -335,23 +335,21 @@ while (1) {
 			####
 			if (length(c) != 0){
 				for (cc in c){
-					if (cc %in% censored){
-						next
+					if (!(cc %in% censored)){
+						print(paste0("Not found via link: ",cc))
+						chk_result <- check_censored(cc)
+						Set_EC(cc,chk_result)
+						if (!is.na(chk_result)){
+							if (chk_result == 20112){
+								print(paste0("Permission denied: ",cc))
+								censored <- c(censored,cc)
+								Set_PD(cc)
+							} else if (chk_result == 20101){
+								print(paste0("target weibo does not exist: ",cc))
+								Set_DP(cc)
+							} 
+						}	
 					}
-					print(paste0("Not found via link: ",cc))
-					chk_result <- check_censored(cc)
-					Set_EC(cc,chk_result)
-					if (!is.na(chk_result)){
-						if (chk_result == 20112){
-							print(paste0("Permission denied: ",cc))
-							censored <- c(censored,cc)
-							Set_PD(cc)
-						} else if (chk_result == 20101){
-							print(paste0("target weibo does not exist: ",cc))
-							Set_DP(cc)
-						} 
-					}	
-			
 				}
 			}
 		}
