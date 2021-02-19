@@ -2,9 +2,9 @@
 
 Steps to setup weiboscope3.0:
 
-1) Install r-base and r-base-dev
+1) Install R
 
-sudo apt-get install r-base r-base-dev or sudo yum install r-base r-base-dev
+https://www.r-project.org/
 
 2) Install the following R packages
 
@@ -16,11 +16,15 @@ Rscript -e 'install.packages(c("RSelenium","stringr","RPostgreSQL","rvest","RCur
 
 java -Dwebdriver.chrome.driver=[PATH TO]chromedriver -jar [PATH to]selenium-server-standalone-3.141.59.jar -sessionTimeout 57868143
 
-5) Setup .pgpass in the home directory, in which your psql username and password are stored
+5) Setup .pgpass in the home directory, in which your PostgreSQL database username and password are stored
 
-6) Create a new directory and put the envirnoment R image file WB.RData in there
+6) Create a new directory and put the envirnoment R image file WB.RData in there. The R image containss four variables:
+DB_NAME = database name
+DB_UNAME = database user name
+HOSTIP = IP address of the database
+token = a array of tokens used to check "permission_denied"
 
-7) Run R in the command line and execute in the console: source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
+7) Run R in the command line/desktop and execute in the console: source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 
 8) Login Weibo (need smartphone to scan QR code) in the pop window when you are asked. Press  any key to continue 
 
