@@ -5,8 +5,9 @@ require(rvest)
 require("RCurl")
 require("RJSONIO")
 
-start <- readline("1 - cold start  2 - jump start\n")
-
+if (!exists("start_v")){
+	start_v <- readline("1 - cold start  2 - jump start\n")
+}
 ## Envirnoment constants
 if (file.exists("WB.RData")){
 	load("WB.RData")
@@ -14,7 +15,7 @@ if (file.exists("WB.RData")){
 	print("Missing WB.RData")
 	quit()
 }
-if (start == 1) {
+if (start_v == 1) {
 
 Sys.setlocale(category = "LC_ALL", locale = "C")
 
