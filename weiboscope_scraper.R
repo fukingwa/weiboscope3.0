@@ -4,6 +4,7 @@ require(RPostgreSQL)
 require(rvest)
 require("RCurl")
 require("RJSONIO")
+if (!require("emayili")) install.packages("emayili")
 
 if (!exists("start_v")){
 	start_v <- readline("1 - cold start  2 - jump start\n")
@@ -252,6 +253,31 @@ chk_missing <- function(x){
 	return(r)
 }
 
+Send_alert <- function(e,Scap){
+
+  smtp <- server(host = "smtp.gmail.com",
+                 port = 465,
+                 username = Sender_username,
+                 password = Sender_password,
+                 reuse = FALSE)
+  
+  Email_msg <- paste0(Sys.info()[[4]],":",e)
+  Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
+  html_body <- '<html><body><img src="cid:image"></body></html>'
+  
+  email <- envelope(
+    to = Sender_username,
+    from = Sender_username,
+    subject = Email_subject,
+    text = Email_msg,
+    html = html_body
+  )
+
+  email <- attachment(email, path = Scap, cid = "image")
+  
+  smtp(email, verbose = TRUE)
+}
+
 #remDr$navigate("https://weibo.com/login.php")
 
 cont <- readline("Press Return to continue \n")
@@ -293,6 +319,11 @@ while (1) {
 		print("First block error")
 		Sys.sleep(300)
 		wb_df <- data.frame()
+		x <- as.character(e)
+		remDr$screenshot(file = "scapture_file.jpg")
+  		Send_alert(x,"scapture_file.jpg")
+  		start_v <- 2
+  		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	})
 	for (u in unique(wb_df$user_id)){
 		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
@@ -367,6 +398,11 @@ while (1) {
 		print(e)
 		print("Second block error")
 		Sys.sleep(300)
+		x <- as.character(e)
+  		remDr$screenshot(file = "scapture_file.jpg")
+  		Send_alert(x,"scapture_file.jpg")
+  		start_v <- 2
+  		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	})
 }
 
