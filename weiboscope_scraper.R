@@ -5,6 +5,7 @@ require(rvest)
 require("RCurl")
 require("RJSONIO")
 if (!require("emayili")) install.packages("emayili")
+require("emayili")
 
 if (!exists("start_v")){
 	start_v <- readline("1 - cold start  2 - jump start\n")
