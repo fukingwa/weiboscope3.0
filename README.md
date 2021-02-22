@@ -1,5 +1,7 @@
 # weiboscope3.0
 
+This project aims to make Weiboscope (codename Weiboscope 3.0) become decentralized, distributed, and resilient. Anyone in anywhere can build site(s) to collect Weibo data.   
+
 Steps to setup weiboscope3.0:
 
 1) Install R
