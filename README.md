@@ -30,7 +30,7 @@ token = a array of tokens used to check "permission_denied"
 
 8) Login Weibo (need smartphone to scan QR code) in the pop window when you are asked. Press  any key to continue 
 
-9) If the program is borken and stopped to the console but the window is still up, Follow Step 7 to execute the command and select 2) jump start to resume
+9) If the program is broken and stopped to the console but the window is still up, Follow Step 7 to execute the command and select 2) jump start to resume
 
 
 
