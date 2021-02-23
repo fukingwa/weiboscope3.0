@@ -281,7 +281,7 @@ Send_alert <- function(e,Scap){
 
 #remDr$navigate("https://weibo.com/login.php")
 
-cont <- readline("Press Return to continue \n")
+#cont <- readline("Press Return to continue \n")
 
 while (1) {
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
