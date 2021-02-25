@@ -358,7 +358,7 @@ while (1) {
 		wb_df <- data.frame()
 		x <- as.character(e)
 		remDr$screenshot(file = "scapture_file.jpg")
-  		if (!Send_alert_blacktea(x,"scapture_file.jpg")){
+  		if (!Send_alert(x,"scapture_file.jpg")){
 			print("Send email error")
 		}
   		start_v <- 2
@@ -439,7 +439,7 @@ while (1) {
 		Sys.sleep(300)
 		x <- as.character(e)
   		remDr$screenshot(file = "scapture_file.jpg")
-  		if (!Send_alert_blacktea(x,"scapture_file.jpg")){
+  		if (!Send_alert(x,"scapture_file.jpg")){
 			print("Send email error")
 		}
   		start_v <- 2
