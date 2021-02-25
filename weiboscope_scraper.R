@@ -284,6 +284,37 @@ Send_alert <- function(e,Scap){
   })
 }
 
+Send_alert_blacktea <- function(e,Scap){
+  tryCatch({
+    smtp <- server(host = "147.8.144.20",
+                   port = 25,
+                   username = New_Sender_username,
+                   password = New_Sender_password,
+                   reuse = FALSE)
+    
+    Email_msg <- paste0(Sys.info()[[4]],":",e)
+    Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
+    html_body <- '<html><body><img src="cid:image"></body></html>'
+    
+    email <- envelope(
+      to = Receiver_username,
+      from = New_Sender_username,
+      subject = Email_subject,
+      text = Email_msg,
+      html = html_body
+    )
+    
+    email <- attachment(email, path = Scap, cid = "image")
+    
+    smtp(email, verbose = TRUE)
+    
+    return(TRUE)
+    
+  }, error = function(e){
+    return(FALSE)
+  })
+}
+
 #remDr$navigate("https://weibo.com/login.php")
 
 #cont <- readline("Press Return to continue \n")
@@ -327,7 +358,7 @@ while (1) {
 		wb_df <- data.frame()
 		x <- as.character(e)
 		remDr$screenshot(file = "scapture_file.jpg")
-  		if (!Send_alert(x,"scapture_file.jpg")){
+  		if (!Send_alert_blacktea(x,"scapture_file.jpg")){
 			print("Send email error")
 		}
   		start_v <- 2
@@ -408,7 +439,7 @@ while (1) {
 		Sys.sleep(300)
 		x <- as.character(e)
   		remDr$screenshot(file = "scapture_file.jpg")
-  		if (!Send_alert(x,"scapture_file.jpg")){
+  		if (!Send_alert_blacktea(x,"scapture_file.jpg")){
 			print("Send email error")
 		}
   		start_v <- 2
