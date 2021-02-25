@@ -95,60 +95,60 @@ to10 <- function(num, base=62) {
 
 parse_wb_rds <- function(txt){
 
-html_txt <- read_html(txt)
-each_post <- html_nodes(html_txt,xpath = "//div[@action-type='feed_list_item']")
-all <- data.frame()
-if (length(each_post) != 0){
+	html_txt <- read_html(txt)
+	each_post <- html_nodes(html_txt,xpath = "//div[@action-type='feed_list_item']")
+	all <- data.frame()
+	if (length(each_post) != 0){
 
-for (i in 1:length(each_post)){
-	hs_txt <- as.character(each_post[[i]])
-	hs <- read_html(hs_txt)
-## Screen name
-	screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_info']//a/@nick-name"))
-## Created_at
-	created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@title"))
-	created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
-## Href
-	href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
-	user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
-	id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
-## text
-	text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
-## Img
-	img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
-	img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
-## RT name
-	rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_info']//a/@nick-name"))
-## RT created_at
-	rt_created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@title"))
-	rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
-## RT href
-	rt_href <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@href"))
-	if (is.na(rt_href)){
-		retweeted_status_user_id <- NA
-		retweeted_status <- NA
-	} else {
-		retweeted_status_user_id <- as.character(strsplit(rt_href,"/|\\?")[[1]][2])
-		retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
+		for (i in 1:length(each_post)){
+			hs_txt <- as.character(each_post[[i]])
+			hs <- read_html(hs_txt)
+		## Screen name
+			screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_info']//a/@nick-name"))
+		## Created_at
+			created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@title"))
+			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
+		## Href
+			href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
+			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
+			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
+		## text
+			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
+		## Img
+			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
+			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
+		## RT name
+			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_info']//a/@nick-name"))
+		## RT created_at
+			rt_created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@title"))
+			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
+		## RT href
+			rt_href <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@href"))
+			if (is.na(rt_href)){
+				retweeted_status_user_id <- NA
+				retweeted_status <- NA
+			} else {
+				retweeted_status_user_id <- as.character(strsplit(rt_href,"/|\\?")[[1]][2])
+				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
+			}
+		## RT text
+			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
+		## numbers
+			num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
+			num2 <- strsplit(gsub('[:space:][:space:]','',trimws(gsub('[^0-9]',' ',num1))),' ')[[1]]
+			reposts_count <- num2[1]
+			comments_count <- num2[3]
+			attitudes_count <- num2[5]
+
+		      w_item <- data.frame(id=id,user_id=user_id,screen_name=screen_name,
+					retweeted_status_user_id=retweeted_status_user_id,retweeted_status=retweeted_status,
+					created_at=created_at,href=href,text=text,original_pic = img, in_reply_to_screen_name=rt_screen_name,
+				  rt_created_at=rt_created_at, rt_href=rt_href,rt_text=rt_text,
+					reposts_count=reposts_count,comments_count=comments_count,attitudes_count=attitudes_count,stringsAsFactors = F)
+
+			all <- rbind(all,w_item)
+		}
 	}
-## RT text
-	rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
-## numbers
-	num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
-	num2 <- strsplit(gsub('[:space:][:space:]','',trimws(gsub('[^0-9]',' ',num1))),' ')[[1]]
-	reposts_count <- num2[1]
-	comments_count <- num2[3]
-	attitudes_count <- num2[5]
-
-      w_item <- data.frame(id=id,user_id=user_id,screen_name=screen_name,
-			retweeted_status_user_id=retweeted_status_user_id,retweeted_status=retweeted_status,
-			created_at=created_at,href=href,text=text,original_pic = img, in_reply_to_screen_name=rt_screen_name,
-                  rt_created_at=rt_created_at, rt_href=rt_href,rt_text=rt_text,
-			reposts_count=reposts_count,comments_count=comments_count,attitudes_count=attitudes_count,stringsAsFactors = F)
-
-	all <- rbind(all,w_item)
-}
-}
 	return(all)
 }
 
@@ -255,28 +255,33 @@ chk_missing <- function(x){
 }
 
 Send_alert <- function(e,Scap){
+  tryCatch({
+	  smtp <- server(host = "smtp.gmail.com",
+			 port = 465,
+			 username = Sender_username,
+			 password = Sender_password,
+			 reuse = FALSE)
 
-  smtp <- server(host = "smtp.gmail.com",
-                 port = 465,
-                 username = Sender_username,
-                 password = Sender_password,
-                 reuse = FALSE)
-  
-  Email_msg <- paste0(Sys.info()[[4]],":",e)
-  Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
-  html_body <- '<html><body><img src="cid:image"></body></html>'
-  
-  email <- envelope(
-    to = Sender_username,
-    from = Sender_username,
-    subject = Email_subject,
-    text = Email_msg,
-    html = html_body
-  )
+	  Email_msg <- paste0(Sys.info()[[4]],":",e)
+	  Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
+	  html_body <- '<html><body><img src="cid:image"></body></html>'
 
-  email <- attachment(email, path = Scap, cid = "image")
+	  email <- envelope(
+	    to = Sender_username,
+	    from = Sender_username,
+	    subject = Email_subject,
+	    text = Email_msg,
+	    html = html_body
+	  )
+
+  	email <- attachment(email, path = Scap, cid = "image")
   
-  smtp(email, verbose = TRUE)
+  	smtp(email, verbose = TRUE)
+	  
+	return(TRUE)
+  }, error = function(e){
+	return(FALSE)
+  })
 }
 
 #remDr$navigate("https://weibo.com/login.php")
@@ -322,7 +327,9 @@ while (1) {
 		wb_df <- data.frame()
 		x <- as.character(e)
 		remDr$screenshot(file = "scapture_file.jpg")
-  		Send_alert(x,"scapture_file.jpg")
+  		if (!Send_alert(x,"scapture_file.jpg")){
+			print("Send email error")
+		}
   		start_v <- 2
   		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	})
@@ -401,7 +408,9 @@ while (1) {
 		Sys.sleep(300)
 		x <- as.character(e)
   		remDr$screenshot(file = "scapture_file.jpg")
-  		Send_alert(x,"scapture_file.jpg")
+  		if (!Send_alert(x,"scapture_file.jpg")){
+			print("Send email error")
+		}
   		start_v <- 2
   		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	})
