@@ -49,7 +49,7 @@ Sys.sleep(10)
 	
 remDr$navigate("https://weibo.com/login.php")
 
-cont <- readline("1) Login Weibo \n")
+cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
 
 }
 
