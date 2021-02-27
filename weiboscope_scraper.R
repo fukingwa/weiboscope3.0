@@ -4,7 +4,6 @@ require(RPostgreSQL)
 require(rvest)
 require("RCurl")
 require("RJSONIO")
-if (!require("emayili")) install.packages("emayili")
 require("emayili")
 
 if (!exists("start_v")){
@@ -17,39 +16,39 @@ if (file.exists("WB.RData")){
 	print("Missing WB.RData")
 	quit()
 }
-if (start_v == 1) {
+if (as.integer(start_v) == 1) {
 
-Sys.setlocale(category = "LC_ALL", locale = "C")
+	Sys.setlocale(category = "LC_ALL", locale = "C")
 
-eCaps <- list(chromeOptions = list(
-	args = c('start-maximized','enable-automation','--disable-gpu', '--no-sandbox','--disable-extensions','--dns-prefetch-disable','--disable-infobars','--disable-dev-shm-usage','--disable-browser-side-navigation')
-#	prefs = list("detach" = TRUE),
-#	detach = TRUE
-))
-	
-remDr <- remoteDriver(
-  remoteServerAddr = "localhost",
-  port = 4444,
-  browserName = "chrome", extraCapabilities = eCaps)
+	eCaps <- list(chromeOptions = list(
+		args = c('start-maximized','enable-automation','--disable-gpu', '--no-sandbox','--disable-extensions','--dns-prefetch-disable','--disable-infobars','--disable-dev-shm-usage','--disable-browser-side-navigation')
+	#	prefs = list("detach" = TRUE),
+	#	detach = TRUE
+	))
 
-q <- remDr$open()
-q <- remDr$maxWindowSize()
-q <- remDr$setWindowSize(1920, 1080)
-q <- remDr$setTimeout(type = "page load", milliseconds = 500000)
-#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
-#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
+	remDr <- remoteDriver(
+	  remoteServerAddr = "localhost",
+	  port = 4444,
+	  browserName = "chrome", extraCapabilities = eCaps)
 
-censored <- c()
-if (file.exists("all.rds")){
-	all <- readRDS("all.rds")
-} else {
-	all <- data.frame()
-}
-Sys.sleep(10)	
-	
-remDr$navigate("https://weibo.com/login.php")
+	q <- remDr$open()
+	q <- remDr$maxWindowSize()
+	q <- remDr$setWindowSize(1920, 1080)
+	q <- remDr$setTimeout(type = "page load", milliseconds = 500000)
+	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
+	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 
-cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
+	censored <- c()
+	if (file.exists("all.rds")){
+		all <- readRDS("all.rds")
+	} else {
+		all <- data.frame()
+	}
+	Sys.sleep(10)	
+
+	remDr$navigate("https://weibo.com/login.php")
+
+	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
 
 }
 
