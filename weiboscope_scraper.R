@@ -47,9 +47,10 @@ if (as.integer(start_v) == 1) {
 	Sys.sleep(10)	
 
 	remDr$navigate("https://weibo.com/login.php")
-
+	
+	start_v <- 2
 	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
-
+	print("Starting Weiboscope 3.0 .....")
 }
 
 id2mid <- function(num){
