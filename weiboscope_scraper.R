@@ -267,7 +267,7 @@ Send_alert <- function(e,Scap){
 			 reuse = FALSE)
 
 	  Email_msg <- paste0(Sys.info()[[4]],":",e)
-	  Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
+	  Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",myip)
 	  html_body <- '<html><body><img src="cid:image"></body></html>'
 
 	  email <- envelope(
