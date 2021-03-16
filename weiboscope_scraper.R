@@ -6,6 +6,8 @@ require("RCurl")
 require("RJSONIO")
 require("emayili")
 
+myip <- getURL("ifconfig.me/ip")
+
 if (!exists("start_v")){
 	start_v <- readline("1 - cold start  2 - jump start\n")
 }
@@ -52,6 +54,8 @@ if (as.integer(start_v) == 1) {
 	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
 	print("Starting Weiboscope 3.0 .....")
 }
+
+print(myip)
 
 id2mid <- function(num){
   length <- nchar(num)
