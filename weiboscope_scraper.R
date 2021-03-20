@@ -107,6 +107,11 @@ parse_wb_rds <- function(txt){
 		for (i in 1:length(each_post)){
 			hs_txt <- as.character(each_post[[i]])
 			hs <- read_html(hs_txt)
+		## Filter promotion
+			prom <- html_text(html_node(hs,xpath = "//i[contains(@class,'prom')]")]
+			if (!is.na(prom)){
+				next
+			}
 		## Screen name
 			screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_info']//a/@nick-name"))
 		## Created_at
