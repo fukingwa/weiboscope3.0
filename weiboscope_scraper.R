@@ -108,7 +108,7 @@ parse_wb_rds <- function(txt){
 			hs_txt <- as.character(each_post[[i]])
 			hs <- read_html(hs_txt)
 		## Filter promotion
-			prom <- html_text(html_node(hs,xpath = "//i[contains(@class,'prom')]")]
+			prom <- html_text(html_node(hs,xpath = "//i[contains(@class,'promo')]"))
 			if (!is.na(prom)){
 				next
 			}
