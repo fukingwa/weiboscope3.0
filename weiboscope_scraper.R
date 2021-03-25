@@ -331,7 +331,8 @@ Send_alert_blacktea <- function(e,Scap){
 while (1) {
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
 	tryCatch({
-		remDr$refresh()
+#		remDr$refresh()
+		remDr$navigate("https://weibo.com")
 		Sys.sleep(30)
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
@@ -435,7 +436,8 @@ while (1) {
 		}
 	}
 	tryCatch({	 
-		remDr$refresh()
+#		remDr$refresh()
+		remDr$navigate("https://weibo.com")
 		Sys.sleep(30)
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
