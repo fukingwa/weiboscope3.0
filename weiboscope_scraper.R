@@ -8,6 +8,14 @@ require("emayili")
 
 myip <- getURL("ifconfig.me/ip")
 
+if (myip == ""){
+	myip <- getURL("api.ipify.org")	
+}
+
+if (myip == ""){
+	myip <- "0.0.0.0"	
+}
+
 if (!exists("start_v")){
 	start_v <- readline("1 - cold start  2 - jump start\n")
 }
