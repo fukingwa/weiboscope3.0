@@ -361,6 +361,14 @@ while (1) {
 			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
 		}
 		c$clickElement()
+		z <- NULL
+		while (is.null(z)){
+			webElem <- remDr$findElement("css", "body")
+			webElem$sendKeysToElement(list("\uE010"))
+			Sys.sleep(30)
+			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
+		}
+		c$clickElement()
 
 #		webElem <- remDr$findElement("css", "body")
 #		webElem$sendKeysToElement(list("\uE010"))
