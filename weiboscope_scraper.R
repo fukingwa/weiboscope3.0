@@ -339,19 +339,20 @@ Scrolling4Posts <- function(){
 		while (is.null(z) & (d_time < 80)){
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
-			Sys.sleep(30)
+			Sys.sleep(20)
 			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
 			d_time <- difftime(Sys.time(),start_time,units = "secs")
 		}
 		if (!is.null(z)){
 			c$clickElement()
-		} else {
-			remDr$navigate("https://weibo.com")
-			Sys.sleep(30)
-			click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
-			click$clickElement()
-			Sys.sleep(30)	
 		}
+#		} else {
+#			remDr$navigate("https://weibo.com")
+#			Sys.sleep(30)
+#			click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
+#			click$clickElement()
+#			Sys.sleep(30)	
+#		}
 }
 
 #remDr$navigate("https://weibo.com/login.php")
@@ -367,9 +368,9 @@ while (1) {
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
 		Sys.sleep(30)
-		Scrolling4Posts() # 3 times
+		Scrolling4Posts() 
 		Scrolling4Posts()
-		Scrolling4Posts()
+#		Scrolling4Posts()
 		
 #		webElem <- remDr$findElement("css", "body")
 #		webElem$sendKeysToElement(list("\uE010"))
