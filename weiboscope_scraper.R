@@ -336,7 +336,7 @@ Scrolling4Posts <- function(){
 		z <- NULL
 		start_time <- Sys.time()
 		d_time <- 0
-		while (is.null(z) & (d_time < 80)){
+		while (is.null(z) & (d_time < 180)){
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
 			Sys.sleep(20)
@@ -371,7 +371,7 @@ while (1) {
 		Sys.sleep(30)
 		Scrolling4Posts() 
 		Scrolling4Posts()
-#		Scrolling4Posts()
+		Scrolling4Posts()
 		
 #		webElem <- remDr$findElement("css", "body")
 #		webElem$sendKeysToElement(list("\uE010"))
