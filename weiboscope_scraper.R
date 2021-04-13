@@ -488,7 +488,7 @@ while (1) {
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
 		Sys.sleep(60)
-		all <- all[all$created_at >= (Sys.time() - (3*60*60)),]  # Three hours only
+		all <- all[all$created_at >= (Sys.time() - (12*60*60)),]  # Twelve hours
 		saveRDS(all,"all.rds")
 	}, error = function(e){
 		print(e)
