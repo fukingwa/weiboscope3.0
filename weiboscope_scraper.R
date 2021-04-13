@@ -332,6 +332,21 @@ Send_alert_blacktea <- function(e,Scap){
   })
 }
 
+Scrolling4Posts <- function(){
+		z <- NULL
+		start_time <- Sys.time()
+		while (is.null(z) & (d_time < 300)){
+			webElem <- remDr$findElement("css", "body")
+			webElem$sendKeysToElement(list("\uE010"))
+			Sys.sleep(30)
+			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
+			d_time <- Sys.time() - start_time
+		}
+		if (!is.null(z)){
+			c$clickElement()
+		}
+}
+
 #remDr$navigate("https://weibo.com/login.php")
 
 #cont <- readline("Press Return to continue \n")
@@ -345,31 +360,10 @@ while (1) {
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
 		Sys.sleep(30)
-		z <- NULL
-		while (is.null(z)){
-			webElem <- remDr$findElement("css", "body")
-			webElem$sendKeysToElement(list("\uE010"))
-			Sys.sleep(30)
-			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
-		}
-		c$clickElement()
-		z <- NULL
-		while (is.null(z)){
-			webElem <- remDr$findElement("css", "body")
-			webElem$sendKeysToElement(list("\uE010"))
-			Sys.sleep(30)
-			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
-		}
-		c$clickElement()
-		z <- NULL
-		while (is.null(z)){
-			webElem <- remDr$findElement("css", "body")
-			webElem$sendKeysToElement(list("\uE010"))
-			Sys.sleep(30)
-			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
-		}
-		c$clickElement()
-
+		Scrolling4Posts() # 3 times
+		Scrolling4Posts()
+		Scrolling4Posts()
+		
 #		webElem <- remDr$findElement("css", "body")
 #		webElem$sendKeysToElement(list("\uE010"))
 #		Sys.sleep(30)
