@@ -345,6 +345,12 @@ Scrolling4Posts <- function(){
 		}
 		if (!is.null(z)){
 			c$clickElement()
+		} else {
+			remDr$navigate("https://weibo.com")
+			Sys.sleep(30)
+			click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
+			click$clickElement()
+			Sys.sleep(30)	
 		}
 }
 
