@@ -336,12 +336,12 @@ Scrolling4Posts <- function(){
 		z <- NULL
 		start_time <- Sys.time()
 		d_time <- 0
-		while (is.null(z) & (d_time < 300)){
+		while (is.null(z) & (d_time < 80)){
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
 			Sys.sleep(30)
 			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
-			d_time <- Sys.time() - start_time
+			d_time <- difftime(Sys.time(),start_time,units = "secs")
 		}
 		if (!is.null(z)){
 			c$clickElement()
