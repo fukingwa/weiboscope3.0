@@ -344,7 +344,8 @@ Scrolling4Posts <- function(){
 			d_time <- difftime(Sys.time(),start_time,units = "secs")
 		}
 		if (!is.null(z)){
-			c$clickElement()
+			remDr$executeScript("arguments[0].click();", args=list(c))
+#			c$clickElement()
 		}
 #		} else {
 #			remDr$navigate("https://weibo.com")
