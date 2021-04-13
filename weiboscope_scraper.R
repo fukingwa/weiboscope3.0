@@ -335,6 +335,7 @@ Send_alert_blacktea <- function(e,Scap){
 Scrolling4Posts <- function(){
 		z <- NULL
 		start_time <- Sys.time()
+		d_time <- 0
 		while (is.null(z) & (d_time < 300)){
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
