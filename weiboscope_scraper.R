@@ -340,7 +340,7 @@ Scrolling4Posts <- function(){
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
 			Sys.sleep(20)
-			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14']")},error=function(e){return(NULL)})
+			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")},error=function(e){return(NULL)})
 			d_time <- difftime(Sys.time(),start_time,units = "secs")
 		}
 		if (!is.null(z)){
