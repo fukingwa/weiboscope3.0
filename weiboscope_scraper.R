@@ -372,6 +372,11 @@ while (1) {
 		Scrolling4Posts() 
 		Scrolling4Posts()
 		Scrolling4Posts()
+		if (format(Sys.time(),"%H") > 2 && format(Sys.time(),"%H") < 5){
+			Scrolling4Posts() 
+			Scrolling4Posts()
+			Scrolling4Posts()
+		}
 		
 #		webElem <- remDr$findElement("css", "body")
 #		webElem$sendKeysToElement(list("\uE010"))
