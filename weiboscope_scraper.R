@@ -313,6 +313,10 @@ Send_alert_blacktea <- function(e,Scap){
     Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
     html_body <- '<html><body><img src="cid:image"></body></html>'
     
+    if (remDr$getCurrentUrl()[[1]] == "https://weibo.com/login.php"){
+	    Email_subject <- paste0("LOGIN REQUIRED !! " ,Email_subject)
+    }
+	  
     email <- envelope(
       to = Receiver_username,
       from = New_Sender_username,
