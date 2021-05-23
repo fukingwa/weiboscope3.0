@@ -16,6 +16,13 @@ if (myip == ""){
 	myip <- "0.0.0.0"	
 }
 
+what_vm <- function(x){
+	a <- read.csv("https://docs.google.com/spreadsheets/d/1gB8RSRJC6hXx2bQHObpFj1lpog1cK4yztet09I-wTbg/gviz/tq?tqx=out:csv")
+	return(a$VM.name[a$IP == trimws(x)])
+}
+
+myvm <- what_vm(ip)
+
 if (!exists("start_v")){
 	start_v <- readline("1 - cold start  2 - jump start\n")
 }
@@ -280,7 +287,7 @@ Send_alert <- function(e,Scap){
 			 reuse = FALSE)
 
 	  Email_msg <- paste0(Sys.info()[[4]],":",e)
-	  Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",myip)
+	  Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",myip,"-",myvm)
 	  html_body <- '<html><body><img src="cid:image"></body></html>'
 
 	  email <- envelope(
