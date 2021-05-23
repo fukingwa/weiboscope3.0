@@ -78,7 +78,8 @@ id2mid <- function(num){
   str1 <- substr(num,1,length-14)
   str2 <- substr(num,length-13,length-7)
   str3 <- substr(num,length-6,length)
-  return(paste(toBase(as.numeric(str1)),toBase(as.numeric(str2)),toBase(as.numeric(str3)),sep=""))
+#  return(paste(toBase(as.numeric(str1)),toBase(as.numeric(str2)),toBase(as.numeric(str3)),sep=""))
+  return(gsub(' ','0',paste(sprintf("%s",toBase(as.numeric(str1))),sprintf("%4s",toBase(as.numeric(str2))),sprintf("%4s",toBase(as.numeric(str3))),sep="")))
 }
 
 mid2id <- function(num){
