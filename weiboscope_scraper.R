@@ -71,6 +71,7 @@ if (as.integer(start_v) == 1) {
 }
 
 print(myip)
+print(myvm)
 
 id2mid <- function(num){
   length <- nchar(num)
