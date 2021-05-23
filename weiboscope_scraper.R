@@ -21,7 +21,7 @@ what_vm <- function(x){
 	return(a$VM.name[a$IP == trimws(x)])
 }
 
-myvm <- what_vm(ip)
+myvm <- what_vm(myip)
 
 if (!exists("start_v")){
 	start_v <- readline("1 - cold start  2 - jump start\n")
