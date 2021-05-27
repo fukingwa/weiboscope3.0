@@ -70,6 +70,8 @@ if (as.integer(start_v) == 1) {
 	print("Starting Weiboscope 3.0 .....")
 }
 
+start_date <- format(Sys.time(),"%Y-%m-%d")
+
 print(myip)
 print(myvm)
 
@@ -374,6 +376,13 @@ Scrolling4Posts <- function(){
 #cont <- readline("Press Return to continue \n")
 
 while (1) {
+## Update source code at 4am everyday
+		current_date <- format(Sys.time(),"%Y-%m-%d")
+		if ((current_date != start_date) && (format(Sys.time(),"%H") == 4)) {
+			print(paste0("Code updated at ",current_date))
+			start_v <- 2
+  			source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
+		}
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
 	tryCatch({
 #		remDr$refresh()
