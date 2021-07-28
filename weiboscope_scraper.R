@@ -223,7 +223,7 @@ InsertDB <- function(df){
   strSQL <- paste(
     'insert into rp_sinaweibo (id,user_id,screen_name,retweeted_status_user_id,retweeted_status,created_at,text,original_pic,in_reply_to_screen_name,reposts_count,comments_count,attitudes_count,dbinserted,deleted_last_seen,myip) values',
     paste(sprintf("(%s,%s,'%s',%s,%s,'%s','%s','%s','%s',%s,%s,%s,'%s','%s','%s')",df$id,tona(df$user_id),gsub("'","''",df$screen_name),df$retweeted_status_user_id,df$retweeted_status,df$created_at,gsub("'","''",df$text),df$original_pic,gsub("'","''",df$in_reply_to_screen_name),tona(df$reposts_count),tona(df$comments_count),tona(df$attitudes_count),dbinserted_time,dbinserted_time,myip), collapse=', '),
-    'on conflict (id) do update set deleted_last_seen = EXCLUDED.deleted_last_seen, reposts_count = EXCLUDED.reposts_count, comments_count = EXCLUDED.comments_count, attitudes_count = EXCLUDED.attitudes_count', sep = ' '
+    'on conflict (id) do update set permission_denied = FALSE, deleted = NULL, deleted_last_seen = EXCLUDED.deleted_last_seen, reposts_count = EXCLUDED.reposts_count, comments_count = EXCLUDED.comments_count, attitudes_count = EXCLUDED.attitudes_count', sep = ' '
   )
   strSQL <- gsub(",NA,",",NULL,",strSQL)
   strSQL <- gsub("\\(NA,","\\(NULL,",strSQL)
