@@ -229,7 +229,15 @@ InsertDB <- function(df){
   strSQL <- gsub("\\(NA,","\\(NULL,",strSQL)
   strSQL <- gsub(",NA\\)",",NULL\\)",strSQL)
   strSQL <- gsub(",NA,",",NULL,",strSQL)
-  dbSendQuery(con, strSQL)
+  tryCatch({
+	  dbSendQuery(con, strSQL)
+
+  }, error = function(e) {
+	  Sys.sleep(10)
+	  dbSendQuery(con, strSQL)
+     }
+  )
+#  dbSendQuery(con, strSQL)
   dbDisconnect(con)
 }
 
