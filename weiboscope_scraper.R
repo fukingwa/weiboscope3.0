@@ -234,6 +234,7 @@ InsertDB <- function(df){
 
   }, error = function(e) {
 	  Sys.sleep(10)
+	  print("Retry")
 	  dbSendQuery(con, strSQL)
      }
   )
