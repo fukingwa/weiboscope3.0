@@ -217,8 +217,19 @@ InsertDB <- function(df){
     x[x == ""] <- NA
     return(x)
   }
-  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-  dbGetQuery(con, "set client_encoding to 'utf-8'")
+  tryCatch({
+  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+  }, error = function(e) {
+	Sys.sleep(10)
+	print("Retrying connection .....")
+  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+     }
+  )
+	
+#  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+#  dbGetQuery(con, "set client_encoding to 'utf-8'")
   dbinserted_time <- rep(as.character(Sys.time()),nrow(df))
   strSQL <- paste(
     'insert into rp_sinaweibo (id,user_id,screen_name,retweeted_status_user_id,retweeted_status,created_at,text,original_pic,in_reply_to_screen_name,reposts_count,comments_count,attitudes_count,dbinserted,deleted_last_seen,myip) values',
@@ -234,7 +245,7 @@ InsertDB <- function(df){
 
   }, error = function(e) {
 	  Sys.sleep(10)
-	  print("Retry")
+	  print("Retrying dbsendquery ......")
 	  dbSendQuery(con, strSQL)
      }
   )
@@ -243,8 +254,19 @@ InsertDB <- function(df){
 }
 
 Set_PD <- function(id){
-  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-  dbGetQuery(con, "set client_encoding to 'utf-8'")
+  tryCatch({
+  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+  }, error = function(e) {
+	Sys.sleep(10)
+	print("Retrying connection .....")
+  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+     }
+  )
+	
+#  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+#  dbGetQuery(con, "set client_encoding to 'utf-8'")
   censored_time <- as.character(Sys.time())
   strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (TRUE,'",censored_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
@@ -252,8 +274,19 @@ Set_PD <- function(id){
 }
 
 Set_DP <- function(id){
-  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-  dbGetQuery(con, "set client_encoding to 'utf-8'")
+  tryCatch({
+  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+  }, error = function(e) {
+	Sys.sleep(10)
+	print("Retrying connection .....")
+  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+     }
+  )
+	
+#  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+#  dbGetQuery(con, "set client_encoding to 'utf-8'")
   deleted_time <- as.character(Sys.time())
   strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (NULL,'",deleted_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
@@ -261,8 +294,19 @@ Set_DP <- function(id){
 }
 
 Set_EC <- function(id,ecode){
-  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-  dbGetQuery(con, "set client_encoding to 'utf-8'")
+  tryCatch({
+  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+  }, error = function(e) {
+	Sys.sleep(10)
+	print("Retrying connection .....")
+  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+     }
+  )
+
+#  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+#  dbGetQuery(con, "set client_encoding to 'utf-8'")
   current_time <- as.character(Sys.time())
   strSQL <- paste0("update rp_sinaweibo set (ecode,deleted_last_seen) = (",ifelse(is.na(ecode),"NULL",paste0("'",ecode,"'")),",'",current_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
