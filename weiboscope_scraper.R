@@ -229,6 +229,7 @@ InsertDB <- function(df){
 	}, error = function(e){
 		Sys.sleep(60)
 		print(e)
+		return(NA)
 	   }
 	)
      }
@@ -272,6 +273,7 @@ Set_PD <- function(id){
 	}, error = function(e){
 		Sys.sleep(60)
 		print(e)
+		return(NA)
 	   }
 	)
      }
@@ -298,6 +300,7 @@ Set_DP <- function(id){
 	}, error = function(e){
 		Sys.sleep(60)
 		print(e)
+		return(NA)
 	   }
 	)
      }
@@ -324,6 +327,7 @@ Set_EC <- function(id,ecode){
 	}, error = function(e){
 		Sys.sleep(60)
 		print(e)
+		return(NA)
 	   }
 	)
      }
