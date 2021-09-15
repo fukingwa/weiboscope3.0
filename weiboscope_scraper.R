@@ -219,12 +219,14 @@ InsertDB <- function(df){
   }
   tryCatch({
   	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+	on.exit(dbDisconnect(con))  
   	dbGetQuery(con, "set client_encoding to 'utf-8'")
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying InsertDB connection .....")
 	tryCatch({  
   		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+		on.exit(dbDisconnect(con))
   		dbGetQuery(con, "set client_encoding to 'utf-8'")
 	}, error = function(e){
 		Sys.sleep(60)
@@ -257,18 +259,20 @@ InsertDB <- function(df){
      }
   )
 #  dbSendQuery(con, strSQL)
-  dbDisconnect(con)
+#  dbDisconnect(con)
 }
 
 Set_PD <- function(id){
   tryCatch({
   	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+	on.exit(dbDisconnect(con))  
   	dbGetQuery(con, "set client_encoding to 'utf-8'")
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_PD connection .....")
 	tryCatch({  
   		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+		on.exit(dbDisconnect(con))
   		dbGetQuery(con, "set client_encoding to 'utf-8'")
 	}, error = function(e){
 		Sys.sleep(60)
@@ -284,18 +288,20 @@ Set_PD <- function(id){
   censored_time <- as.character(Sys.time())
   strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (TRUE,'",censored_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
-  dbDisconnect(con)
+#  dbDisconnect(con)
 }
 
 Set_DP <- function(id){
   tryCatch({
   	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+	on.exit(dbDisconnect(con))  
   	dbGetQuery(con, "set client_encoding to 'utf-8'")
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_DP connection .....")
 	tryCatch({  
   		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+		on.exit(dbDisconnect(con))
   		dbGetQuery(con, "set client_encoding to 'utf-8'")
 	}, error = function(e){
 		Sys.sleep(60)
@@ -311,18 +317,20 @@ Set_DP <- function(id){
   deleted_time <- as.character(Sys.time())
   strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (NULL,'",deleted_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
-  dbDisconnect(con)
+#  dbDisconnect(con)
 }
 
 Set_EC <- function(id,ecode){
   tryCatch({
   	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+	on.exit(dbDisconnect(con))  
   	dbGetQuery(con, "set client_encoding to 'utf-8'")
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_EC connection .....")
 	tryCatch({  
   		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+		on.exit(dbDisconnect(con))
   		dbGetQuery(con, "set client_encoding to 'utf-8'")
 	}, error = function(e){
 		Sys.sleep(60)
@@ -338,7 +346,7 @@ Set_EC <- function(id,ecode){
   current_time <- as.character(Sys.time())
   strSQL <- paste0("update rp_sinaweibo set (ecode,deleted_last_seen) = (",ifelse(is.na(ecode),"NULL",paste0("'",ecode,"'")),",'",current_time,"') where id = ",id)
   dbSendQuery(con, strSQL)
-  dbDisconnect(con)
+#  dbDisconnect(con)
 }
 
 chk_missing <- function(x){
@@ -464,6 +472,9 @@ while (1) {
 			start_v <- 2
   			source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 		}
+# Remove all db connections
+	removedb <- lapply(dbListConnections(drv = dbDriver("PostgreSQL")), function(x) {dbDisconnect(conn = x)})
+	
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
 	tryCatch({
 #		remDr$refresh()
