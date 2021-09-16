@@ -270,16 +270,18 @@ Set_PD <- function(id){
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_PD connection .....")
-	tryCatch({  
-  		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-		on.exit(dbDisconnect(con))
-  		dbGetQuery(con, "set client_encoding to 'utf-8'")
-	}, error = function(e){
-		Sys.sleep(60)
-		print(e)
-		return(NA)
-	   }
-	)
+	print(e)
+	return(NA)
+#	tryCatch({  
+#  		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+#		on.exit(dbDisconnect(con))
+#  		dbGetQuery(con, "set client_encoding to 'utf-8'")
+#	}, error = function(e){
+#		Sys.sleep(60)
+#		print(e)
+#		return(NA)
+#	   }
+#	)
      }
   )
 	
@@ -299,16 +301,8 @@ Set_DP <- function(id){
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_DP connection .....")
-	tryCatch({  
-  		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-		on.exit(dbDisconnect(con))
-  		dbGetQuery(con, "set client_encoding to 'utf-8'")
-	}, error = function(e){
-		Sys.sleep(60)
-		print(e)
-		return(NA)
-	   }
-	)
+	print(e)
+	return(NA)
      }
   )
 	
@@ -328,16 +322,8 @@ Set_EC <- function(id,ecode){
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_EC connection .....")
-	tryCatch({  
-  		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-		on.exit(dbDisconnect(con))
-  		dbGetQuery(con, "set client_encoding to 'utf-8'")
-	}, error = function(e){
-		Sys.sleep(60)
-		print(e)
-		return(NA)
-	   }
-	)
+	print(e)
+	return(NA)
      }
   )
 
