@@ -267,6 +267,9 @@ Set_PD <- function(id){
   	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
 	on.exit(dbDisconnect(con))  
   	dbGetQuery(con, "set client_encoding to 'utf-8'")
+        censored_time <- as.character(Sys.time())
+        strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (TRUE,'",censored_time,"') where id = ",id)
+        dbSendQuery(con, strSQL)
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_PD connection .....")
@@ -287,9 +290,6 @@ Set_PD <- function(id){
 	
 #  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
 #  dbGetQuery(con, "set client_encoding to 'utf-8'")
-  censored_time <- as.character(Sys.time())
-  strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (TRUE,'",censored_time,"') where id = ",id)
-  dbSendQuery(con, strSQL)
 #  dbDisconnect(con)
 }
 
@@ -298,6 +298,9 @@ Set_DP <- function(id){
   	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
 	on.exit(dbDisconnect(con))  
   	dbGetQuery(con, "set client_encoding to 'utf-8'")
+        deleted_time <- as.character(Sys.time())
+        strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (NULL,'",deleted_time,"') where id = ",id)
+        dbSendQuery(con, strSQL)
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_DP connection .....")
@@ -308,9 +311,6 @@ Set_DP <- function(id){
 	
 #  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
 #  dbGetQuery(con, "set client_encoding to 'utf-8'")
-  deleted_time <- as.character(Sys.time())
-  strSQL <- paste0("update rp_sinaweibo set (permission_denied,deleted) = (NULL,'",deleted_time,"') where id = ",id)
-  dbSendQuery(con, strSQL)
 #  dbDisconnect(con)
 }
 
@@ -319,6 +319,9 @@ Set_EC <- function(id,ecode){
   	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
 	on.exit(dbDisconnect(con))  
   	dbGetQuery(con, "set client_encoding to 'utf-8'")
+        current_time <- as.character(Sys.time())
+        strSQL <- paste0("update rp_sinaweibo set (ecode,deleted_last_seen) = (",ifelse(is.na(ecode),"NULL",paste0("'",ecode,"'")),",'",current_time,"') where id = ",id)
+        dbSendQuery(con, strSQL)
   }, error = function(e) {
 	Sys.sleep(60)
 	print("Retrying Set_EC connection .....")
@@ -326,12 +329,8 @@ Set_EC <- function(id,ecode){
 	return(NA)
      }
   )
-
 #  con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
 #  dbGetQuery(con, "set client_encoding to 'utf-8'")
-  current_time <- as.character(Sys.time())
-  strSQL <- paste0("update rp_sinaweibo set (ecode,deleted_last_seen) = (",ifelse(is.na(ecode),"NULL",paste0("'",ecode,"'")),",'",current_time,"') where id = ",id)
-  dbSendQuery(con, strSQL)
 #  dbDisconnect(con)
 }
 
