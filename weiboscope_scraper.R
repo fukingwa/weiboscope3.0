@@ -539,7 +539,7 @@ while (1) {
 			c <- ref[r_missing]
 			#### Check the existence of the "disappeared" posts from the user timeline
 			tryCatch({
-				remDr$navigate(paste0("https://weibo.com/u/",u))
+				remDr$navigate(paste0("https://weibo.com/u/",u,"?is_all=1"))
 				Sys.sleep(5)
 				webElem <- remDr$findElement("css", "body")
 				webElem$sendKeysToElement(list("\uE010"))
