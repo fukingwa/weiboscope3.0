@@ -449,13 +449,33 @@ Scrolling4Posts <- function(){
 
 #cont <- readline("Press Return to continue \n")
 
+find_version <- function(){
+  v <- str_extract(list.dirs("C:/Program Files (x86)/Google/Chrome/Application", recursive = FALSE),'[0-9]*\\..*[0-9]$')
+  v <- trimws(v[!is.na(v)])
+  if (length(v)==0){
+    return(NA)
+  } else if (length(v)==1){
+    return(v)
+  } else {
+    return(sort(v)[length(v)])
+  }
+}
+
+get_chromedriver_version <- function(){
+  trimws(str_extract(system(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver --version"),intern=TRUE),"[0-9]*\\.[\\.0-9]+"))
+}
+
 while (1) {
 ## Update source code at 4am everyday
 		current_date <- format(Sys.time(),"%Y-%m-%d")
 		if ((current_date != start_date) && (format(Sys.time(),"%H") == 4)) {
 			print(paste0("Code updated at ",current_date))
 			start_v <- 2
-  			source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
+			if (find_version() != get_chromedriver_version()){
+				download.file(paste0("https://chromedriver.storage.googleapis.com/",find_version(),"/chromedriver_win32.zip"),paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"))
+				unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
+			}
+ 			source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 		}
 # Remove all db connections
 	removedb <- lapply(dbListConnections(drv = dbDriver("PostgreSQL")), function(x) {dbDisconnect(conn = x)})
