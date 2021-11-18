@@ -450,7 +450,7 @@ Scrolling4Posts <- function(){
 #cont <- readline("Press Return to continue \n")
 
 find_version <- function(){
-  v <- str_extract(list.dirs("C:/Program Files (x86)/Google/Chrome/Application", recursive = FALSE),'[0-9]*\\..*[0-9]$')
+  v <- str_extract(list.dirs("C:/Program Files/Google/Chrome/Application", recursive = FALSE),'[0-9]*\\..*[0-9]$')
   v <- trimws(v[!is.na(v)])
   if (length(v)==0){
     return(NA)
