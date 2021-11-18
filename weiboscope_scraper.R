@@ -467,16 +467,18 @@ get_chromedriver_version <- function(){
 
 while (1) {
 ## Update source code at 4am everyday
-		current_date <- format(Sys.time(),"%Y-%m-%d")
-		if ((current_date != start_date) && (format(Sys.time(),"%H") == 4)) {
-			print(paste0("Code updated at ",current_date))
-			start_v <- 2
-			if (find_version() != get_chromedriver_version()){
-				download.file(paste0("https://chromedriver.storage.googleapis.com/",find_version(),"/chromedriver_win32.zip"),paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"))
-				unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
-			}
- 			source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
+	current_date <- format(Sys.time(),"%Y-%m-%d")
+	if ((current_date != start_date) && (format(Sys.time(),"%H") == 4)) {
+		for (x in 1:1000){
+			print(paste0("Code updated at ",current_date,":",Sys.time()))
 		}
+		if (find_version() != get_chromedriver_version()){
+			download.file(paste0("https://chromedriver.storage.googleapis.com/",find_version(),"/chromedriver_win32.zip"),paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"))
+			unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
+		}
+		start_v <- 2
+ 		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
+	}
 # Remove all db connections
 	removedb <- lapply(dbListConnections(drv = dbDriver("PostgreSQL")), function(x) {dbDisconnect(conn = x)})
 	
