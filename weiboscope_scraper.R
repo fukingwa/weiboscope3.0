@@ -465,6 +465,24 @@ get_chromedriver_version <- function(){
   trimws(str_extract(system(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver --version"),intern=TRUE),"[0-9]*\\.[\\.0-9]+"))
 }
 
+check_tt <- function(uid){
+	p <- 1
+	rs_data <- c()
+	while(p<=5){
+		url <- paste0("https://m.weibo.cn/api/container/getIndex?type=uid&value=",uid,"&containerid=107603",uid,"&page=",p)
+		g <- RJSONIO::fromJSON(url,flatten=TRUE)
+		Sys.sleep(0.5)
+		if(g$ok == 1){
+			d <- sapply(g$data$cards,function(x) {x$mblog$id})
+			rs_data <- c(rs_data,d)
+			p <- p + 1
+		} else {
+			break
+		}
+	}
+	return(rs_data)
+}
+
 while (1) {
 ## Update source code at 4am everyday
 	current_date <- format(Sys.time(),"%Y-%m-%d")
@@ -561,27 +579,33 @@ while (1) {
 			c <- ref[r_missing]
 			#### Check the existence of the "disappeared" posts from the user timeline
 			tryCatch({
-				remDr$navigate(paste0("https://weibo.com/u/",u,"?is_all=1"))
-				Sys.sleep(5)
-				webElem <- remDr$findElement("css", "body")
-				webElem$sendKeysToElement(list("\uE010"))
-				Sys.sleep(2)
-				webElem <- remDr$findElement("css", "body")
-				webElem$sendKeysToElement(list("\uE010"))
-				Sys.sleep(2)
-				u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
+###
+### New check via new API
+###
+#				remDr$navigate(paste0("https://weibo.com/u/",u,"?is_all=1"))
+#				Sys.sleep(5)
+#				webElem <- remDr$findElement("css", "body")
+#				webElem$sendKeysToElement(list("\uE010"))
+#				Sys.sleep(2)
+#				webElem <- remDr$findElement("css", "body")
+#				webElem$sendKeysToElement(list("\uE010"))
+#				Sys.sleep(2)
+#				u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
+				u_id <- check_tt(u)
 				if (length(u_id) == 0) {  ### Retry if no data
-					remDr$refresh()
+#					remDr$refresh()
+					u_id <- check_tt(u)
 					Sys.sleep(5)
-					u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
+#					u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
 					if (length(u_id) == 0) {
 						c <- c()
 					}
 				} else {
-					chk_again <- sort(sapply(1:length(u_id), function(i){
-						u_id[[i]]$getElementAttribute("name")[[1]]
-					}))
-					c <- c[!(c %in% chk_again)]
+#					chk_again <- sort(sapply(1:length(u_id), function(i){
+#						u_id[[i]]$getElementAttribute("name")[[1]]
+#					}))
+#					c <- c[!(c %in% chk_again)]
+					c <- c[!(c %in% u_id)]				
 				}
 			}, error = function(e){
 				print(paste0("Can't reach https://weibo.com/u/",u))
