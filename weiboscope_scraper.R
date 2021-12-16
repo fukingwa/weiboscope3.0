@@ -72,6 +72,7 @@ if (as.integer(start_v) == 1) {
 
 #start_date <- format(Sys.time(),"%Y-%m-%d")
 start_date <- '2021-12-16'
+print(start_date)
 
 print(myip)
 print(myvm)
