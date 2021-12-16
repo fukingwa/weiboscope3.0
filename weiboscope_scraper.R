@@ -70,7 +70,8 @@ if (as.integer(start_v) == 1) {
 	print("Starting Weiboscope 3.0 .....")
 }
 
-start_date <- format(Sys.time(),"%Y-%m-%d")
+#start_date <- format(Sys.time(),"%Y-%m-%d")
+start_date <- '2021-12-16'
 
 print(myip)
 print(myvm)
