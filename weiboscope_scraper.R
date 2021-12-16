@@ -492,7 +492,7 @@ check_tt <- function(uid){
 while (1) {
 ## Update source code at 4am everyday
 	current_date <- format(Sys.time(),"%Y-%m-%d")
-	if ((current_date != start_date) && (format(Sys.time(),"%H") == 4)) {
+	if ((current_date != start_date) && (format(Sys.time(),"%H") == "04")) {
 		for (x in 1:1000){
 			print(paste0("Code updated at ",current_date,":",Sys.time()))
 		}
