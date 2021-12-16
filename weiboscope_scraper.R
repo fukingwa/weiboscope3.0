@@ -495,11 +495,12 @@ while (1) {
 ## Update source code at 4am everyday
 	current_date <- format(Sys.time(),"%Y-%m-%d")
 	if ((current_date != start_date) && (format(Sys.time(),"%H") == "04")) {
-		for (x in 1:1000){
-			print(paste0("Code updated at ",current_date,":",Sys.time()))
-		}
+#		for (x in 1:1000){
+#			print(paste0("Code updated at ",current_date,":",Sys.time()))
+#		}
 		if (find_version() != get_chromedriver_version()){
-			download.file(paste0("https://chromedriver.storage.googleapis.com/",find_version(),"/chromedriver_win32.zip"),paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"))
+			latest_release <- getURL("https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
+			download.file(paste0("https://chromedriver.storage.googleapis.com/",latest_release,"/chromedriver_win32.zip"),paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"))
 			unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
 		}
 		start_v <- 2
