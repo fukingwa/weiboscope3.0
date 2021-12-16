@@ -491,6 +491,16 @@ check_tt <- function(uid){
 	return(rs_data)
 }
 
+download_latest <- function(){
+		browser_v <- strsplit(find_version(),'\\.')[[1]][1]
+		cdriver_v <- strsplit(get_chromedriver_version(),'\\.')[[1]][1]
+		if (browser_v != cdriver_v){
+			latest_release <- getURL("https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
+			download.file(paste0("https://chromedriver.storage.googleapis.com/",latest_release,"/chromedriver_win32.zip"),paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"))
+			unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
+		}	
+}
+
 while (1) {
 ## Update source code at 4am everyday
 	current_date <- format(Sys.time(),"%Y-%m-%d")
