@@ -70,8 +70,8 @@ if (as.integer(start_v) == 1) {
 	print("Starting Weiboscope 3.0 .....")
 }
 
-#start_date <- format(Sys.time(),"%Y-%m-%d")
-start_date <- '2021-12-16'
+start_date <- format(Sys.time(),"%Y-%m-%d")
+#start_date <- '2021-12-16'
 print(start_date)
 
 print(myip)
@@ -495,14 +495,14 @@ while (1) {
 ## Update source code at 4am everyday
 	current_date <- format(Sys.time(),"%Y-%m-%d")
 	if ((current_date != start_date) && (format(Sys.time(),"%H") == "04")) {
-#		for (x in 1:1000){
-#			print(paste0("Code updated at ",current_date,":",Sys.time()))
-#		}
-		if (find_version() != get_chromedriver_version()){
-			latest_release <- getURL("https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
-			download.file(paste0("https://chromedriver.storage.googleapis.com/",latest_release,"/chromedriver_win32.zip"),paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"))
-			unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
+		for (x in 1:100){
+			print(paste0("Code updated at ",current_date,":",Sys.time()))
 		}
+#		if (find_version() != get_chromedriver_version()){
+#			latest_release <- getURL("https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
+#			download.file(paste0("https://chromedriver.storage.googleapis.com/",latest_release,"/chromedriver_win32.zip"),paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"))
+#			unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
+#		}
 		start_v <- 2
  		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	}
