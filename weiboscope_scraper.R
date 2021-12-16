@@ -429,7 +429,13 @@ Scrolling4Posts <- function(){
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
 			Sys.sleep(20)
-			z <- tryCatch({c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")},error=function(e){return(NULL)})
+			z <- tryCatch({
+				suppressMessages({
+					c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")
+				})
+			},error=function(e){
+				return(NULL)
+			})
 			d_time <- difftime(Sys.time(),start_time,units = "secs")
 		}
 		if (!is.null(z)){
@@ -640,7 +646,7 @@ while (1) {
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
 		Sys.sleep(60)
-		all <- all[all$created_at >= (Sys.time() - (12*60*60)),]  # Twelve hours
+		all <- all[all$created_at >= (Sys.time() - (24*60*60)),]  # checking 24 hours
 		saveRDS(all,"all.rds")
 	}, error = function(e){
 		print(e)
