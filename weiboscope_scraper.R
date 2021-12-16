@@ -594,8 +594,8 @@ while (1) {
 				u_id <- check_tt(u)
 				if (length(u_id) == 0) {  ### Retry if no data
 #					remDr$refresh()
-					u_id <- check_tt(u)
 					Sys.sleep(5)
+					u_id <- check_tt(u)
 #					u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
 					if (length(u_id) == 0) {
 						c <- c()
