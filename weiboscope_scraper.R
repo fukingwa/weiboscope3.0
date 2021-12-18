@@ -165,10 +165,11 @@ parse_wb_rds <- function(txt){
 			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
 		## numbers
 			num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
-			num2 <- strsplit(gsub('[:space:][:space:]','',trimws(gsub('[^0-9]',' ',num1))),' ')[[1]]
+#			num2 <- strsplit(gsub('[:space:][:space:]','',trimws(gsub('[^0-9]',' ',num1))),' ')[[1]]
+			num2 <- strsplit(gsub('[ ]+',',',trimws(gsub('[^0-9]',' ',num1))),',')[[1]]
 			reposts_count <- num2[1]
-			comments_count <- num2[3]
-			attitudes_count <- num2[5]
+			comments_count <- num2[2]
+			attitudes_count <- num2[3]
 
 		      w_item <- data.frame(id=id,user_id=user_id,screen_name=screen_name,
 					retweeted_status_user_id=retweeted_status_user_id,retweeted_status=retweeted_status,
@@ -177,6 +178,79 @@ parse_wb_rds <- function(txt){
 					reposts_count=reposts_count,comments_count=comments_count,attitudes_count=attitudes_count,stringsAsFactors = F)
 
 			all <- rbind(all,w_item)
+		}
+	}
+	return(all)
+}
+
+rt_parse_wb_rds <- function(txt){
+
+	html_txt <- read_html(txt)
+	each_post <- html_nodes(html_txt,xpath = "//div[@action-type='feed_list_item']")
+	all <- data.frame()
+	if (length(each_post) != 0){
+
+		for (i in 1:length(each_post)){
+			hs_txt <- as.character(each_post[[i]])
+			hs <- read_html(hs_txt)
+		## Filter promotion
+			prom <- html_text(html_node(hs,xpath = "//i[contains(@class,'promo')]"))
+			if (!is.na(prom)){
+				next
+			}
+		## Screen name
+			screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_info']//a/@nick-name"))
+		## Created_at
+			created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@title"))
+			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
+		## Href
+			href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
+			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
+			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
+		## text
+			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
+		## Img
+			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
+			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
+		## RT name
+			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_info']//a/@nick-name"))
+		## RT created_at
+			rt_created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@title"))
+			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
+		## RT href
+			rt_href <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@href"))
+			if (is.na(rt_href)){
+				retweeted_status_user_id <- NA
+				retweeted_status <- NA
+			} else {
+				retweeted_status_user_id <- as.character(strsplit(rt_href,"/|\\?")[[1]][2])
+				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
+			}
+		## RT text
+			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
+		## numbers
+			num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
+#			num2 <- strsplit(gsub('[:space:][:space:]','',trimws(gsub('[^0-9]',' ',num1))),' ')[[1]]
+			num2 <- strsplit(gsub('[ ]+',',',trimws(gsub('[^0-9]',' ',num1))),',')[[1]]
+			reposts_count <- num2[1]
+			comments_count <- num2[2]
+			attitudes_count <- num2[3]
+		## RT number
+			rt_num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_handle W_fr']"))
+			rt_num2 <- strsplit(gsub('[ ]+',',',trimws(gsub('[^0-9]',' ',rt_num1))),',')[[1]]
+			rt_reposts_count <- rt_num2[1]
+			rt_comments_count <- rt_num2[2]
+			rt_attitudes_count <- rt_num2[3]
+
+			if (!is.na(retweeted_status)){
+			      w_item <- data.frame(id=retweeted_status,user_id=retweeted_status_user_id,screen_name=rt_screen_name,
+					retweeted_status_user_id=NA,retweeted_status=NA,
+					created_at=rt_created_at,href=rt_href,text=rt_text,original_pic = img, in_reply_to_screen_name=NA,
+				  rt_created_at=NA, rt_href=NA,rt_text=NA,
+					reposts_count=rt_reposts_count,comments_count=rt_comments_count,attitudes_count=rt_attitudes_count,stringsAsFactors = F)
+
+				all <- rbind(all,w_item)
+			}
 		}
 	}
 	return(all)
@@ -563,6 +637,9 @@ while (1) {
 		whole_body <- remDr$findElement(using = "xpath","//body")
 		text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
 		wb_df <- parse_wb_rds(text_html)
+		### Added for retweeted weibos
+		rt_wb_df <- rt_parse_wb_rds(text_html)
+		wb_df <- rbind(wb_df,rt_wb_df)
 		wb_df <- wb_df[!duplicated(wb_df$id),]
 		if (nrow(wb_df)!=0){
 			InsertDB(wb_df)
