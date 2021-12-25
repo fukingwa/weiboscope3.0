@@ -74,6 +74,9 @@ start_date <- format(Sys.time(),"%Y-%m-%d")
 #start_date <- '2021-12-16'
 print(start_date)
 
+checking_time <- 48
+print(checking_time)
+
 print(myip)
 print(myvm)
 
@@ -736,7 +739,7 @@ while (1) {
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
 		Sys.sleep(60)
-		all <- all[all$created_at >= (Sys.time() - (24*60*60)),]  # checking 24 hours
+		all <- all[all$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past 48 hours
 		saveRDS(all,"all.rds")
 	}, error = function(e){
 		print(e)
