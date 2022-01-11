@@ -74,7 +74,7 @@ start_date <- format(Sys.time(),"%Y-%m-%d")
 #start_date <- '2021-12-16'
 print(start_date)
 
-checking_time <- 48
+checking_time <- 24
 print(checking_time)
 
 print(myip)
