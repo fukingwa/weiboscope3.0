@@ -578,6 +578,19 @@ download_latest <- function(){
 		}	
 }
 
+clearCache <- function(){
+	remDr$navigate("chrome://settings/clearBrowserData")
+	Sys.sleep(1)
+	for (i in 1:12){
+		remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE004"))
+		Sys.sleep(1)
+	}
+	Sys.sleep(3)
+	remDr$buttondown()
+	Sys.sleep(3)
+	remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE007"))
+}
+
 while (1) {
 ## Update source code at 4am everyday
 	current_date <- format(Sys.time(),"%Y-%m-%d")
