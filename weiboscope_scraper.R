@@ -678,11 +678,18 @@ while (1) {
   		start_v <- 2
   		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	})
-	for (u in unique(wb_df$user_id)){
+	
+	need_to_chk <- unique(c(wb_df$user_id,all$user_id))  ### combining new and old user ids
+	
+	for (u in need_to_chk){
 		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
 		ref  <- sort(unique(as.character(all$id[all$user_id == u])))
 		if (length(ref) != 0){
-			r_missing <- chk_missing(ref %in% u_posts)
+			if (length(u_posts) == 0){
+				r_missing <- rep(T,length(ref))
+			} else {
+				r_missing <- chk_missing(ref %in% u_posts)
+			}
 		} else {
 			print("Not found user in ref")
 			next
