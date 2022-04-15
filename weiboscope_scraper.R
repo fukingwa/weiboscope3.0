@@ -680,6 +680,8 @@ while (1) {
 		rt_wb_df <- rt_parse_wb_rds(text_html)
 		wb_df <- rbind(wb_df,rt_wb_df)
 		wb_df <- wb_df[!duplicated(wb_df$id),]
+		wb_df <- wb_df[wb_df$user_id != "",] 
+		wb_df <- wb_df[!is.na(wb_df$user_id),] 
 		if (nrow(wb_df)!=0){
 			InsertDB(wb_df)
 		}
