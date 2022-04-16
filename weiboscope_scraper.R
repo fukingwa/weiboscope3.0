@@ -175,7 +175,8 @@ parse_wb_rds <- function(txt){
 				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
 			}
 		## RT text
-			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
+#			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
+			rt_text <- ""
 		## numbers
 			num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
 #			num2 <- strsplit(gsub('[:space:][:space:]','',trimws(gsub('[^0-9]',' ',num1))),' ')[[1]]
@@ -221,7 +222,8 @@ rt_parse_wb_rds <- function(txt){
 			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
 			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
 		## text
-			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
+#			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
+			text <- ""
 		## Img
 			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
@@ -241,9 +243,15 @@ rt_parse_wb_rds <- function(txt){
 			}
 		## RT text
 #			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
-			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
-			rt_link <- html_attr(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']//a[@title]"),"href")
-			rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"*** External link:",rt_link))
+			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text' and @node-type='feed_list_reason_full']"))
+			if (is.na(rt_text)){
+				rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
+				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']//a[@title]"),"href")
+				rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"*** External link:",rt_link))
+			} else {
+				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text' and @node-type='feed_list_reason_full']//a[@title]"),"href")
+				rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"***External link:",rt_link))
+			}
 
 		## numbers
 			num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
@@ -276,7 +284,7 @@ rt_parse_wb_rds <- function(txt){
 unfold_fn <- function(){
 	unfold_l <- remDr$findElements("xpath","//a[@action-type='fl_unfold' and @class='WB_text_opt']")
 #	unfold_l <- remDr$findElements("xpath","//a[contains(text(),'展开全文')]")
-	for (i in length(unfold_l)){
+	for (i in 1:length(unfold_l)){
 		unfold_l[[i]]$clickElement()
 		Sys.sleep(2)
 	}
@@ -673,6 +681,7 @@ while (1) {
 #		webElem <- remDr$findElement("css", "body")
 #		webElem$sendKeysToElement(list("\uE010"))
 #		Sys.sleep(5)
+		unfold_fn()   # unfold all shortened texts
 		whole_body <- remDr$findElement(using = "xpath","//body")
 		text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
 		wb_df <- parse_wb_rds(text_html)
