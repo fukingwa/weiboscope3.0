@@ -682,6 +682,8 @@ while (1) {
 		wb_df <- wb_df[!duplicated(wb_df$id),]
 		wb_df <- wb_df[wb_df$user_id != "",] 
 		wb_df <- wb_df[!is.na(wb_df$user_id),] 
+		wb_df <- wb_df[nchar(wb_df$id) <= 16,]
+		wb_df <- wb_df[nchar(wb_df$retweeted_status) <= 16 | is.na(wb_df$retweeted_status),]
 		if (nrow(wb_df)!=0){
 			InsertDB(wb_df)
 		}
