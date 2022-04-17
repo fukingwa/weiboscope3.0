@@ -284,9 +284,11 @@ rt_parse_wb_rds <- function(txt){
 unfold_fn <- function(){
 	unfold_l <- remDr$findElements("xpath","//a[@action-type='fl_unfold' and @class='WB_text_opt']")
 #	unfold_l <- remDr$findElements("xpath","//a[contains(text(),'展开全文')]")
-	for (i in 1:length(unfold_l)){
-		unfold_l[[i]]$clickElement()
-		Sys.sleep(2)
+	if (length(unfold_l) != 0){
+		for (i in 1:length(unfold_l)){
+			unfold_l[[i]]$clickElement()
+			Sys.sleep(2)
+		}
 	}
 }
 
