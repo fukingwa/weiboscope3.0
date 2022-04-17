@@ -585,11 +585,12 @@ get_chromedriver_version <- function(){
 
 check_tt <- function(uid){
 	p <- 1
+	max_page <- 3
 	rs_data <- c()
-	while(p<=5){
+	while(p<=max_page){
 		url <- paste0("https://m.weibo.cn/api/container/getIndex?type=uid&value=",uid,"&containerid=107603",uid,"&page=",p)
 		g <- RJSONIO::fromJSON(url,flatten=TRUE)
-		Sys.sleep(0.5)
+		Sys.sleep(0.25)
 		if(g$ok == 1){
 			d <- sapply(g$data$cards,function(x) {x$mblog$id})
 			rs_data <- c(rs_data,d)
@@ -719,6 +720,8 @@ while (1) {
 	
 	need_to_chk <- unique(c(wb_df$user_id,all$user_id))  ### combining new and old user ids
 	
+	print(paste0("Need to check: ",length(need_to_chk)))
+	
 	for (u in need_to_chk){
 		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
 		ref  <- sort(unique(as.character(all$id[all$user_id == u])))
@@ -797,7 +800,7 @@ while (1) {
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
 		Sys.sleep(60)
-		all <- all[all$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past 48 hours
+		all <- all[all$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past "checking_time" hours
 		saveRDS(all,"all.rds")
 	}, error = function(e){
 		print(e)
