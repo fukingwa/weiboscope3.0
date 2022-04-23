@@ -653,7 +653,7 @@ while (1) {
 		Sys.sleep(30)
 		Scrolling4Posts() 
 		Scrolling4Posts()
-#		Scrolling4Posts()
+		Scrolling4Posts()
 #		if (format(Sys.time(),"%H") > 2 && format(Sys.time(),"%H") < 5){
 #		Scrolling4Posts() 
 #		Scrolling4Posts()
@@ -718,7 +718,7 @@ while (1) {
   		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	})
 	
-	need_to_chk <- unique(c(wb_df$user_id,all$user_id))  ### combining new and old user ids
+	need_to_chk <- unique(c(wb_df$user_id,all[all$created_at < (Sys.time() - (checking_time*60*30)),]$user_id))  ### checking only between 12 and 24 hour before 
 	
 	print(paste0("Need to check: ",length(need_to_chk)))
 	
