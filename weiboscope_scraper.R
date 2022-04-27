@@ -540,7 +540,7 @@ Scrolling4Posts <- function(){
 		while (is.null(z) & (d_time < 180)){
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
-			Sys.sleep(20)
+			Sys.sleep(10)
 			z <- tryCatch({
 				suppressMessages({
 					c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")
@@ -623,6 +623,24 @@ clearCache <- function(){
 	remDr$buttondown()
 	Sys.sleep(3)
 	remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE007"))
+}
+
+myswitch <- function(windowId){
+  qpath <- sprintf("%s/session/%s/window", remDr$serverURL, remDr$sessionInfo[["id"]])
+  remDr$queryRD(qpath, "POST", qdata = list(handle = windowId))
+}
+
+Close_all_tabs <- function(){
+	all_h <- remDr$getWindowHandles()
+	if (length(all_h) > 1){
+		for (i in 2:length(all_h)){
+			myswitch(all_h[[i]])
+			remDr$closeWindow()
+#		remDr$navigate("https://www.hku.hk")
+#		remDr$getCurrentWindowHandle()
+		}
+		myswitch(all_h[[1]])
+	}
 }
 
 while (1) {
@@ -796,12 +814,13 @@ while (1) {
 	tryCatch({	 
 #		remDr$refresh()
 		remDr$navigate("https://weibo.com")
-		Sys.sleep(30)
+		Sys.sleep(10)
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
-		Sys.sleep(60)
+		Sys.sleep(10)
 		all <- all[all$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past "checking_time" hours
 		saveRDS(all,"all.rds")
+		Close_all_tabs()
 	}, error = function(e){
 		print(e)
 		print("Second block error")
