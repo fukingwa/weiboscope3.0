@@ -736,7 +736,7 @@ while (1) {
   		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	})
 	
-	need_to_chk <- unique(c(wb_df$user_id,all[all$created_at < (Sys.time() - (checking_time*60*60*2/3)),]$user_id))  ### checking only after 16 hour 
+	need_to_chk <- unique(all[all$created_at < (Sys.time() - (checking_time*60*60*2/3)),]$user_id)  ### checking only after 16 hour 
 	
 	print(paste0("Need to check: ",length(need_to_chk)))
 	
