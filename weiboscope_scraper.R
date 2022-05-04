@@ -739,7 +739,7 @@ while (1) {
 #	need_to_chk <- unique(all[all$created_at < (Sys.time() - (checking_time*60*60*2/3)),]$user_id)  ### checking only after 16 hour 
 	threshold_chk <- 50
 	need_to_chk <- unique(all$user_id[order(all$created_at)][1:ifelse(nrow(all)<threshold_chk,nrow(all),threshold_chk)])
-	print(paste0("Need to check: ",length(need_to_chk)))
+	print(paste0("Need to check: ",length(need_to_chk)," [",Sys.time(),"]"))
 	
 	for (u in need_to_chk){
 		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
