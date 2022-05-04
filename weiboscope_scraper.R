@@ -736,8 +736,9 @@ while (1) {
   		source("https://raw.githubusercontent.com/fukingwa/weiboscope3.0/main/weiboscope_scraper.R")
 	})
 	
-	need_to_chk <- unique(all[all$created_at < (Sys.time() - (checking_time*60*60*2/3)),]$user_id)  ### checking only after 16 hour 
-	
+#	need_to_chk <- unique(all[all$created_at < (Sys.time() - (checking_time*60*60*2/3)),]$user_id)  ### checking only after 16 hour 
+	threshold_chk <- 50
+	need_to_chk <- unique(all$user_id[order(all$created_at)][1:ifelse(nrow(all)<threshold_chk,nrow(all),threshold_chk)])
 	print(paste0("Need to check: ",length(need_to_chk)))
 	
 	for (u in need_to_chk){
