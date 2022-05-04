@@ -755,7 +755,7 @@ while (1) {
 			next
 		}
 		if (sum(r_missing) > 0){
-			c <- ref[r_missing]
+			c_ref <- ref[r_missing]
 			#### Check the existence of the "disappeared" posts from the user timeline
 			tryCatch({
 ###
@@ -777,24 +777,24 @@ while (1) {
 					u_id <- check_tt(u)
 #					u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
 					if (length(u_id) == 0) {
-						c <- c()
+						c_ref <- c()
 					}
 				} else {
 #					chk_again <- sort(sapply(1:length(u_id), function(i){
 #						u_id[[i]]$getElementAttribute("name")[[1]]
 #					}))
-#					c <- c[!(c %in% chk_again)]
-					c <- c[!(c %in% u_id)]				
+#					c <- c_ref[!(c_ref %in% chk_again)]
+					c_ref <- c_ref[!(c_ref %in% u_id)]				
 				}
 			}, error = function(e){
 				print(paste0("Can't reach https://weibo.com/u/",u))
-				c <- c()
+				c_ref <- c()
 			})
 			####
-			if (length(c) != 0){
-				for (cc in c){
+			if (length(c_ref) != 0){
+				for (cc in c_ref){
 					if (!(cc %in% censored)){
-						print(paste0("Not found via link: ",cc))
+	#					print(paste0("Not found via link: ",cc))
 						chk_result <- check_censored(cc)
 						Set_EC(cc,chk_result)
 						if (!is.na(chk_result)){
