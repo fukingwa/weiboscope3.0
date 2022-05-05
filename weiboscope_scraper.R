@@ -794,7 +794,7 @@ while (1) {
 			if (length(c_ref) != 0){
 				for (cc in c_ref){
 					if (!(cc %in% censored)){
-	#					print(paste0("Not found via link: ",cc))
+#						print(paste0("Not found via link: ",cc))
 						chk_result <- check_censored(cc)
 						Set_EC(cc,chk_result)
 						if (!is.na(chk_result)){
