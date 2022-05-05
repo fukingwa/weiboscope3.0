@@ -792,6 +792,7 @@ while (1) {
 			})
 			####
 			if (length(c_ref) != 0){
+				print(paste0("Links to be checked (",u,") :",length(c_ref)))
 				for (cc in c_ref){
 					if (!(cc %in% censored)){
 #						print(paste0("Not found via link: ",cc))
