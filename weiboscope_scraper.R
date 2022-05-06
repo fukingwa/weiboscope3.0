@@ -160,7 +160,7 @@ parse_wb_rds <- function(txt){
 		## Img
 			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
-			if (nchar(img) > 4096){
+			if (nchar(img) > 4096 & !is.na(img)){
 				img <- substr(img,1,4096)
 			}			
 		## RT name
@@ -230,7 +230,7 @@ rt_parse_wb_rds <- function(txt){
 		## Img
 			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
-			if (nchar(img) > 4096){
+			if (nchar(img) > 4096 & !is.na(img)){
 				img <- substr(img,1,4096)
 			}
 		## RT name
