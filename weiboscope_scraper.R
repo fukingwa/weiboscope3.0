@@ -160,6 +160,9 @@ parse_wb_rds <- function(txt){
 		## Img
 			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
+			if (nchar(img) > 4096){
+				img <- substr(img,1,4096)
+			}			
 		## RT name
 			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_info']//a/@nick-name"))
 		## RT created_at
@@ -227,6 +230,9 @@ rt_parse_wb_rds <- function(txt){
 		## Img
 			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
+			if (nchar(img) > 4096){
+				img <- substr(img,1,4096)
+			}
 		## RT name
 			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_info']//a/@nick-name"))
 		## RT created_at
