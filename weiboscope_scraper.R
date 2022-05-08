@@ -591,7 +591,7 @@ get_chromedriver_version <- function(){
 
 check_tt <- function(uid){
 	p <- 1
-	max_page <- 3
+	max_page <- 5
 	rs_data <- c()
 	while(p<=max_page){
 		url <- paste0("https://m.weibo.cn/api/container/getIndex?type=uid&value=",uid,"&containerid=107603",uid,"&page=",p)
@@ -748,7 +748,8 @@ while (1) {
 	print(paste0("Need to check: ",length(need_to_chk)," [",Sys.time(),"]"))
 	
 	for (u in need_to_chk){
-		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
+		u_posts <- c()
+#		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
 		ref  <- sort(unique(as.character(all$id[all$user_id == u])))
 		if (length(ref) != 0){
 			if (length(u_posts) == 0){
