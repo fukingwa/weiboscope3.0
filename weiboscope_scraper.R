@@ -589,9 +589,12 @@ get_chromedriver_version <- function(){
   trimws(str_extract(system(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver --version"),intern=TRUE),"[0-9]*\\.[\\.0-9]+"))
 }
 
-check_tt <- function(uid){
+check_tt <- function(uid,cl){
 	p <- 1
-	max_page <- 5
+	max_page <- (cl %/% 10) + 1
+	if (max_page > 15){
+		max_page <- 15
+	}	
 	rs_data <- c()
 	while(p<=max_page){
 		url <- paste0("https://m.weibo.cn/api/container/getIndex?type=uid&value=",uid,"&containerid=107603",uid,"&page=",p)
@@ -777,11 +780,11 @@ while (1) {
 #				webElem$sendKeysToElement(list("\uE010"))
 #				Sys.sleep(2)
 #				u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
-				u_id <- check_tt(u)
+				u_id <- check_tt(u,length(c_ref))
 				if (length(u_id) == 0) {  ### Retry if no data
 #					remDr$refresh()
 					Sys.sleep(5)
-					u_id <- check_tt(u)
+					u_id <- check_tt(u,length(c_ref))
 #					u_id <- remDr$findElements("xpath", "//div[@class='WB_from S_txt2']//a[@name]")
 					if (length(u_id) == 0) {
 						c_ref <- c()
