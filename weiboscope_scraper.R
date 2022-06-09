@@ -543,10 +543,11 @@ Scrolling4Posts <- function(){
 		z <- NULL
 		start_time <- Sys.time()
 		d_time <- 0
-		while (is.null(z) & (d_time < 180)){
+		duration <- 210
+		while (is.null(z) & (d_time < duration)){
 			webElem <- remDr$findElement("css", "body")
 			webElem$sendKeysToElement(list("\uE010"))
-			Sys.sleep(10)
+			Sys.sleep(8)
 			z <- tryCatch({
 				suppressMessages({
 					c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")
