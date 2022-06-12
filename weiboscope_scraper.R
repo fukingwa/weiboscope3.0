@@ -477,7 +477,7 @@ chk_missing <- function(x){
 Send_alert <- function(e,Scap){
   tryCatch({
 	  smtp <- server(host = "smtp.gmail.com",
-			 port = 465,
+			 port = 587,  # previously 465
 			 username = Sender_username,
 			 password = Sender_password,
 			 reuse = FALSE)
