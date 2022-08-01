@@ -668,7 +668,7 @@ while (1) {
 #			unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
 #		}
 		start_v <- 2
- 		source("weiboscope_scraper.R")
+ 		source("run_weiboscope.R")
 	}
 # Remove all db connections
 	removedb <- lapply(dbListConnections(drv = dbDriver("PostgreSQL")), function(x) {dbDisconnect(conn = x)})
@@ -745,7 +745,7 @@ while (1) {
 			print("Send email error")
 		}
   		start_v <- 2
-  		source("weiboscope_scraper.R")
+  		source("run_weiboscope.R")
 	})
 	
 #	need_to_chk <- unique(all[all$created_at < (Sys.time() - (checking_time*60*60*2/3)),]$user_id)  ### checking only after 16 hour 
@@ -846,7 +846,7 @@ while (1) {
 			print("Send email error")
 		}
   		start_v <- 2
-  		source("weiboscope_scraper.R")
+  		source("run_weiboscope.R")
 	})
 }
 
