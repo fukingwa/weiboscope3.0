@@ -672,6 +672,7 @@ while (1) {
 	}
 # Remove all db connections
 	removedb <- lapply(dbListConnections(drv = dbDriver("PostgreSQL")), function(x) {dbDisconnect(conn = x)})
+	closeAllConnections()
 	
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
 	tryCatch({
