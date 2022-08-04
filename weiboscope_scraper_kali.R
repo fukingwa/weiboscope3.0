@@ -611,6 +611,7 @@ check_tt <- function(uid,cl){
 			break
 		}
 	}
+	closeAllConnections()
 	return(rs_data)
 }
 
