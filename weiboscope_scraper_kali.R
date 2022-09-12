@@ -6,6 +6,8 @@ require(RCurl)
 require(RJSONIO)
 require(emayili)
 
+set.seed(as.numeric(Sys.time()))
+
 myip <- getURL("ifconfig.me/ip")
 
 if (myip == ""){
@@ -682,13 +684,20 @@ while (1) {
 		Sys.sleep(30)
 		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 		click$clickElement()
-		Sys.sleep(59)
-		Scrolling4Posts() 
-		Sys.sleep(40)
-		Scrolling4Posts()
-		Sys.sleep(65)
-		Scrolling4Posts()
-		Sys.sleep(40)
+		
+		### Randomization of sleeping time and looping times		
+		scrolling_times <- sample(3:5,1)
+		i <- 0
+		while (i < scrolling_times){
+			Sys.sleep(rnorm(1,60,20))
+			Scrolling4Posts()
+		}
+		
+#		Sys.sleep(40)
+#		Scrolling4Posts()
+#		Sys.sleep(65)
+#		Scrolling4Posts()
+#		Sys.sleep(40)
 #		if (format(Sys.time(),"%H") > 2 && format(Sys.time(),"%H") < 5){
 #		Scrolling4Posts() 
 #		Scrolling4Posts()
