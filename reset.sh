@@ -1,6 +1,6 @@
 killall chrome
 killall chromedriver
 killall java
-/home/fukingwa/chrome.sh
-/home/fukingwa/run_java.sh
-R -e "source('run_weiboscope.R')"
+/home/fukingwa/Weibo/chrome.sh
+/home/fukingwa/Weibo/run_java.sh
+R -e "source('/home/fukingwa/Weibo/run_weiboscope.R')"
