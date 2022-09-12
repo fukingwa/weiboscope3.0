@@ -659,9 +659,15 @@ Close_all_tabs <- function(){
 }
 
 while (1) {
-## Update source code at 4am everyday
+	## Sleep between 2-6am
+	current_hr <- as.integer(format(Sys.time(),"%H"))
+	if (current_hr >= 2 & current_hr <= 6){
+		Sys.sleep(600)
+		next
+	}
+	## Update source code at 7am everyday
 	current_date <- format(Sys.time(),"%Y-%m-%d")
-	if ((current_date != start_date) && (format(Sys.time(),"%H") == "04")) {
+	if ((current_date != start_date) && (format(Sys.time(),"%H") == "07")) {
 		for (x in 1:100){
 			print(paste0("Code updated at ",current_date,":",Sys.time()))
 		}
