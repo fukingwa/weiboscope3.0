@@ -690,12 +690,14 @@ while (1) {
 		i <- 0
 		while (i < scrolling_times){
 			Sys.sleep(rnorm(1,60,20))
+			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
 			Scrolling4Posts()
 			i <- i + 1
 			### Random liking - 25%
 			if (sample(1:4,1) == 2){
 				all_likes <- remDr$findElements("xpath","//span[@node-type='like_status']")
 				all_likes[[sample(length(all_likes),1)]]$clickElement()
+				print("Liking .......")
 			}
 		}
 		
