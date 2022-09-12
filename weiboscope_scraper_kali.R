@@ -691,6 +691,7 @@ while (1) {
 		while (i < scrolling_times){
 			Sys.sleep(rnorm(1,60,20))
 			Scrolling4Posts()
+			i <- i + 1
 		}
 		
 #		Sys.sleep(40)
