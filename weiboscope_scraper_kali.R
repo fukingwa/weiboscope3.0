@@ -695,7 +695,7 @@ while (1) {
 		scrolling_times <- sample(3:5,1)
 		i <- 0
 		while (i < scrolling_times){
-			Sys.sleep(rnorm(1,60,20))
+			Sys.sleep(abs(rnorm(1,60,20)))
 			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
 			Scrolling4Posts()
 			i <- i + 1
