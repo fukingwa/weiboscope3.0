@@ -764,6 +764,10 @@ while (1) {
 		} else {
 			all <- rbind(all,wb_df[!(wb_df$id %in% all$id),])
 		}
+		if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py")){
+			cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py '' '//div[@action-data=\"cur_visible=0\"]'"
+			system(cmd,intern=FALSE)
+		}
 	}, error = function(e){
 		print(e)
 		print("First block error")
