@@ -147,8 +147,8 @@ parse_wb_rds <- function(txt){
 			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
 		## Href
 			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"href")
-			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
-			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
+			user_id <- as.character(strsplit(href,"/|\\?")[[1]][4])
+			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][5]))
 		## text
 			text <- html_text(html_node(hs,xpath = "//div[@class='wbpro-feed-content']"))
 			if (is.na(text)){
@@ -224,8 +224,8 @@ rt_parse_wb_rds <- function(txt){
 #			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
 		## Href
 #			href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
-#			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
-#			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
+#			user_id <- as.character(strsplit(href,"/|\\?")[[1]][4])
+#			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][5]))
 		## text
 #			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
 			text <- ""
@@ -691,7 +691,7 @@ while (1) {
 		
 		### Randomization of sleeping time and looping times		
 		scrolling_times <- sample(3:5,1)
-		i <- 0
+		i <- 1
 		while (i < scrolling_times){
 			Sys.sleep(abs(rnorm(1,60,20)))
 			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
