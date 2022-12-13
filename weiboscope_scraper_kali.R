@@ -289,12 +289,13 @@ rt_parse_wb_rds <- function(txt){
 }
 
 unfold_fn <- function(){
-	unfold_l <- remDr$findElements("xpath","//a[@action-type='fl_unfold' and @class='WB_text_opt']")
+#	unfold_l <- remDr$findElements("xpath","//a[@action-type='fl_unfold' and @class='WB_text_opt']")
 #	unfold_l <- remDr$findElements("xpath","//span[contains(text(),'展开')]")
+	unfold_l <- remDr$findElements("xpath","//div[@class='wbpro-feed-content']//span[@class='expand']")
 	if (length(unfold_l) != 0){
 		for (i in 1:length(unfold_l)){
 			unfold_l[[i]]$clickElement()
-			Sys.sleep(2)
+			Sys.sleep(1)
 		}
 	}
 }
