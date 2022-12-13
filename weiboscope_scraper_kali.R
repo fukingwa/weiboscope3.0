@@ -128,7 +128,7 @@ to10 <- function(num, base=62) {
 parse_wb_rds <- function(txt){
 
 	html_txt <- read_html(txt)
-	each_post <- html_nodes(html_txt,xpath = "//div[@action-type='feed_list_item']")
+	each_post <- html_nodes(html_txt,xpath = '//div[@class="vue-recycle-scroller__item-view"]')
 	all <- data.frame()
 	if (length(each_post) != 0){
 
@@ -136,17 +136,17 @@ parse_wb_rds <- function(txt){
 			hs_txt <- as.character(each_post[[i]])
 			hs <- read_html(hs_txt)
 		## Filter promotion
-			prom <- html_text(html_node(hs,xpath = "//i[contains(@class,'promo')]"))
+			prom <- html_text(html_node(hs,xpath = '//span[@class="main_title"]'))
 			if (!is.na(prom)){
 				next
 			}
 		## Screen name
-			screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_info']//a/@nick-name"))
+			screen_name <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a'),"aria-label")
 		## Created_at
-			created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@title"))
+			created_at <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"title")
 			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
 		## Href
-			href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
+			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"href")
 			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
 			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
 		## text
@@ -207,7 +207,7 @@ parse_wb_rds <- function(txt){
 rt_parse_wb_rds <- function(txt){
 
 	html_txt <- read_html(txt)
-	each_post <- html_nodes(html_txt,xpath = "//div[@action-type='feed_list_item']")
+	each_post <- html_nodes(html_txt,xpath = '//div[@class="vue-recycle-scroller__item-view"]')
 	all <- data.frame()
 	if (length(each_post) != 0){
 
@@ -215,14 +215,14 @@ rt_parse_wb_rds <- function(txt){
 			hs_txt <- as.character(each_post[[i]])
 			hs <- read_html(hs_txt)
 		## Filter promotion
-			prom <- html_text(html_node(hs,xpath = "//i[contains(@class,'promo')]"))
+			prom <- html_text(html_node(hs,xpath = '//span[@class="main_title"]'))
 			if (!is.na(prom)){
 				next
 			}
 		## Screen name
-			screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_info']//a/@nick-name"))
+			screen_name <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a'),"aria-label")
 		## Created_at
-			created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@title"))
+			created_at <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"title")
 			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
 		## Href
 			href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
