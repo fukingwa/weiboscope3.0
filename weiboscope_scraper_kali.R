@@ -150,30 +150,29 @@ parse_wb_rds <- function(txt){
 			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
 			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
 		## text
-	#		text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
-			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14' and @node-type='feed_list_content_full']"))
+			text <- html_text(html_node(hs,xpath = "//div[@class='wbpro-feed-content']"))
 			if (is.na(text)){
-				text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
-				link <- html_attr(html_node(hs,xpath = "//div[@class='WB_text W_f14']//a[@title]"),"href")
+				text <- html_text(html_node(hs,xpath = "//div[@class='wbpro-feed-content']"))
+				link <- html_attr(html_node(hs,xpath = "//div[@class='wbpro-feed-content']//a[@target='_blank']"),"href")
 				text <- ifelse(is.na(link),text,paste(text,"***External link:",link))
 			} else {
-				link <- html_attr(html_node(hs,xpath = "//div[@class='WB_text W_f14' and @node-type='feed_list_content_full']//a[@title]"),"href")
+				link <- html_attr(html_node(hs,xpath = "//div[@class='wbpro-feed-content']//a[@target='_blank']"),"href")
 				text <- ifelse(is.na(link),text,paste(text,"***External link:",link))
 			}
 
 		## Img
-			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
+			img <- html_attr(html_node(hs,xpath = "//div[@class='picture content_row_-r5Tk']//img"),"src")
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
 			if (nchar(img) > 4096 & !is.na(img)){
 				img <- substr(img,1,4096)
 			}			
 		## RT name
-			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_info']//a/@nick-name"))
+			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//span[@class='detail_nick_u-ffy']"))
 		## RT created_at
-			rt_created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@title"))
+			rt_created_at <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"title")
 			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
 		## RT href
-			rt_href <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@href"))
+			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
 			if (is.na(rt_href)){
 				retweeted_status_user_id <- NA
 				retweeted_status <- NA
@@ -182,11 +181,10 @@ parse_wb_rds <- function(txt){
 				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
 			}
 		## RT text
-#			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
+#			rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
 			rt_text <- ""
 		## numbers
-			num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
-#			num2 <- strsplit(gsub('[:space:][:space:]','',trimws(gsub('[^0-9]',' ',num1))),' ')[[1]]
+			num1 <- html_text(html_node(hs,xpath = "//div[@class='woo-box-flex woo-box-alignCenter toolbar_left_2vlsY toolbar_main_3Mxwo']"))
 			num2 <- strsplit(gsub('[ ]+',',',trimws(gsub('[^0-9]',' ',num1))),',')[[1]]
 			reposts_count <- num2[1]
 			comments_count <- num2[2]
@@ -220,30 +218,30 @@ rt_parse_wb_rds <- function(txt){
 				next
 			}
 		## Screen name
-			screen_name <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a'),"aria-label")
+#			screen_name <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a'),"aria-label")
 		## Created_at
-			created_at <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"title")
-			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
+#			created_at <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"title")
+#			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
 		## Href
-			href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
-			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
-			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
+#			href <- html_text(html_node(hs,xpath = "//div[@class='WB_from S_txt2']//a/@href"))
+#			user_id <- as.character(strsplit(href,"/|\\?")[[1]][2])
+#			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][3]))
 		## text
 #			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
 			text <- ""
 		## Img
-			img <- html_text(html_node(hs,xpath = "//div[@class='WB_media_wrap clearfix']//ul/@action-data"))
+			img <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='picture content_row_-r5Tk']//img"),"src")
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
 			if (nchar(img) > 4096 & !is.na(img)){
 				img <- substr(img,1,4096)
 			}
 		## RT name
-			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_info']//a/@nick-name"))
+			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//span[@class='detail_nick_u-ffy']"))
 		## RT created_at
-			rt_created_at <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@title"))
+			rt_created_at <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"title")
 			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
 		## RT href
-			rt_href <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_from S_txt2']//a/@href"))
+			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
 			if (is.na(rt_href)){
 				retweeted_status_user_id <- NA
 				retweeted_status <- NA
@@ -252,26 +250,25 @@ rt_parse_wb_rds <- function(txt){
 				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
 			}
 		## RT text
-#			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
-			rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text' and @node-type='feed_list_reason_full']"))
+			rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
+			rt_text <- ""
 			if (is.na(rt_text)){
-				rt_text <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']"),trim=T)
-				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text']//a[@title]"),"href")
+				rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
+				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank']"),"href")
 				rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"*** External link:",rt_link))
 			} else {
-				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='WB_feed_expand']//div[@class='WB_text' and @node-type='feed_list_reason_full']//a[@title]"),"href")
+				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank']"),"href")
 				rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"***External link:",rt_link))
 			}
 
 		## numbers
-			num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
-#			num2 <- strsplit(gsub('[:space:][:space:]','',trimws(gsub('[^0-9]',' ',num1))),' ')[[1]]
-			num2 <- strsplit(gsub('[ ]+',',',trimws(gsub('[^0-9]',' ',num1))),',')[[1]]
-			reposts_count <- num2[1]
-			comments_count <- num2[2]
-			attitudes_count <- num2[3]
+#			num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_feed_handle']"))
+#			num2 <- strsplit(gsub('[ ]+',',',trimws(gsub('[^0-9]',' ',num1))),',')[[1]]
+#			reposts_count <- num2[1]
+#			comments_count <- num2[2]
+#			attitudes_count <- num2[3]
 		## RT number
-			rt_num1 <- html_text(html_node(hs,xpath = "//div[@class='WB_handle W_fr']"))
+			rt_num1 <- html_text(html_node(hs,xpath = "//div[@class='woo-box-alignCenter toolbar_left_2vlsY toolbar_simple_qb_FB']"))
 			rt_num2 <- strsplit(gsub('[ ]+',',',trimws(gsub('[^0-9]',' ',rt_num1))),',')[[1]]
 			rt_reposts_count <- rt_num2[1]
 			rt_comments_count <- rt_num2[2]
