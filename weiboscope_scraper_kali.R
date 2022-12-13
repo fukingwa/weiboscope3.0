@@ -574,6 +574,15 @@ Scrolling4Posts <- function(){
 #		}
 }
 
+Scrolling4Posts_New <- function(){
+	for (i in 1:3){
+		webElem <- remDr$findElement("css", "body")
+		webElem$sendKeysToElement(list("\uE010"))
+		Sys.sleep(5)
+	}
+}
+
+
 #remDr$navigate("https://weibo.com/login.php")
 
 #cont <- readline("Press Return to continue \n")
@@ -692,15 +701,16 @@ while (1) {
 #		click$clickElement()
 		
 		### Randomization of sleeping time and looping times		
-		scrolling_times <- sample(3:5,1)
+		scrolling_times <- sample(6:10,1)
 		i <- 1
+		wb_df <- data.frame()
 		while (i < scrolling_times){
 			Sys.sleep(abs(rnorm(1,60,20)))
 			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
-			Scrolling4Posts()
+			Scrolling4Posts_New()
 			i <- i + 1
-			### Random liking - 25%
-			if (sample(1:4,1) == 2){
+			### Random liking - 12.5%
+			if (sample(1:8,1) == 2){
 #				all_likes <- remDr$findElements("xpath","//span[@node-type='like_status']")
 				all_likes <- remDr$findElements("xpath","//button[@class='woo-like-main toolbar_btn_Cg9tz']")
 				if (length(all_likes) != 0){
@@ -708,50 +718,19 @@ while (1) {
 					print("Liking .......")
 				}
 			}
+			unfold_fn()   # unfold all shortened texts
+			whole_body <- remDr$findElement(using = "xpath","//body")
+			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
+			wb_df <- parse_wb_rds(text_html)
+			### Added for retweeted weibos
+			rt_wb_df <- rt_parse_wb_rds(text_html)
+			one_df <- rbind(wb_df,rt_wb_df)
+			wb_df <- rbind(wb_df,one_df)
+			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py")){
+				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
+				system(cmd,intern=FALSE)
+			}
 		}
-		
-#		Sys.sleep(40)
-#		Scrolling4Posts()
-#		Sys.sleep(65)
-#		Scrolling4Posts()
-#		Sys.sleep(40)
-#		if (format(Sys.time(),"%H") > 2 && format(Sys.time(),"%H") < 5){
-#		Scrolling4Posts() 
-#		Scrolling4Posts()
-#		Scrolling4Posts()
-#		}
-		
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(30)
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(30)
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(30)
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(30)
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(30)
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(30)
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(30)
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(5)
-		unfold_fn()   # unfold all shortened texts
-		whole_body <- remDr$findElement(using = "xpath","//body")
-		text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
-		wb_df <- parse_wb_rds(text_html)
-		### Added for retweeted weibos
-		rt_wb_df <- rt_parse_wb_rds(text_html)
-		wb_df <- rbind(wb_df,rt_wb_df)
 		wb_df <- wb_df[!duplicated(wb_df$id),]
 		wb_df <- wb_df[wb_df$user_id != "",] 
 		wb_df <- wb_df[!is.na(wb_df$user_id),] 
@@ -764,10 +743,6 @@ while (1) {
 			all <- wb_df
 		} else {
 			all <- rbind(all,wb_df[!(wb_df$id %in% all$id),])
-		}
-		if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py")){
-			cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
-			system(cmd,intern=FALSE)
 		}
 	}, error = function(e){
 		print(e)
