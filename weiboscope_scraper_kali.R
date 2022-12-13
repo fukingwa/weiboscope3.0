@@ -231,7 +231,7 @@ rt_parse_wb_rds <- function(txt){
 #			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
 			text <- ""
 		## Img
-			img <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='picture content_row_-r5Tk']//img"),"src")
+			img <- html_attr(html_nodes(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='picture content_row_-r5Tk']//img"),"src")
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
 			img <- paste(img,collapse=",")
 			if (nchar(img) > 4096 & !is.na(img)){
