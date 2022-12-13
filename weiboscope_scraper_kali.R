@@ -718,7 +718,7 @@ while (1) {
 					print("Liking .......")
 				}
 			}
-			try(unfold_fn())   # unfold all shortened texts		
+			try(unfold_fn(),silent=TRUE)   # unfold all shortened texts		
 			whole_body <- remDr$findElement(using = "xpath","//body")
 			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
 			wb_df <- parse_wb_rds(text_html)
