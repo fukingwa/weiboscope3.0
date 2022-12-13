@@ -766,7 +766,7 @@ while (1) {
 			all <- rbind(all,wb_df[!(wb_df$id %in% all$id),])
 		}
 		if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py")){
-			cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py '' '//div[@action-type=\"feed_list_item\"]'"
+			cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 			system(cmd,intern=FALSE)
 		}
 	}, error = function(e){
