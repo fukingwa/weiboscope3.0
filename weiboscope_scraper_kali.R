@@ -161,8 +161,9 @@ parse_wb_rds <- function(txt){
 			}
 
 		## Img
-			img <- html_attr(html_node(hs,xpath = "//div[@class='picture content_row_-r5Tk']//img"),"src")
+			img <- html_attr(html_nodes(hs,xpath = "//div[@class='picture content_row_-r5Tk']//img"),"src")
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
+			img <- paste(img,collapse=",")
 			if (nchar(img) > 4096 & !is.na(img)){
 				img <- substr(img,1,4096)
 			}			
@@ -232,6 +233,7 @@ rt_parse_wb_rds <- function(txt){
 		## Img
 			img <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='picture content_row_-r5Tk']//img"),"src")
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
+			img <- paste(img,collapse=",")
 			if (nchar(img) > 4096 & !is.na(img)){
 				img <- substr(img,1,4096)
 			}
