@@ -177,8 +177,8 @@ parse_wb_rds <- function(txt){
 				retweeted_status_user_id <- NA
 				retweeted_status <- NA
 			} else {
-				retweeted_status_user_id <- as.character(strsplit(rt_href,"/|\\?")[[1]][2])
-				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
+				retweeted_status_user_id <- as.character(strsplit(rt_href,"/|\\?")[[1]][4])
+				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][5]))
 			}
 		## RT text
 #			rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
@@ -246,8 +246,8 @@ rt_parse_wb_rds <- function(txt){
 				retweeted_status_user_id <- NA
 				retweeted_status <- NA
 			} else {
-				retweeted_status_user_id <- as.character(strsplit(rt_href,"/|\\?")[[1]][2])
-				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][3]))
+				retweeted_status_user_id <- as.character(strsplit(rt_href,"/|\\?")[[1]][4])
+				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][5]))
 			}
 		## RT text
 			rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
