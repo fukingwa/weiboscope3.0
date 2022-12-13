@@ -293,7 +293,7 @@ rt_parse_wb_rds <- function(txt){
 
 unfold_fn <- function(){
 	unfold_l <- remDr$findElements("xpath","//a[@action-type='fl_unfold' and @class='WB_text_opt']")
-#	unfold_l <- remDr$findElements("xpath","//a[contains(text(),'展开全文')]")
+#	unfold_l <- remDr$findElements("xpath","//span[contains(text(),'展开')]")
 	if (length(unfold_l) != 0){
 		for (i in 1:length(unfold_l)){
 			unfold_l[[i]]$clickElement()
@@ -688,8 +688,8 @@ while (1) {
 #		remDr$refresh()
 		remDr$navigate("https://weibo.com")
 		Sys.sleep(30)
-		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
-		click$clickElement()
+#		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
+#		click$clickElement()
 		
 		### Randomization of sleeping time and looping times		
 		scrolling_times <- sample(3:5,1)
@@ -701,7 +701,8 @@ while (1) {
 			i <- i + 1
 			### Random liking - 25%
 			if (sample(1:4,1) == 2){
-				all_likes <- remDr$findElements("xpath","//span[@node-type='like_status']")
+#				all_likes <- remDr$findElements("xpath","//span[@node-type='like_status']")
+				all_likes <- remDr$findElements("xpath","//button[@class='woo-like-main toolbar_btn_Cg9tz']")
 				if (length(all_likes) != 0){
 					all_likes[[sample(length(all_likes),1)]]$clickElement()
 					print("Liking .......")
@@ -864,8 +865,8 @@ while (1) {
 #		remDr$refresh()
 		remDr$navigate("https://weibo.com")
 		Sys.sleep(10)
-		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
-		click$clickElement()
+#		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
+#		click$clickElement()
 		Sys.sleep(10)
 		all <- all[all$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past "checking_time" hours
 		saveRDS(all,"all.rds")
