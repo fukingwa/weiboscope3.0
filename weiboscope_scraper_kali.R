@@ -253,7 +253,7 @@ rt_parse_wb_rds <- function(txt){
 			}
 		## RT text
 			rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
-			rt_text <- ""
+#			rt_text <- ""
 			if (is.na(rt_text)){
 				rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
 				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank']"),"href")
