@@ -574,8 +574,8 @@ Scrolling4Posts <- function(){
 #		}
 }
 
-Scrolling4Posts_New <- function(){
-	for (i in 1:2){
+Scrolling4Posts_New <- function(times){
+	for (i in 1:times){
 		webElem <- remDr$findElement("css", "body")
 		webElem$sendKeysToElement(list("\uE010"))
 		Sys.sleep(5)
@@ -705,9 +705,9 @@ while (1) {
 		i <- 1
 		all_wb_df <- data.frame()
 		while (i < scrolling_times){
-			Sys.sleep(abs(rnorm(1,60,20)))
+			Sys.sleep(abs(rnorm(1,10,3)))
 			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
-			Scrolling4Posts_New()
+			Scrolling4Posts_New(1)
 			i <- i + 1
 			### Random liking - 12.5%
 			if (sample(1:8,1) == 2){
