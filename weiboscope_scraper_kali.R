@@ -244,7 +244,7 @@ rt_parse_wb_rds <- function(txt){
 			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
 		## RT href
 			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
-			if (is.na(rt_href)){
+			if (is.na(rt_href)  | !grepl("http",rt_href)){
 				retweeted_status_user_id <- NA
 				retweeted_status <- NA
 			} else {
