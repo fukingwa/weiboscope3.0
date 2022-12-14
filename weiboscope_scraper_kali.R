@@ -276,6 +276,8 @@ rt_parse_wb_rds <- function(txt){
 			rt_comments_count <- rt_num2[2]
 			rt_attitudes_count <- rt_num2[3]
 
+			retweeted_status <- ifelse(is.null(retweeted_status),NA,retweeted_status)
+			
 			if (!is.na(retweeted_status)){
 			      w_item <- data.frame(id=retweeted_status,user_id=retweeted_status_user_id,screen_name=rt_screen_name,
 					retweeted_status_user_id=NA,retweeted_status=NA,
