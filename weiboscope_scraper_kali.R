@@ -296,7 +296,7 @@ unfold_fn <- function(){
 	unfold_l <- remDr$findElements("xpath","//div[@class='wbpro-feed-content']//span[@class='expand']")
 	if (length(unfold_l) != 0){
 		for (i in 1:length(unfold_l)){
-			unfold_l[[i]]$clickElement()
+			e <- try(unfold_l[[i]]$clickElement(),silent=TRUE)
 			Sys.sleep(1)
 		}
 	}
@@ -703,7 +703,7 @@ while (1) {
 		### Randomization of sleeping time and looping times		
 		scrolling_times <- sample(6:10,1)
 		i <- 1
-		wb_df <- data.frame()
+		all_wb_df <- data.frame()
 		while (i < scrolling_times){
 			Sys.sleep(abs(rnorm(1,60,20)))
 			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
@@ -718,37 +718,37 @@ while (1) {
 					print("Liking .......")
 				}
 			}
-			try(unfold_fn(),silent=TRUE)   # unfold all shortened texts		
+			unfold_fn()   # unfold all shortened texts		
 			whole_body <- remDr$findElement(using = "xpath","//body")
 			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
 			wb_df <- parse_wb_rds(text_html)
 			### Added for retweeted weibos
 			rt_wb_df <- rt_parse_wb_rds(text_html)
 			one_df <- rbind(wb_df,rt_wb_df)
-			wb_df <- rbind(wb_df,one_df)
+			all_wb_df <- rbind(all_wb_df,one_df)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py")){
 				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				system(cmd,intern=FALSE)
 			}
 		}
-		wb_df <- wb_df[!duplicated(wb_df$id),]
-		wb_df <- wb_df[wb_df$user_id != "",] 
-		wb_df <- wb_df[!is.na(wb_df$user_id),] 
-		wb_df <- wb_df[nchar(wb_df$id) <= 16,]
-		wb_df <- wb_df[nchar(wb_df$retweeted_status) <= 16 | is.na(wb_df$retweeted_status),]
+		all_wb_df <- all_wb_df[!duplicated(all_wb_df$id),]
+		all_wb_df <- all_wb_df[all_wb_df$user_id != "",] 
+		all_wb_df <- all_wb_df[!is.na(all_wb_df$user_id),] 
+		all_wb_df <- all_wb_df[nchar(all_wb_df$id) <= 16,]
+		all_wb_df <- all_wb_df[nchar(all_wb_df$retweeted_status) <= 16 | is.na(all_wb_df$retweeted_status),]
 		if (nrow(wb_df)!=0){
-			InsertDB(wb_df)
+			InsertDB(all_wb_df)
 		}
 		if (nrow(all)==0){
-			all <- wb_df
+			all <- all_wb_df
 		} else {
-			all <- rbind(all,wb_df[!(wb_df$id %in% all$id),])
+			all <- rbind(all,all_wb_df[!(all_wb_df$id %in% all$id),])
 		}
 	}, error = function(e){
 		print(e)
 		print("First block error")
 		Sys.sleep(300)
-		wb_df <- data.frame()
+		all_wb_df <- data.frame()
 		x <- as.character(e)
 		remDr$screenshot(file = "scapture_file.jpg")
   		if (!Send_alert(x,"scapture_file.jpg")){
