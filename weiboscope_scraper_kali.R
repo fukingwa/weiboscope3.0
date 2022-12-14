@@ -747,6 +747,7 @@ while (1) {
 	}, error = function(e){
 		print(e)
 		print("First block error")
+		save.image("error.RData")
 		Sys.sleep(300)
 		all_wb_df <- data.frame()
 		x <- as.character(e)
