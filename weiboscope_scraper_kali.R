@@ -575,7 +575,7 @@ Scrolling4Posts <- function(){
 }
 
 Scrolling4Posts_New <- function(){
-	for (i in 1:3){
+	for (i in 1:2){
 		webElem <- remDr$findElement("css", "body")
 		webElem$sendKeysToElement(list("\uE010"))
 		Sys.sleep(5)
@@ -736,7 +736,7 @@ while (1) {
 		all_wb_df <- all_wb_df[!is.na(all_wb_df$user_id),] 
 		all_wb_df <- all_wb_df[nchar(all_wb_df$id) <= 16,]
 		all_wb_df <- all_wb_df[nchar(all_wb_df$retweeted_status) <= 16 | is.na(all_wb_df$retweeted_status),]
-		if (nrow(wb_df)!=0){
+		if (nrow(all_wb_df)!=0){
 			InsertDB(all_wb_df)
 		}
 		if (nrow(all)==0){
