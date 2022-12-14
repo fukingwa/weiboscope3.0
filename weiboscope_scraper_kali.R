@@ -296,7 +296,7 @@ unfold_fn <- function(){
 	unfold_l <- remDr$findElements("xpath","//div[@class='wbpro-feed-content']//span[@class='expand']")
 	if (length(unfold_l) != 0){
 		for (i in 1:length(unfold_l)){
-			e <- try(unfold_l[[i]]$clickElement(),silent=TRUE)
+			e <- suppressMessages(try(unfold_l[[i]]$clickElement(),silent=TRUE))
 			Sys.sleep(1)
 		}
 	}
