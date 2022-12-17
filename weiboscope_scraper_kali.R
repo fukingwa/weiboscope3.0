@@ -63,9 +63,9 @@ if (!exists("start_v")){
 		remDr <<- starting_now()	
 		censored <- c()
 		if (file.exists("all.rds")){
-			all <- readRDS("all.rds")
+			all_things <- readRDS("all.rds")
 		} else {
-			all <- data.frame()
+			all_things <- data.frame()
 		}
 		Sys.sleep(10)	
 	})
@@ -83,9 +83,9 @@ if (as.integer(start_v) == 1) {
 	remDr <- starting_now()
 	censored <- c()
 	if (file.exists("all.rds")){
-		all <- readRDS("all.rds")
+		all_things <- readRDS("all.rds")
 	} else {
-		all <- data.frame()
+		all_things <- data.frame()
 	}
 	Sys.sleep(10)	
 	start_v <- 2
@@ -148,7 +148,7 @@ parse_wb_rds <- function(txt){
 
 	html_txt <- read_html(txt)
 	each_post <- html_nodes(html_txt,xpath = '//div[@class="vue-recycle-scroller__item-view"]')
-	all <- data.frame()
+	all_p <- data.frame()
 	if (length(each_post) != 0){
 
 		for (i in 1:length(each_post)){
@@ -216,7 +216,7 @@ parse_wb_rds <- function(txt){
 				  rt_created_at=rt_created_at, rt_href=rt_href,rt_text=rt_text,
 					reposts_count=reposts_count,comments_count=comments_count,attitudes_count=attitudes_count,stringsAsFactors = F)
 
-			all <- rbind(all,w_item)
+			all_p <- rbind(all_p,w_item)
 		}
 	}
 	return(all)
@@ -226,7 +226,7 @@ rt_parse_wb_rds <- function(txt){
 
 	html_txt <- read_html(txt)
 	each_post <- html_nodes(html_txt,xpath = '//div[@class="vue-recycle-scroller__item-view"]')
-	all <- data.frame()
+	all_p <- data.frame()
 	if (length(each_post) != 0){
 
 		for (i in 1:length(each_post)){
@@ -304,7 +304,7 @@ rt_parse_wb_rds <- function(txt){
 				  rt_created_at=NA, rt_href=NA,rt_text=NA,
 					reposts_count=rt_reposts_count,comments_count=rt_comments_count,attitudes_count=rt_attitudes_count,stringsAsFactors = F)
 
-				all <- rbind(all,w_item)
+				all_p <- rbind(all_p,w_item)
 			}
 		}
 	}
@@ -760,10 +760,10 @@ while (1) {
 		if (nrow(all_wb_df)!=0){
 			InsertDB(all_wb_df)
 		}
-		if (nrow(all)==0){
-			all <- all_wb_df
+		if (nrow(all_things)==0){
+			all_things <- all_wb_df
 		} else {
-			all <- rbind(all,all_wb_df[!(all_wb_df$id %in% all$id),])
+			all_things <- rbind(all_things,all_wb_df[!(all_wb_df$id %in% all_things$id),])
 		}
 	}, error = function(e){
 		print(e)
@@ -788,7 +788,7 @@ while (1) {
 	for (u in need_to_chk){
 		u_posts <- c()
 #		u_posts <- sort(unique(as.character(wb_df$id[wb_df$user_id == u])))
-		ref  <- sort(unique(as.character(all$id[all$user_id == u])))
+		ref  <- sort(unique(as.character(all_things$id[all$user_id == u])))
 		if (length(ref) != 0){
 			if (length(u_posts) == 0){
 				r_missing <- rep(T,length(ref))
@@ -865,8 +865,8 @@ while (1) {
 #		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 #		click$clickElement()
 		Sys.sleep(10)
-		all <- all[all$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past "checking_time" hours
-		saveRDS(all,"all.rds")
+		all_things <- all_things[all_things$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past "checking_time" hours
+		saveRDS(all_things,"all.rds")
 		Close_all_tabs()
 	}, error = function(e){
 		print(e)
