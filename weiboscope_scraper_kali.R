@@ -47,14 +47,6 @@ starting_now <- function(){
 	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 
-	censored <- c()
-	if (file.exists("all.rds")){
-		all <- readRDS("all.rds")
-	} else {
-		all <- data.frame()
-	}
-	Sys.sleep(10)	
-
 	remDr$navigate("https://weibo.com/login.php")
 	print("STARTING NEW remDr ........................")
 	return(remDr)
@@ -68,7 +60,14 @@ if (!exists("start_v")){
 	tryCatch({
 		remDr$refresh()
 	}, error = function(e){
-		remDr <- starting_now()		
+		remDr <- starting_now()	
+		censored <- c()
+		if (file.exists("all.rds")){
+			all <- readRDS("all.rds")
+		} else {
+			all <- data.frame()
+		}
+		Sys.sleep(10)	
 	})
 }
 
@@ -82,6 +81,13 @@ if (file.exists("WB.RData")){
 
 if (as.integer(start_v) == 1) {
 	remDr <- starting_now()
+	censored <- c()
+	if (file.exists("all.rds")){
+		all <- readRDS("all.rds")
+	} else {
+		all <- data.frame()
+	}
+	Sys.sleep(10)	
 	start_v <- 2
 	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
 	print("Starting Weiboscope 3.0 .....")
