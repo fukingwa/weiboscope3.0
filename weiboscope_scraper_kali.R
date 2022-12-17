@@ -23,20 +23,8 @@ what_vm <- function(x){
 	return(a$VM.name[a$IP == trimws(x)])
 }
 
-myvm <- what_vm(myip)
-
-if (!exists("start_v")){
-	start_v <- readline("1 - cold start  2 - jump start\n")
-}
-## Envirnoment constants
-if (file.exists("WB.RData")){
-	load("WB.RData")
-} else {
-	print("Missing WB.RData")
-	quit()
-}
-if (as.integer(start_v) == 1) {
-
+starting_now <- function(){
+	
 	Sys.setlocale(category = "LC_ALL", locale = "C")
 
 	eCaps <- list(chromeOptions = list(args = c("--disable-gpu","--window-size=1920,1080", "--lang=en", "<96>disable-features=RendererCodeIntegrity", "--disable-extensions", "--disable-software-rasterizer", "--no-sandbox"), debuggerAddress = c("127.0.0.1:9222")))
@@ -69,6 +57,24 @@ if (as.integer(start_v) == 1) {
 
 	remDr$navigate("https://weibo.com/login.php")
 	
+	return("STARTING NEW remDr ........................")
+}
+
+myvm <- what_vm(myip)
+
+if (!exists("start_v")){
+	start_v <- readline("1 - cold start  2 - jump start\n")
+}
+## Envirnoment constants
+if (file.exists("WB.RData")){
+	load("WB.RData")
+} else {
+	print("Missing WB.RData")
+	quit()
+}
+
+if (as.integer(start_v) == 1) {
+	starting_now()
 	start_v <- 2
 	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
 	print("Starting Weiboscope 3.0 .....")
