@@ -219,7 +219,7 @@ parse_wb_rds <- function(txt){
 			all_p <- rbind(all_p,w_item)
 		}
 	}
-	return(all)
+	return(all_p)
 }
 
 rt_parse_wb_rds <- function(txt){
@@ -308,7 +308,7 @@ rt_parse_wb_rds <- function(txt){
 			}
 		}
 	}
-	return(all)
+	return(all_p)
 }
 
 unfold_fn <- function(){
