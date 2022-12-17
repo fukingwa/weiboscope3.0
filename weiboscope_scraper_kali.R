@@ -324,13 +324,13 @@ unfold_fn <- function(){
 }
 
 testid <- function(testid){
-  h <- all$href[all$id == testid]
+  h <- all_things$href[all_things$id == testid]
   remDr$navigate(paste0("https://weibo.com/",h))
   Sys.sleep(10)
   tryCatch({
 	x <- remDr$findElement(using = "xpath","//div[@class='WB_info']")  
 	test <- x$getElementText()[[1]]
-	if (trimws(test) == all$screen_name[all$id == testid]){
+	if (trimws(test) == all_things$screen_name[all_things$id == testid]){
 		return(FALSE)
 	} else {
 		return(TRUE)
@@ -780,7 +780,6 @@ while (1) {
   		source("run_weiboscope.R")
 	})
 	
-#	need_to_chk <- unique(all[all$created_at < (Sys.time() - (checking_time*60*60*2/3)),]$user_id)  ### checking only after 16 hour 
 	threshold_chk <- 5
 	need_to_chk <- unique(all_things$user_id[order(all_things$created_at)][1:ifelse(nrow(all_things)<threshold_chk,nrow(all_things),threshold_chk)])
 	print(paste0("Need to check: ",length(need_to_chk)," [",Sys.time(),"]"))
