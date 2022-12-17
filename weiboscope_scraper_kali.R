@@ -64,7 +64,14 @@ myvm <- what_vm(myip)
 
 if (!exists("start_v")){
 	start_v <- readline("1 - cold start  2 - jump start\n")
+} else {  ## test if remDr is dead, regenerate
+	tryCatch({
+		remDr$refresh()
+	}, error = function(e){
+		remDr <- starting_now()		
+	})
 }
+
 ## Envirnoment constants
 if (file.exists("WB.RData")){
 	load("WB.RData")
