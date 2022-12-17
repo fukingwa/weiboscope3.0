@@ -60,7 +60,7 @@ if (!exists("start_v")){
 	tryCatch({
 		remDr$refresh()
 	}, error = function(e){
-		remDr <- starting_now()	
+		remDr <<- starting_now()	
 		censored <- c()
 		if (file.exists("all.rds")){
 			all <- readRDS("all.rds")
