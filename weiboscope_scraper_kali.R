@@ -56,8 +56,8 @@ starting_now <- function(){
 	Sys.sleep(10)	
 
 	remDr$navigate("https://weibo.com/login.php")
-	
-	return("STARTING NEW remDr ........................")
+	print("STARTING NEW remDr ........................")
+	return(remDr)
 }
 
 myvm <- what_vm(myip)
@@ -74,7 +74,7 @@ if (file.exists("WB.RData")){
 }
 
 if (as.integer(start_v) == 1) {
-	starting_now()
+	remDr <- starting_now()
 	start_v <- 2
 	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
 	print("Starting Weiboscope 3.0 .....")
