@@ -876,7 +876,7 @@ while (1) {
 		print("Second block error")
 		Sys.sleep(300)
 		x <- as.character(e)
-  		remDr$screenshot(file = "scapture_file.jpg")
+#  		remDr$screenshot(file = "scapture_file.jpg")
   		if (!Send_alert(x,"scapture_file.jpg")){
 			print("Send email error")
 		}
