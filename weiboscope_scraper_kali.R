@@ -71,6 +71,10 @@ if (!exists("start_v")){
 	})
 }
 
+if (!exists("all_things") & exists("all")){
+	all_things <- all
+}
+
 ## Envirnoment constants
 if (file.exists("WB.RData")){
 	load("WB.RData")
