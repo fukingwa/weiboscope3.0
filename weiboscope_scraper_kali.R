@@ -776,7 +776,7 @@ while (1) {
 		Sys.sleep(300)
 		all_wb_df <- data.frame()
 		x <- as.character(e)
-		remDr$screenshot(file = "scapture_file.jpg")
+#		remDr$screenshot(file = "scapture_file.jpg")
   		if (!Send_alert(x,"scapture_file.jpg")){
 			print("Send email error")
 		}
