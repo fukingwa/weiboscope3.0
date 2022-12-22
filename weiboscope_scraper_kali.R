@@ -692,9 +692,15 @@ Close_all_tabs <- function(){
 	}
 }
 
+previous_hr <- as.integer(format(Sys.time(),"%H"))
+
 while (1) {
 	## Sleep between 2-6am
 	current_hr <- as.integer(format(Sys.time(),"%H"))
+	if (previous_hr != current_hr){
+		print("Just pass :00")
+	}	
+	previous_hr <- current_hr 
 	if (current_hr >= 2 & current_hr <= 6){
 		Sys.sleep(600)
 		next
