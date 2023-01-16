@@ -758,7 +758,7 @@ while (1) {
 			one_df <- rbind(wb_df,rt_wb_df)
 			all_wb_df <- rbind(all_wb_df,one_df)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py")){
-				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
+				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2b.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				system(cmd,intern=FALSE)
 			}
 		}
