@@ -738,7 +738,7 @@ while (1) {
 		while (i < scrolling_times){
 			Sys.sleep(abs(rnorm(1,10,3)))
 			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
-#			Scrolling4Posts_New(i)   ### scroll more to increase loaded images
+			Scrolling4Posts_New(1)   
 			i <- i + 1
 			### Random liking - 12.5%
 			if (sample(1:8,1) == 2){
