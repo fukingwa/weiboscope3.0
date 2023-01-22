@@ -734,11 +734,11 @@ while (1) {
 		### Randomization of sleeping time and looping times		
 #		scrolling_times <- sample(6:10,1)
 		scrolling_times <- sample(1:4,1)
-		i <- 1
+		i <- 0
 		all_wb_df <- data.frame()
 		while (i < scrolling_times){
 			Sys.sleep(abs(rnorm(1,10,3)))
-			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
+			print(paste0("Scrolling loop: ",i+1,"/",scrolling_times))
 #			Scrolling4Posts_New(1)   
 			i <- i + 1
 			### Random liking - 12.5%
