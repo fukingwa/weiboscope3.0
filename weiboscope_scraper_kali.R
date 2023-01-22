@@ -732,13 +732,14 @@ while (1) {
 #		click$clickElement()
 		
 		### Randomization of sleeping time and looping times		
-		scrolling_times <- sample(6:10,1)
+#		scrolling_times <- sample(6:10,1)
+		scrolling_times <- sample(1:4,1)
 		i <- 1
 		all_wb_df <- data.frame()
 		while (i < scrolling_times){
 			Sys.sleep(abs(rnorm(1,10,3)))
 			print(paste0("Scrolling loop: ",i,"/",scrolling_times))
-			Scrolling4Posts_New(1)   
+#			Scrolling4Posts_New(1)   
 			i <- i + 1
 			### Random liking - 12.5%
 			if (sample(1:8,1) == 2){
@@ -757,8 +758,8 @@ while (1) {
 			rt_wb_df <- rt_parse_wb_rds(text_html)
 			one_df <- rbind(wb_df,rt_wb_df)
 			all_wb_df <- rbind(all_wb_df,one_df)
-			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2a.py")){
-				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2b.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
+			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
+				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				system(cmd,intern=FALSE)
 			}
 		}
