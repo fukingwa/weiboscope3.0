@@ -699,6 +699,8 @@ while (1) {
 	current_hr <- as.integer(format(Sys.time(),"%H"))
 	if (previous_hr != current_hr){
 		print("Just pass :00")
+		print("Clear Cache")
+		clearCache()
 	}	
 	previous_hr <- current_hr 
 	if (current_hr >= 2 & current_hr <= 6){
