@@ -699,8 +699,8 @@ while (1) {
 	current_hr <- as.integer(format(Sys.time(),"%H"))
 	if (previous_hr != current_hr){
 		print("Just pass :00")
-		print("Clear Cache")
-		clearCache()
+#		print("Clear Cache")
+#		clearCache()
 	}	
 	previous_hr <- current_hr 
 	if (current_hr >= 2 & current_hr <= 6){
@@ -778,6 +778,8 @@ while (1) {
 		} else {
 			all_things <- rbind(all_things,all_wb_df[!(all_wb_df$id %in% all_things$id),])
 		}
+		print("Clear Cache")   # clear cache frequently to reduce chance of opp page
+		clearCache()
 	}, error = function(e){
 		print(e)
 		print("First block error")
