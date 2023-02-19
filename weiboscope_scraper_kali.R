@@ -779,7 +779,8 @@ while (1) {
 			all_things <- rbind(all_things,all_wb_df[!(all_wb_df$id %in% all_things$id),])
 		}
 		print("Clear Cache")   # clear cache frequently to reduce chance of opp page
-		clearCache()
+#		clearCache()
+		system("/home/fukingwa/Weibo/18T/weibo_scap/clearcache.py",intern=FALSE)
 	}, error = function(e){
 		print(e)
 		print("First block error")
