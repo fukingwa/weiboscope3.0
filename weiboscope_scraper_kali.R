@@ -27,7 +27,8 @@ starting_now <- function(){
 	
 	Sys.setlocale(category = "LC_ALL", locale = "C")
 
-	eCaps <- list(chromeOptions = list(args = c("--disable-gpu","--window-size=1920,1080", "--lang=en", "<96>disable-features=RendererCodeIntegrity", "--disable-extensions", "--disable-software-rasterizer", "--no-sandbox"), debuggerAddress = c("127.0.0.1:9222")))
+#	eCaps <- list(chromeOptions = list(args = c("--window-size=1920,1080", "--lang=en", "--disable-features=RendererCodeIntegrity", "--disable-extensions", "--disable-software-rasterizer", "--no-sandbox"), debuggerAddress = c("127.0.0.1:9222")))
+	eCaps <- list(chromeOptions = list(args = c("--disable-gpu","--window-size=1920,1080", "--lang=en", "--disable-features=RendererCodeIntegrity", "--disable-extensions", "--disable-software-rasterizer", "--no-sandbox"), debuggerAddress = c("127.0.0.1:9222")))
 
 #	eCaps <- list(chromeOptions = list(
 #		args = c('start-maximized','enable-automation','--disable-gpu', '--no-sandbox','--disable-extensions','--dns-prefetch-disable','--disable-infobars','--disable-dev-shm-usage','--disable-browser-side-navigation')
