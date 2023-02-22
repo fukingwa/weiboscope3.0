@@ -736,7 +736,7 @@ while (1) {
 		
 		### Randomization of sleeping time and looping times		
 #		scrolling_times <- sample(6:10,1)
-		scrolling_times <- sample(1:4,1) # max times of scrolling = 4
+		scrolling_times <- sample(2:3,1) # max times of scrolling = 3
 		i <- 0
 		all_wb_df <- data.frame()
 		while (i < scrolling_times){
