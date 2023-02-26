@@ -38,7 +38,6 @@ go_home <- function(){
 	msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
 	ws$send(msg)
 	ws$close()
-	print("Welcome Home!")
 }
 
 starting_now <- function(){
@@ -68,6 +67,7 @@ starting_now <- function(){
 
 #	remDr$navigate("https://weibo.com/login.php")
 	go_home()
+	print("Welcome Home!")
 	print("STARTING NEW remDr ........................")
 	return(remDr)
 }
