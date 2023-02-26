@@ -588,28 +588,28 @@ Send_alert_blacktea <- function(e,Scap){
   })
 }
 
-Scrolling4Posts <- function(){
-		z <- NULL
-		start_time <- Sys.time()
-		d_time <- 0
-		duration <- 300
-		while (is.null(z) & (d_time < duration)){
-			webElem <- remDr$findElement("css", "body")
-			webElem$sendKeysToElement(list("\uE010"))
-			Sys.sleep(20)
-			z <- tryCatch({
-				suppressMessages({
-					c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")
-				})
-			},error=function(e){
-				return(NULL)
-			})
-			d_time <- difftime(Sys.time(),start_time,units = "secs")
-		}
-		if (!is.null(z)){
-			remDr$executeScript("arguments[0].click();", args=list(c))
+#Scrolling4Posts <- function(){
+#		z <- NULL
+#		start_time <- Sys.time()
+#		d_time <- 0
+#		duration <- 300
+#		while (is.null(z) & (d_time < duration)){
+#			webElem <- remDr$findElement("css", "body")
+#			webElem$sendKeysToElement(list("\uE010"))
+#			Sys.sleep(20)
+#			z <- tryCatch({
+#				suppressMessages({
+#					c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")
+#				})
+#			},error=function(e){
+#				return(NULL)
+#			})
+#			d_time <- difftime(Sys.time(),start_time,units = "secs")
+#		}
+#		if (!is.null(z)){
+#			remDr$executeScript("arguments[0].click();", args=list(c))
 #			c$clickElement()
-		}
+#		}
 #		} else {
 #			remDr$navigate("https://weibo.com")
 #			Sys.sleep(30)
@@ -617,16 +617,15 @@ Scrolling4Posts <- function(){
 #			click$clickElement()
 #			Sys.sleep(30)	
 #		}
-}
+#}
 
-Scrolling4Posts_New <- function(times){
-	for (i in 1:times){
-		webElem <- remDr$findElement("css", "body")
-		webElem$sendKeysToElement(list("\uE010"))
-		Sys.sleep(5)
-	}
-}
-
+#Scrolling4Posts_New <- function(times){
+#	for (i in 1:times){
+#		webElem <- remDr$findElement("css", "body")
+#		webElem$sendKeysToElement(list("\uE010"))
+#		Sys.sleep(5)
+#	}
+#}
 
 #remDr$navigate("https://weibo.com/login.php")
 
