@@ -11,7 +11,7 @@ if (!require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))) {
 	install.packages("websocket", lib = Sys.getenv("R_LIBS_USER"), repos = "https://cran.rstudio.com/")
 	require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))
 } else {
-	require(websocket)
+	require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))
 }
 
 set.seed(as.numeric(Sys.time()))
