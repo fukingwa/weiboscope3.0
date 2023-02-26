@@ -6,6 +6,14 @@ require(RCurl)
 require(RJSONIO)
 require(emayili)
 
+if (!require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))) {
+	dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)
+	install.packages("websocket", lib = Sys.getenv("R_LIBS_USER"), repos = "https://cran.rstudio.com/")
+	require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))
+} else {
+	require(websocket)
+}
+
 set.seed(as.numeric(Sys.time()))
 
 myip <- getURL("ifconfig.me/ip")
