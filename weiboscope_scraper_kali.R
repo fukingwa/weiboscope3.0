@@ -665,7 +665,8 @@ while (1) {
 #			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py")){
 				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py",intern=TRUE)
-				text_html <- paste(text_html,collapse=' ',sep=' ')
+				text_html <- paste(text_html,collapse='',sep='')
+				encoding(text_html) <- 'UTF-8'
 				wb_df <- parse_wb_rds(text_html)
 				### Added for retweeted weibos
 				rt_wb_df <- rt_parse_wb_rds(text_html)
