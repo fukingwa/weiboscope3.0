@@ -189,7 +189,7 @@ parse_wb_rds <- function(txt){
 
 		for (i in 1:length(each_post)){
 			hs_txt <- as.character(each_post[[i]])
-			hs <- read_html(hs_txt)
+			hs <- read_html(hs_txt, options = "HUGE")
 		## Filter promotion
 			prom <- html_text(html_node(hs,xpath = '//span[@class="main_title"]'))
 			if (!is.na(prom)){
@@ -267,7 +267,7 @@ rt_parse_wb_rds <- function(txt){
 
 		for (i in 1:length(each_post)){
 			hs_txt <- as.character(each_post[[i]])
-			hs <- read_html(hs_txt)
+			hs <- read_html(hs_txt, options = "HUGE")
 		## Filter promotion
 			prom <- html_text(html_node(hs,xpath = '//span[@class="main_title"]'))
 			if (!is.na(prom)){
