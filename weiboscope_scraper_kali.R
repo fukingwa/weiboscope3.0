@@ -74,22 +74,22 @@ starting_now <- function(){
 
 myvm <- what_vm(myip)
 
-if (!exists("start_v")){
-	start_v <- readline("1 - cold start  2 - jump start\n")
-} else {  ## test if remDr is dead, regenerate
-	tryCatch({
-		remDr$refresh()
-	}, error = function(e){
-		remDr <<- starting_now()	
-		censored <- c()
-		if (file.exists("all.rds")){
-			all_things <- readRDS("all.rds")
-		} else {
-			all_things <- data.frame()
-		}
-		Sys.sleep(10)	
-	})
-}
+#if (!exists("start_v")){
+#	start_v <- readline("1 - cold start  2 - jump start\n")
+#} else {  ## test if remDr is dead, regenerate
+#	tryCatch({
+#		remDr$refresh()
+#	}, error = function(e){
+#		remDr <<- starting_now()	
+#		censored <- c()
+#		if (file.exists("all.rds")){
+#			all_things <- readRDS("all.rds")
+#		} else {
+#			all_things <- data.frame()
+#		}
+#		Sys.sleep(10)	
+#	})
+#}
 
 if (!exists("all_things") & exists("all")){
 	all_things <- all
@@ -103,19 +103,19 @@ if (file.exists("WB.RData")){
 	quit()
 }
 
-if (as.integer(start_v) == 1) {
-	remDr <- starting_now()
-	censored <- c()
-	if (file.exists("all.rds")){
-		all_things <- readRDS("all.rds")
-	} else {
-		all_things <- data.frame()
-	}
-	Sys.sleep(10)	
-	start_v <- 2
-	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
-	print("Starting Weiboscope 3.0 .....")
-}
+#if (as.integer(start_v) == 1) {
+#	remDr <- starting_now()
+#	censored <- c()
+#	if (file.exists("all.rds")){
+#		all_things <- readRDS("all.rds")
+#	} else {
+#		all_things <- data.frame()
+#	}
+#	Sys.sleep(10)	
+#	start_v <- 2
+#	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
+#	print("Starting Weiboscope 3.0 .....")
+#}
 
 start_date <- format(Sys.time(),"%Y-%m-%d")
 #start_date <- '2021-12-16'
@@ -641,22 +641,25 @@ while (1) {
 #			Scrolling4Posts_New(1)   
 			i <- i + 1
 			### Random liking - 12.5%
-			if (sample(1:8,1) == 2){
-#				all_likes <- remDr$findElements("xpath","//span[@node-type='like_status']")
-				all_likes <- remDr$findElements("xpath","//button[@class='woo-like-main toolbar_btn_Cg9tz']")
-				if (length(all_likes) != 0){
-					all_likes[[sample(length(all_likes),1)]]$clickElement()
-					print("Liking .......")
-				}
+#			if (sample(1:8,1) == 2){
+#				all_likes <- remDr$findElements("xpath","//button[@class='woo-like-main toolbar_btn_Cg9tz']")
+#				if (length(all_likes) != 0){
+#					all_likes[[sample(length(all_likes),1)]]$clickElement()
+#					print("Liking .......")
+#				}
+#			}
+#			unfold_fn()   # unfold all shortened texts		
+#			whole_body <- remDr$findElement(using = "xpath","//body")
+#			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
+			if (file.exists("/home/fukingwa/Weibo/18T/unfold.py")){
+				text_html <- system("/home/fukingwa/Weibo/18T/unfold.py",intern=TRUE)
+				text_html <- paste(text_html,collapse=' ',sep=' ')
+				wb_df <- parse_wb_rds(text_html)
+				### Added for retweeted weibos
+				rt_wb_df <- rt_parse_wb_rds(text_html)
+				one_df <- rbind(wb_df,rt_wb_df)
+				all_wb_df <- rbind(all_wb_df,one_df)
 			}
-			unfold_fn()   # unfold all shortened texts		
-			whole_body <- remDr$findElement(using = "xpath","//body")
-			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
-			wb_df <- parse_wb_rds(text_html)
-			### Added for retweeted weibos
-			rt_wb_df <- rt_parse_wb_rds(text_html)
-			one_df <- rbind(wb_df,rt_wb_df)
-			all_wb_df <- rbind(all_wb_df,one_df)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
 				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				system(cmd,intern=FALSE)
