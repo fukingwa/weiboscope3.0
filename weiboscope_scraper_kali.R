@@ -347,23 +347,6 @@ unfold_fn <- function(){
 	}
 }
 
-#testid <- function(testid){
-#  h <- all_things$href[all_things$id == testid]
-#  remDr$navigate(paste0("https://weibo.com/",h))
-#  Sys.sleep(10)
-#  tryCatch({
-#	x <- remDr$findElement(using = "xpath","//div[@class='WB_info']")  
-#	test <- x$getElementText()[[1]]
-#	if (trimws(test) == all_things$screen_name[all_things$id == testid]){
-#		return(FALSE)
-#	} else {
-#		return(TRUE)
-#	}
-#  }, error = function(e){
-#		return(TRUE)
-#  })
-#}
-
 check_censored <- function(id){
 	tryCatch({
 		url <- paste0('https://api.weibo.com/2/statuses/show.json?source=',sample(token,1),'&id=',as.character(id))
@@ -553,83 +536,6 @@ Send_alert <- function(e,Scap){
   })
 }
 
-#Send_alert_blacktea <- function(e,Scap){
-#  tryCatch({
-#    smtp <- server(host = "147.8.144.20",
-#                   port = 25,
-#                   username = New_Sender_username,
-#                   password = New_Sender_password,
-#                   reuse = FALSE)
-#    
-#    Email_msg <- paste0(Sys.info()[[4]],":",e)
-#    Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
-#    html_body <- '<html><body><img src="cid:image"></body></html>'
-#    
-#    if (remDr$getCurrentUrl()[[1]] == "https://weibo.com/login.php"){
-#	    Email_subject <- paste0("LOGIN REQUIRED !! " ,Email_subject)
-#    }
-#	  
-#    email <- envelope(
-#      to = Receiver_username,
-#      from = New_Sender_username,
-#      subject = Email_subject,
-#      text = Email_msg,
-#      html = html_body
-#    )
-#    
-#    email <- attachment(email, path = Scap, cid = "image")
-#    
-#    smtp(email, verbose = TRUE)
-#    
-#    return(TRUE)
-#    
-#  }, error = function(e){
-#    return(FALSE)
-#  })
-#}
-
-#Scrolling4Posts <- function(){
-#		z <- NULL
-#		start_time <- Sys.time()
-#		d_time <- 0
-#		duration <- 300
-#		while (is.null(z) & (d_time < duration)){
-#			webElem <- remDr$findElement("css", "body")
-#			webElem$sendKeysToElement(list("\uE010"))
-#			Sys.sleep(20)
-#			z <- tryCatch({
-#				suppressMessages({
-#					c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")
-#				})
-#			},error=function(e){
-#				return(NULL)
-#			})
-#			d_time <- difftime(Sys.time(),start_time,units = "secs")
-#		}
-#		if (!is.null(z)){
-#			remDr$executeScript("arguments[0].click();", args=list(c))
-#			c$clickElement()
-#		}
-#		} else {
-#			remDr$navigate("https://weibo.com")
-#			Sys.sleep(30)
-#			click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
-#			click$clickElement()
-#			Sys.sleep(30)	
-#		}
-#}
-
-#Scrolling4Posts_New <- function(times){
-#	for (i in 1:times){
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(5)
-#	}
-#}
-
-#remDr$navigate("https://weibo.com/login.php")
-
-#cont <- readline("Press Return to continue \n")
 
 find_version <- function(){
   v <- str_extract(list.dirs("C:/Program Files/Google/Chrome/Application", recursive = FALSE),'[0-9]*\\..*[0-9]$')
@@ -680,34 +586,7 @@ download_latest <- function(){
 		}	
 }
 
-#clearCache <- function(){
-#	remDr$navigate("chrome://settings/clearBrowserData")
-#	Sys.sleep(1)
-#	for (i in 1:12){
-#		remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE004"))
-#		Sys.sleep(1)
-#	}
-#	Sys.sleep(3)
-#	remDr$buttondown()
-#	Sys.sleep(3)
-#	remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE007"))
-#}
 
-#myswitch <- function(windowId){
-#  qpath <- sprintf("%s/session/%s/window", remDr$serverURL, remDr$sessionInfo[["id"]])
-#  remDr$queryRD(qpath, "POST", qdata = list(handle = windowId))
-#}
-
-#Close_all_tabs <- function(){
-#	all_h <- remDr$getWindowHandles()
-#	if (length(all_h) > 1){
-#		for (i in 2:length(all_h)){
-#			myswitch(all_h[[i]])
-#			remDr$closeWindow()
-#		}
-#		myswitch(all_h[[1]])
-#	}
-#}
 
 previous_hr <- as.integer(format(Sys.time(),"%H"))
 
@@ -923,4 +802,125 @@ while (1) {
 #cookies <- readRDS("cookies.rds")
 #for (i in 1:length(cookies)) {
 #  remDr$addCookie(name = cookies[[i]][["name"]], value = #cookies[[i]][["value"]])
+#}
+#testid <- function(testid){
+#  h <- all_things$href[all_things$id == testid]
+#  remDr$navigate(paste0("https://weibo.com/",h))
+#  Sys.sleep(10)
+#  tryCatch({
+#	x <- remDr$findElement(using = "xpath","//div[@class='WB_info']")  
+#	test <- x$getElementText()[[1]]
+#	if (trimws(test) == all_things$screen_name[all_things$id == testid]){
+#		return(FALSE)
+#	} else {
+#		return(TRUE)
+#	}
+#  }, error = function(e){
+#		return(TRUE)
+#  })
+#}
+#Send_alert_blacktea <- function(e,Scap){
+#  tryCatch({
+#    smtp <- server(host = "147.8.144.20",
+#                   port = 25,
+#                   username = New_Sender_username,
+#                   password = New_Sender_password,
+#                   reuse = FALSE)
+#    
+#    Email_msg <- paste0(Sys.info()[[4]],":",e)
+#    Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
+#    html_body <- '<html><body><img src="cid:image"></body></html>'
+#    
+#    if (remDr$getCurrentUrl()[[1]] == "https://weibo.com/login.php"){
+#	    Email_subject <- paste0("LOGIN REQUIRED !! " ,Email_subject)
+#    }
+#	  
+#    email <- envelope(
+#      to = Receiver_username,
+#      from = New_Sender_username,
+#      subject = Email_subject,
+#      text = Email_msg,
+#      html = html_body
+#    )
+#    
+#    email <- attachment(email, path = Scap, cid = "image")
+#    
+#    smtp(email, verbose = TRUE)
+#    
+#    return(TRUE)
+#    
+#  }, error = function(e){
+#    return(FALSE)
+#  })
+#}
+
+#Scrolling4Posts <- function(){
+#		z <- NULL
+#		start_time <- Sys.time()
+#		d_time <- 0
+#		duration <- 300
+#		while (is.null(z) & (d_time < duration)){
+#			webElem <- remDr$findElement("css", "body")
+#			webElem$sendKeysToElement(list("\uE010"))
+#			Sys.sleep(20)
+#			z <- tryCatch({
+#				suppressMessages({
+#					c <- remDr$findElement("xpath","//span[@class='more_txt W_f14'] | //a[contains(text(),'点击重新载入')]")
+#				})
+#			},error=function(e){
+#				return(NULL)
+#			})
+#			d_time <- difftime(Sys.time(),start_time,units = "secs")
+#		}
+#		if (!is.null(z)){
+#			remDr$executeScript("arguments[0].click();", args=list(c))
+#			c$clickElement()
+#		}
+#		} else {
+#			remDr$navigate("https://weibo.com")
+#			Sys.sleep(30)
+#			click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
+#			click$clickElement()
+#			Sys.sleep(30)	
+#		}
+#}
+
+#Scrolling4Posts_New <- function(times){
+#	for (i in 1:times){
+#		webElem <- remDr$findElement("css", "body")
+#		webElem$sendKeysToElement(list("\uE010"))
+#		Sys.sleep(5)
+#	}
+#}
+
+#remDr$navigate("https://weibo.com/login.php")
+
+#cont <- readline("Press Return to continue \n")
+#clearCache <- function(){
+#	remDr$navigate("chrome://settings/clearBrowserData")
+#	Sys.sleep(1)
+#	for (i in 1:12){
+#		remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE004"))
+#		Sys.sleep(1)
+#	}
+#	Sys.sleep(3)
+#	remDr$buttondown()
+#	Sys.sleep(3)
+#	remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE007"))
+#}
+
+#myswitch <- function(windowId){
+#  qpath <- sprintf("%s/session/%s/window", remDr$serverURL, remDr$sessionInfo[["id"]])
+#  remDr$queryRD(qpath, "POST", qdata = list(handle = windowId))
+#}
+
+#Close_all_tabs <- function(){
+#	all_h <- remDr$getWindowHandles()
+#	if (length(all_h) > 1){
+#		for (i in 2:length(all_h)){
+#			myswitch(all_h[[i]])
+#			remDr$closeWindow()
+#		}
+#		myswitch(all_h[[1]])
+#	}
 #}
