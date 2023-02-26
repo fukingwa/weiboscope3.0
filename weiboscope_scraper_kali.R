@@ -347,22 +347,22 @@ unfold_fn <- function(){
 	}
 }
 
-testid <- function(testid){
-  h <- all_things$href[all_things$id == testid]
-  remDr$navigate(paste0("https://weibo.com/",h))
-  Sys.sleep(10)
-  tryCatch({
-	x <- remDr$findElement(using = "xpath","//div[@class='WB_info']")  
-	test <- x$getElementText()[[1]]
-	if (trimws(test) == all_things$screen_name[all_things$id == testid]){
-		return(FALSE)
-	} else {
-		return(TRUE)
-	}
-  }, error = function(e){
-		return(TRUE)
-  })
-}
+#testid <- function(testid){
+#  h <- all_things$href[all_things$id == testid]
+#  remDr$navigate(paste0("https://weibo.com/",h))
+#  Sys.sleep(10)
+#  tryCatch({
+#	x <- remDr$findElement(using = "xpath","//div[@class='WB_info']")  
+#	test <- x$getElementText()[[1]]
+#	if (trimws(test) == all_things$screen_name[all_things$id == testid]){
+#		return(FALSE)
+#	} else {
+#		return(TRUE)
+#	}
+#  }, error = function(e){
+#		return(TRUE)
+#  })
+#}
 
 check_censored <- function(id){
 	tryCatch({
