@@ -663,8 +663,8 @@ while (1) {
 #			unfold_fn()   # unfold all shortened texts		
 #			whole_body <- remDr$findElement(using = "xpath","//body")
 #			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
-			if (file.exists("/home/fukingwa/Weibo/18T/unfold.py")){
-				text_html <- system("/home/fukingwa/Weibo/18T/unfold.py",intern=TRUE)
+			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py")){
+				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py",intern=TRUE)
 				text_html <- paste(text_html,collapse=' ',sep=' ')
 				wb_df <- parse_wb_rds(text_html)
 				### Added for retweeted weibos
