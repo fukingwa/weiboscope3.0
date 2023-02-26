@@ -31,6 +31,15 @@ what_vm <- function(x){
 	return(a$VM.name[a$IP == trimws(x)])
 }
 
+go_home <- function(){
+	rb_url <- str_extract_all(grep('webSocket',strsplit(getURL("http://127.0.0.1:9222/json"),"\n")[[1]],value=T),"ws://[^\"]+")[[1]]
+	ws <- WebSocket$new(rb_url)
+	Sys.sleep(2)
+	msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
+	ws$send(msg)
+	ws$close()	
+}
+
 starting_now <- function(){
 	
 	Sys.setlocale(category = "LC_ALL", locale = "C")
@@ -56,7 +65,8 @@ starting_now <- function(){
 	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 
-	remDr$navigate("https://weibo.com/login.php")
+#	remDr$navigate("https://weibo.com/login.php")
+	go_home()
 	print("STARTING NEW remDr ........................")
 	return(remDr)
 }
@@ -737,8 +747,9 @@ while (1) {
 #while (Sys.time() < strptime("2021-02-12 10:00:00","%Y-%m-%d %H:%M:%S")) {
 	tryCatch({
 #		remDr$refresh()
-		remDr$navigate("https://weibo.com")
-		Sys.sleep(30)
+#		remDr$navigate("https://weibo.com")
+		go_home()
+		Sys.sleep(20)
 #		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 #		click$clickElement()
 		
@@ -884,11 +895,12 @@ while (1) {
 	}
 	tryCatch({	 
 #		remDr$refresh()
-		remDr$navigate("https://weibo.com")
-		Sys.sleep(10)
+#		remDr$navigate("https://weibo.com")
+		go_home()
+		Sys.sleep(5)
 #		click <- remDr$findElement(using = "xpath","//a[@bpfilter='main']")
 #		click$clickElement()
-		Sys.sleep(10)
+		Sys.sleep(5)
 		all_things <- all_things[all_things$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past "checking_time" hours
 		saveRDS(all_things,"all.rds")
 		Close_all_tabs()
