@@ -182,7 +182,7 @@ to10 <- function(num, base=62) {
 
 parse_wb_rds <- function(txt){
 
-	html_txt <- read_html(txt)
+	html_txt <- read_html(txt, options = "HUGE")
 	each_post <- html_nodes(html_txt,xpath = '//div[@class="vue-recycle-scroller__item-view"]')
 	all_p <- data.frame()
 	if (length(each_post) != 0){
@@ -260,7 +260,7 @@ parse_wb_rds <- function(txt){
 
 rt_parse_wb_rds <- function(txt){
 
-	html_txt <- read_html(txt)
+	html_txt <- read_html(txt, options = "HUGE")
 	each_post <- html_nodes(html_txt,xpath = '//div[@class="vue-recycle-scroller__item-view"]')
 	all_p <- data.frame()
 	if (length(each_post) != 0){
