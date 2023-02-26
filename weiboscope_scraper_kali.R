@@ -37,7 +37,8 @@ go_home <- function(){
 	Sys.sleep(2)
 	msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
 	ws$send(msg)
-	ws$close()	
+	ws$close()
+	print("Welcome Home!")
 }
 
 starting_now <- function(){
