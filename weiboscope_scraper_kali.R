@@ -553,40 +553,40 @@ Send_alert <- function(e,Scap){
   })
 }
 
-Send_alert_blacktea <- function(e,Scap){
-  tryCatch({
-    smtp <- server(host = "147.8.144.20",
-                   port = 25,
-                   username = New_Sender_username,
-                   password = New_Sender_password,
-                   reuse = FALSE)
-    
-    Email_msg <- paste0(Sys.info()[[4]],":",e)
-    Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
-    html_body <- '<html><body><img src="cid:image"></body></html>'
-    
-    if (remDr$getCurrentUrl()[[1]] == "https://weibo.com/login.php"){
-	    Email_subject <- paste0("LOGIN REQUIRED !! " ,Email_subject)
-    }
-	  
-    email <- envelope(
-      to = Receiver_username,
-      from = New_Sender_username,
-      subject = Email_subject,
-      text = Email_msg,
-      html = html_body
-    )
-    
-    email <- attachment(email, path = Scap, cid = "image")
-    
-    smtp(email, verbose = TRUE)
-    
-    return(TRUE)
-    
-  }, error = function(e){
-    return(FALSE)
-  })
-}
+#Send_alert_blacktea <- function(e,Scap){
+#  tryCatch({
+#    smtp <- server(host = "147.8.144.20",
+#                   port = 25,
+#                   username = New_Sender_username,
+#                   password = New_Sender_password,
+#                   reuse = FALSE)
+#    
+#    Email_msg <- paste0(Sys.info()[[4]],":",e)
+#    Email_subject <- paste0("Error alert from Weiboscope 3.0 - ",Sys.info()[[4]])
+#    html_body <- '<html><body><img src="cid:image"></body></html>'
+#    
+#    if (remDr$getCurrentUrl()[[1]] == "https://weibo.com/login.php"){
+#	    Email_subject <- paste0("LOGIN REQUIRED !! " ,Email_subject)
+#    }
+#	  
+#    email <- envelope(
+#      to = Receiver_username,
+#      from = New_Sender_username,
+#      subject = Email_subject,
+#      text = Email_msg,
+#      html = html_body
+#    )
+#    
+#    email <- attachment(email, path = Scap, cid = "image")
+#    
+#    smtp(email, verbose = TRUE)
+#    
+#    return(TRUE)
+#    
+#  }, error = function(e){
+#    return(FALSE)
+#  })
+#}
 
 #Scrolling4Posts <- function(){
 #		z <- NULL
