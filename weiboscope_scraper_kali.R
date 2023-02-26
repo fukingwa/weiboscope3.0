@@ -1,4 +1,4 @@
-require(RSelenium)
+#require(RSelenium)
 require(stringr)
 require(RPostgreSQL)
 require(rvest)
@@ -90,6 +90,18 @@ myvm <- what_vm(myip)
 #		Sys.sleep(10)	
 #	})
 #}
+
+Sys.setlocale(category = "LC_ALL", locale = "C")
+
+go_home()
+print("Welcome Home!")
+
+censored <- c()
+if (file.exists("all.rds")){
+	all_things <- readRDS("all.rds")
+} else {
+	all_things <- data.frame()
+}
 
 if (!exists("all_things") & exists("all")){
 	all_things <- all
@@ -671,6 +683,7 @@ while (1) {
 		all_wb_df <- all_wb_df[nchar(all_wb_df$id) <= 16,]
 		all_wb_df <- all_wb_df[nchar(all_wb_df$retweeted_status) <= 16 | is.na(all_wb_df$retweeted_status),]
 		if (nrow(all_wb_df)!=0){
+			print(paste0("Inserting ",nrow(all_wb_df)," posts ......"))
 			InsertDB(all_wb_df)
 		}
 		if (nrow(all_things)==0){
