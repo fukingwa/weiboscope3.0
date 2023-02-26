@@ -680,36 +680,34 @@ download_latest <- function(){
 		}	
 }
 
-clearCache <- function(){
-	remDr$navigate("chrome://settings/clearBrowserData")
-	Sys.sleep(1)
-	for (i in 1:12){
-		remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE004"))
-		Sys.sleep(1)
-	}
-	Sys.sleep(3)
-	remDr$buttondown()
-	Sys.sleep(3)
-	remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE007"))
-}
+#clearCache <- function(){
+#	remDr$navigate("chrome://settings/clearBrowserData")
+#	Sys.sleep(1)
+#	for (i in 1:12){
+#		remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE004"))
+#		Sys.sleep(1)
+#	}
+#	Sys.sleep(3)
+#	remDr$buttondown()
+#	Sys.sleep(3)
+#	remDr$findElement("xpath","//settings-ui")$sendKeysToElement(list("\uE007"))
+#}
 
-myswitch <- function(windowId){
-  qpath <- sprintf("%s/session/%s/window", remDr$serverURL, remDr$sessionInfo[["id"]])
-  remDr$queryRD(qpath, "POST", qdata = list(handle = windowId))
-}
+#myswitch <- function(windowId){
+#  qpath <- sprintf("%s/session/%s/window", remDr$serverURL, remDr$sessionInfo[["id"]])
+#  remDr$queryRD(qpath, "POST", qdata = list(handle = windowId))
+#}
 
-Close_all_tabs <- function(){
-	all_h <- remDr$getWindowHandles()
-	if (length(all_h) > 1){
-		for (i in 2:length(all_h)){
-			myswitch(all_h[[i]])
-			remDr$closeWindow()
-#		remDr$navigate("https://www.hku.hk")
-#		remDr$getCurrentWindowHandle()
-		}
-		myswitch(all_h[[1]])
-	}
-}
+#Close_all_tabs <- function(){
+#	all_h <- remDr$getWindowHandles()
+#	if (length(all_h) > 1){
+#		for (i in 2:length(all_h)){
+#			myswitch(all_h[[i]])
+#			remDr$closeWindow()
+#		}
+#		myswitch(all_h[[1]])
+#	}
+#}
 
 previous_hr <- as.integer(format(Sys.time(),"%H"))
 
@@ -903,7 +901,7 @@ while (1) {
 		Sys.sleep(5)
 		all_things <- all_things[all_things$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past "checking_time" hours
 		saveRDS(all_things,"all.rds")
-		Close_all_tabs()
+#		Close_all_tabs()
 	}, error = function(e){
 		print(e)
 		print("Second block error")
