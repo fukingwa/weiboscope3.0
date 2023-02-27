@@ -1,4 +1,4 @@
-#require(RSelenium)
+require(RSelenium)
 require(stringr)
 require(RPostgreSQL)
 require(rvest)
