@@ -87,27 +87,24 @@ starting_now <- function(){
 
 myvm <- what_vm(myip)
 
-if (!exists("start_v")){
-	start_v <- readline("1 - cold start  2 - jump start\n")
-} else {  ## test if remDr is dead, regenerate
-	tryCatch({
-		remDr$refresh()
-	}, error = function(e){
-		remDr <<- starting_now()	
-		censored <- c()
-		if (file.exists("all.rds")){
-			all_things <- readRDS("all.rds")
-		} else {
-			all_things <- data.frame()
-		}
-		Sys.sleep(10)	
-	})
-}
+#if (!exists("start_v")){
+#	start_v <- readline("1 - cold start  2 - jump start\n")
+#} else {  ## test if remDr is dead, regenerate
+#	tryCatch({
+#		remDr$refresh()
+#	}, error = function(e){
+#		remDr <<- starting_now()	
+#		censored <- c()
+#		if (file.exists("all.rds")){
+#			all_things <- readRDS("all.rds")
+#		} else {
+#			all_things <- data.frame()
+#		}
+#		Sys.sleep(10)	
+#	})
+#}
 
 Sys.setlocale(category = "LC_ALL", locale = "C")
-
-go_home()
-print("Welcome Home!")
 
 censored <- c()
 if (file.exists("all.rds")){
@@ -128,6 +125,8 @@ if (file.exists("WB.RData")){
 	quit()
 }
 
+start_v <- 1
+
 if (as.integer(start_v) == 1) {
 	remDr <- starting_now()
 	censored <- c()
@@ -138,9 +137,12 @@ if (as.integer(start_v) == 1) {
 	}
 	Sys.sleep(10)	
 	start_v <- 2
-	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
+#	cont <- readline("1) Login Weibo ; 2) then Press Enter to start\n")
 	print("Starting Weiboscope 3.0 .....")
 }
+
+go_home()
+print("Welcome Home!")
 
 start_date <- format(Sys.time(),"%Y-%m-%d")
 #start_date <- '2021-12-16'
