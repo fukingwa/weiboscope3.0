@@ -32,24 +32,25 @@ what_vm <- function(x){
 }
 
 go_home <- function(){
-	tryCatch({
-		rb_url <- str_extract_all(grep('webSocket',strsplit(getURL("http://127.0.0.1:9222/json"),"\n")[[1]],value=T),"ws://[^\"]+")[[1]]
-		ws <- WebSocket$new(rb_url)
-		Sys.sleep(2)
-		msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
-		ws$send(msg)
-		ws$close()
-	}, error = function(e){
-		system("killall chrome",intern=FALSE)
-		system("/home/fukingwa/Weibo/chrome.sh",intern=FALSE)
-		Sys.sleep(10)
-		rb_url <- str_extract_all(grep('webSocket',strsplit(getURL("http://127.0.0.1:9222/json"),"\n")[[1]],value=T),"ws://[^\"]+")[[1]]
-		ws <- WebSocket$new(rb_url)
-		Sys.sleep(2)
-		msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
-		ws$send(msg)
-		ws$close()
-	})
+	remDr$navigate("https://weibo.com/login.php")
+#	tryCatch({
+#		rb_url <- str_extract_all(grep('webSocket',strsplit(getURL("http://127.0.0.1:9222/json"),"\n")[[1]],value=T),"ws://[^\"]+")[[1]]
+#		ws <- WebSocket$new(rb_url)
+#		Sys.sleep(2)
+#		msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
+#		ws$send(msg)
+#		ws$close()
+#	}, error = function(e){
+#		system("killall chrome",intern=FALSE)
+#		system("/home/fukingwa/Weibo/chrome.sh",intern=FALSE)
+#		Sys.sleep(10)
+#		rb_url <- str_extract_all(grep('webSocket',strsplit(getURL("http://127.0.0.1:9222/json"),"\n")[[1]],value=T),"ws://[^\"]+")[[1]]
+#		ws <- WebSocket$new(rb_url)
+#		Sys.sleep(2)
+#		msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
+#		ws$send(msg)
+#		ws$close()
+#	})
 }
 
 starting_now <- function(){
