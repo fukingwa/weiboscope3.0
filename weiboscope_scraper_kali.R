@@ -682,6 +682,7 @@ while (1) {
 #				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py",intern=TRUE)
 #				text_html <- paste(text_html,collapse='',sep='')
 			Encoding(text_html) <- 'UTF-8'
+			print("Get HTML")
 			wb_df <- parse_wb_rds(text_html)
 			### Added for retweeted weibos
 			rt_wb_df <- rt_parse_wb_rds(text_html)
