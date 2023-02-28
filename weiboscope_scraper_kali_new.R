@@ -668,27 +668,28 @@ while (1) {
 #			Scrolling4Posts_New(1)   
 			i <- i + 1
 			### Random liking - 12.5%
-			if (sample(1:8,1) == 2){
-				all_likes <- remDr$findElements("xpath","//button[@class='woo-like-main toolbar_btn_Cg9tz']")
-				if (length(all_likes) != 0){
-					all_likes[[sample(length(all_likes),1)]]$clickElement()
-					print("Liking .......")
-				}
-			}
-			unfold_fn()   # unfold all shortened texts		
-			whole_body <- remDr$findElement(using = "xpath","//body")
-			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
-#			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py")){
-#				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py",intern=TRUE)
-#				text_html <- paste(text_html,collapse='',sep='')
-			Encoding(text_html) <- 'UTF-8'
-			print("Get HTML")
-			wb_df <- parse_wb_rds(text_html)
-			### Added for retweeted weibos
-			rt_wb_df <- rt_parse_wb_rds(text_html)
-			one_df <- rbind(wb_df,rt_wb_df)
-			all_wb_df <- rbind(all_wb_df,one_df)
+#			if (sample(1:8,1) == 2){
+#				all_likes <- remDr$findElements("xpath","//button[@class='woo-like-main toolbar_btn_Cg9tz']")
+#				if (length(all_likes) != 0){
+#					all_likes[[sample(length(all_likes),1)]]$clickElement()
+#					print("Liking .......")
+#				}
 #			}
+#			unfold_fn()   # unfold all shortened texts		
+#			whole_body <- remDr$findElement(using = "xpath","//body")
+#			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
+			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py")){
+				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py",intern=TRUE)
+				text_html <- paste(text_html,collapse='',sep='')
+				Encoding(text_html) <- 'UTF-8'
+				print("Get HTML")
+				wb_df <- parse_wb_rds(text_html)
+				### Added for retweeted weibos
+				rt_wb_df <- rt_parse_wb_rds(text_html)
+				one_df <- rbind(wb_df,rt_wb_df)
+				all_wb_df <- rbind(all_wb_df,one_df)
+			}
+			Sys.sleep(3)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
 				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				system(cmd,intern=FALSE)
