@@ -78,8 +78,8 @@ starting_now <- function(){
 	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 
-#	remDr$navigate("https://weibo.com/login.php")
-	go_home()
+	remDr$navigate("https://weibo.com/login.php")
+#	go_home()
 	print("Welcome Home!")
 	print("STARTING NEW remDr ........................")
 	return(remDr)
