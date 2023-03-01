@@ -694,8 +694,8 @@ while (1) {
 #			unfold_fn()   # unfold all shortened texts		
 #			whole_body <- remDr$findElement(using = "xpath","//body")
 #			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
-			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py")){
-				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py",intern=TRUE)
+			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py")){
+				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py",intern=TRUE)
 				text_html <- paste(text_html,collapse='',sep='')
 				Encoding(text_html) <- 'UTF-8'
 				print("Get HTML")
