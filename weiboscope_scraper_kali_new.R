@@ -1,4 +1,4 @@
-require(RSelenium)
+#require(RSelenium)
 require(stringr)
 require(RPostgreSQL)
 require(rvest)
@@ -6,13 +6,13 @@ require(RCurl)
 require(RJSONIO)
 require(emayili)
 
-if (!require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))) {
-	dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)
-	install.packages("websocket", lib = Sys.getenv("R_LIBS_USER"), repos = "https://cran.rstudio.com/")
-	require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))
-} else {
-	require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))
-}
+#if (!require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))) {
+#	dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)
+#	install.packages("websocket", lib = Sys.getenv("R_LIBS_USER"), repos = "https://cran.rstudio.com/")
+#	require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))
+#} else {
+#	require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))
+#}
 
 set.seed(as.numeric(Sys.time()))
 
@@ -34,7 +34,7 @@ what_vm <- function(x){
 go_home <- function(){
 #	remDr$navigate("https://weibo.com/login.php")
 	if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/home.py")){
-		cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/home"
+		cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/home.py"
 		system(cmd,intern=FALSE)
 	}
 #	tryCatch({
