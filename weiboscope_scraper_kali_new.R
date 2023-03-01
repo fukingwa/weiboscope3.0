@@ -33,10 +33,21 @@ what_vm <- function(x){
 
 go_home <- function(){
 #	remDr$navigate("https://weibo.com/login.php")
-	if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/home.py")){
-		cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/home.py"
-		system(cmd,intern=FALSE)
-	}
+	tryCatch({
+		if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/home.py")){
+			cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/home.py"
+			system(cmd,intern=FALSE)
+		}
+	}, error = function(e){
+		system("killall chrome",intern=FALSE)
+		system("/home/fukingwa/Weibo/chrome.sh",intern=FALSE)
+		Sys.sleep(10)
+		if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/home.py")){
+			cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/home.py"
+			system(cmd,intern=FALSE)
+		}
+	})
+		
 #	tryCatch({
 #		rb_url <- str_extract_all(grep('webSocket',strsplit(getURL("http://127.0.0.1:9222/json"),"\n")[[1]],value=T),"ws://[^\"]+")[[1]]
 #		ws <- WebSocket$new(rb_url)
