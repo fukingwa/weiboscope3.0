@@ -32,7 +32,11 @@ what_vm <- function(x){
 }
 
 go_home <- function(){
-	remDr$navigate("https://weibo.com/login.php")
+#	remDr$navigate("https://weibo.com/login.php")
+	if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/home.py")){
+		cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/home"
+		system(cmd,intern=FALSE)
+	}
 #	tryCatch({
 #		rb_url <- str_extract_all(grep('webSocket',strsplit(getURL("http://127.0.0.1:9222/json"),"\n")[[1]],value=T),"ws://[^\"]+")[[1]]
 #		ws <- WebSocket$new(rb_url)
@@ -78,8 +82,8 @@ starting_now <- function(){
 	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 	#q <- remDr$setAsyncScriptTimeout(milliseconds = 300000)
 
-	remDr$navigate("https://weibo.com/login.php")
-#	go_home()
+#	remDr$navigate("https://weibo.com/login.php")
+	go_home()
 	print("Welcome Home!")
 	print("STARTING NEW remDr ........................")
 	return(remDr)
@@ -127,7 +131,8 @@ if (file.exists("WB.RData")){
 
 start_v <- 1
 
-if (as.integer(start_v) == 1) {
+if (0) {
+#if (as.integer(start_v) == 1) {
 	remDr <- starting_now()
 	censored <- c()
 	if (file.exists("all.rds")){
