@@ -846,7 +846,7 @@ while (1) {
 	})
 }
 
-remDr$quit()
+
 
 #InsertDB(tm_wb)
 #cookies <- remDr$getAllCookies()
