@@ -638,6 +638,7 @@ while (1) {
 	current_hr <- as.integer(format(Sys.time(),"%H"))
 	if (previous_hr != current_hr){
 		print("Just pass :00")
+		break
 #		print("Clear Cache")
 #		clearCache()
 	}	
@@ -844,6 +845,8 @@ while (1) {
   		source("run_weiboscope.R")
 	})
 }
+
+remDr$quit()
 
 #InsertDB(tm_wb)
 #cookies <- remDr$getAllCookies()
