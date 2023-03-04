@@ -707,8 +707,8 @@ while (1) {
 				all_wb_df <- rbind(all_wb_df,one_df)
 			}
 			Sys.sleep(3)
-			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
-				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
+			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2d.py")){
+				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2d.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				system(cmd,intern=FALSE)
 			}
 		}
