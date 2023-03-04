@@ -638,7 +638,7 @@ while (1) {
 	current_hr <- as.integer(format(Sys.time(),"%H"))
 	if (previous_hr != current_hr){
 		print("Just pass :00")
-		break
+#		break
 #		print("Clear Cache")
 #		clearCache()
 	}	
@@ -707,8 +707,8 @@ while (1) {
 				all_wb_df <- rbind(all_wb_df,one_df)
 			}
 			Sys.sleep(3)
-			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2d.py")){
-				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2d.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
+			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
+				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				system(cmd,intern=FALSE)
 			}
 		}
@@ -832,6 +832,11 @@ while (1) {
 		all_things <- all_things[all_things$created_at >= (Sys.time() - (checking_time*60*60)),]  # checking the past "checking_time" hours
 		saveRDS(all_things,"all.rds")
 #		Close_all_tabs()
+		max_mem <- as.integer(system("ps eo rss | sort -nr | head -1",intern=TRUE))
+		print(paste0("Max mem = ",max_mem))
+		if (max_mem > 1000000){
+			break
+		}
 	}, error = function(e){
 		print(e)
 		print("Second block error")
