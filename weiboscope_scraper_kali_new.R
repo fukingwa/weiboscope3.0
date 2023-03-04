@@ -834,7 +834,7 @@ while (1) {
 #		Close_all_tabs()
 		max_mem <- as.integer(system("ps eo rss | sort -nr | head -1",intern=TRUE))
 		print(paste0("Max mem = ",max_mem))
-		if (max_mem > 1000000){
+		if (max_mem > 1500000){
 			break
 		}
 	}, error = function(e){
