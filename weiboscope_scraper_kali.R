@@ -682,7 +682,7 @@ while (1) {
 #				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold.py",intern=TRUE)
 #				text_html <- paste(text_html,collapse='',sep='')
 			Encoding(text_html) <- 'UTF-8'
-			print("Get HTML")
+#			print("Get HTML")
 			wb_df <- parse_wb_rds(text_html)
 			### Added for retweeted weibos
 			rt_wb_df <- rt_parse_wb_rds(text_html)
@@ -693,6 +693,17 @@ while (1) {
 				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				system(cmd,intern=FALSE)
 			}
+			Sys.sleep(2)
+			unfold_fn()   # unfold all shortened texts		
+			whole_body <- remDr$findElement(using = "xpath","//body")
+			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
+			Encoding(text_html) <- 'UTF-8'
+			print("Get HTML")
+			wb_df <- parse_wb_rds(text_html)
+			### Added for retweeted weibos
+			rt_wb_df <- rt_parse_wb_rds(text_html)
+			one_df <- rbind(wb_df,rt_wb_df)
+			all_wb_df <- rbind(all_wb_df,one_df)
 		}
 		all_wb_df <- all_wb_df[!duplicated(all_wb_df$id),]
 		all_wb_df <- all_wb_df[all_wb_df$user_id != "",] 
