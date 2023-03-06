@@ -695,6 +695,11 @@ while (1) {
 #			unfold_fn()   # unfold all shortened texts		
 #			whole_body <- remDr$findElement(using = "xpath","//body")
 #			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
+			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
+				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
+				system(cmd,intern=FALSE)
+			}
+			Sys.sleep(3)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py")){
 				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py",intern=TRUE)
 				text_html <- paste(text_html,collapse='',sep='')
@@ -705,11 +710,6 @@ while (1) {
 				rt_wb_df <- rt_parse_wb_rds(text_html)
 				one_df <- rbind(wb_df,rt_wb_df)
 				all_wb_df <- rbind(all_wb_df,one_df)
-			}
-			Sys.sleep(3)
-			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
-				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
-				system(cmd,intern=FALSE)
 			}
 		}
 		all_wb_df <- all_wb_df[!duplicated(all_wb_df$id),]
