@@ -660,7 +660,8 @@ while (1) {
 #			unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
 #		}
 		start_v <- 2
- 		source("run_weiboscope.R")
+		stop("Stopped 1")
+# 		source("run_weiboscope.R")
 	}
 # Remove all db connections
 	removedb <- lapply(dbListConnections(drv = dbDriver("PostgreSQL")), function(x) {dbDisconnect(conn = x)})
@@ -754,7 +755,8 @@ while (1) {
 			print("Send email error")
 		}
   		start_v <- 2
-  		source("run_weiboscope.R")
+		stop("Error first block")
+#  		source("run_weiboscope.R")
 	})
 	
 	threshold_chk <- 5
@@ -860,7 +862,8 @@ while (1) {
 			print("Send email error")
 		}
   		start_v <- 2
-  		source("run_weiboscope.R")
+		stop("Error second block")
+#		source("run_weiboscope.R")
 	})
 }
 
