@@ -726,7 +726,7 @@ while (1) {
 				all_wb_df <- rbind(all_wb_df,one_df)
 			}
 		}
-		saveRDS(all_wb_df,"all_wb_df_test.rds")
+		saveRDS(all_wb_df,"/home/fukingwa/Weibo/all_wb_df_test.rds")
 		all_wb_df <- all_wb_df[!duplicated(all_wb_df$id),]
 		all_wb_df <- all_wb_df[all_wb_df$user_id != "",] 
 		all_wb_df <- all_wb_df[!is.na(all_wb_df$user_id),] 
