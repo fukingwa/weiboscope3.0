@@ -727,6 +727,7 @@ while (1) {
 			}
 		}
 		saveRDS(all_wb_df,"/home/fukingwa/Weibo/all_wb_df_test.rds")
+		all_wb_df <- all_wb_df[order(nchar(all_wb_df$text),decreasing=TRUE),]
 		all_wb_df <- all_wb_df[!duplicated(all_wb_df$id),]
 		all_wb_df <- all_wb_df[all_wb_df$user_id != "",] 
 		all_wb_df <- all_wb_df[!is.na(all_wb_df$user_id),] 
