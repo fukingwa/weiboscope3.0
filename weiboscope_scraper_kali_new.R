@@ -39,13 +39,14 @@ go_home <- function(){
 			system(cmd,intern=FALSE)
 		}
 	}, error = function(e){
-		system("killall chrome",intern=FALSE)
-		system("/home/fukingwa/Weibo/chrome.sh",intern=FALSE)
+#		system("killall chrome",intern=FALSE)
+#		system("/home/fukingwa/Weibo/chrome.sh",intern=FALSE)
 		Sys.sleep(10)
-		if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/home.py")){
-			cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/home.py"
-			system(cmd,intern=FALSE)
-		}
+		stop("Can't home")
+#		if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/home.py")){
+#			cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/home.py"
+#			system(cmd,intern=FALSE)
+#		}
 	})
 		
 #	tryCatch({
