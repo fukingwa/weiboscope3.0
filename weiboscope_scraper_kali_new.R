@@ -700,31 +700,45 @@ while (1) {
 #			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py")){
 				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py",intern=TRUE)
-				text_html <- paste(text_html,collapse='',sep='')
-				Encoding(text_html) <- 'UTF-8'
-				print("Get HTML")
-				wb_df <- parse_wb_rds(text_html)
-				### Added for retweeted weibos
-				rt_wb_df <- rt_parse_wb_rds(text_html)
-				one_df <- rbind(wb_df,rt_wb_df)
-				all_wb_df <- rbind(all_wb_df,one_df)
+				if (attr(text_html,"status") == 5){
+					print("UNFOLD1 Status 5 error")
+					dfkdskffkdkfkd
+				) else (
+					text_html <- paste(text_html,collapse='',sep='')
+					Encoding(text_html) <- 'UTF-8'
+					print("Get HTML")
+					wb_df <- parse_wb_rds(text_html)
+					### Added for retweeted weibos
+					rt_wb_df <- rt_parse_wb_rds(text_html)
+					one_df <- rbind(wb_df,rt_wb_df)
+					all_wb_df <- rbind(all_wb_df,one_df)
+				}
 			}
 			Sys.sleep(3)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
 				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
-				system(cmd,intern=FALSE)
+				pw_status <- system(cmd,intern=TRUE)
+				if (attr(pw_status,"status") == 5){
+					print("PW Status 5 error")
+					dfkdskffkdkfkd
+				) 
 			}
 			Sys.sleep(3)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py")){
 				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py",intern=TRUE)
-				text_html <- paste(text_html,collapse='',sep='')
-				Encoding(text_html) <- 'UTF-8'
-				print("Get HTML")
-				wb_df <- parse_wb_rds(text_html)
-				### Added for retweeted weibos
-				rt_wb_df <- rt_parse_wb_rds(text_html)
-				one_df <- rbind(wb_df,rt_wb_df)
-				all_wb_df <- rbind(all_wb_df,one_df)
+				if (attr(text_html,"status") == 5){
+					print("UNFOLD1 Status 5 error")
+					dfkdskffkdkfkd
+				) else (
+					text_html <- paste(text_html,collapse='',sep='')
+					Encoding(text_html) <- 'UTF-8'
+					print("Get HTML")
+					wb_df <- parse_wb_rds(text_html)
+					### Added for retweeted weibos
+					rt_wb_df <- rt_parse_wb_rds(text_html)
+					one_df <- rbind(wb_df,rt_wb_df)
+					all_wb_df <- rbind(all_wb_df,one_df)
+				}
 			}
 		}
 		saveRDS(all_wb_df,"/home/fukingwa/Weibo/all_wb_df_test.rds")
