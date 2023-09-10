@@ -703,7 +703,7 @@ while (1) {
 				if (attr(text_html,"status") == 5){
 					print("UNFOLD1 Status 5 error")
 					dfkdskffkdkfkd
-				) else (
+				} else {
 					text_html <- paste(text_html,collapse='',sep='')
 					Encoding(text_html) <- 'UTF-8'
 					print("Get HTML")
@@ -721,7 +721,7 @@ while (1) {
 				if (attr(pw_status,"status") == 5){
 					print("PW Status 5 error")
 					dfkdskffkdkfkd
-				) 
+				} 
 			}
 			Sys.sleep(3)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py")){
@@ -729,7 +729,7 @@ while (1) {
 				if (attr(text_html,"status") == 5){
 					print("UNFOLD1 Status 5 error")
 					dfkdskffkdkfkd
-				) else (
+				} else {
 					text_html <- paste(text_html,collapse='',sep='')
 					Encoding(text_html) <- 'UTF-8'
 					print("Get HTML")
