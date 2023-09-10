@@ -700,10 +700,7 @@ while (1) {
 #			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py")){
 				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py",intern=TRUE)
-				if (attr(text_html,"status") == 5){
-					print("UNFOLD1 Status 5 error")
-					dfkdskffkdkfkd
-				} else {
+				if (is.null(attr(text_html,"status"))){
 					text_html <- paste(text_html,collapse='',sep='')
 					Encoding(text_html) <- 'UTF-8'
 					print("Get HTML")
@@ -712,13 +709,16 @@ while (1) {
 					rt_wb_df <- rt_parse_wb_rds(text_html)
 					one_df <- rbind(wb_df,rt_wb_df)
 					all_wb_df <- rbind(all_wb_df,one_df)
+				} else if (attr(text_html,"status") == 5){
+					print("UNFOLD1 Status 5 error")
+					dfkdskffkdkfkd
 				}
 			}
 			Sys.sleep(3)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
 				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
 				pw_status <- system(cmd,intern=TRUE)
-				if (attr(pw_status,"status") == 5){
+				if (!is.null(attr(pw_status,"status"))){
 					print("PW Status 5 error")
 					dfkdskffkdkfkd
 				} 
@@ -726,10 +726,7 @@ while (1) {
 			Sys.sleep(3)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py")){
 				text_html <- system("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py",intern=TRUE)
-				if (attr(text_html,"status") == 5){
-					print("UNFOLD1 Status 5 error")
-					dfkdskffkdkfkd
-				} else {
+				if (is.null(attr(text_html,"status"))){
 					text_html <- paste(text_html,collapse='',sep='')
 					Encoding(text_html) <- 'UTF-8'
 					print("Get HTML")
@@ -738,6 +735,9 @@ while (1) {
 					rt_wb_df <- rt_parse_wb_rds(text_html)
 					one_df <- rbind(wb_df,rt_wb_df)
 					all_wb_df <- rbind(all_wb_df,one_df)
+				} else if (attr(text_html,"status") == 5){
+					print("UNFOLD1 Status 5 error")
+					dfkdskffkdkfkd
 				}
 			}
 		}
