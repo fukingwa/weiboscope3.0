@@ -722,7 +722,7 @@ while (1) {
 					print("PW Status 5 error")
 					dfkdskffkdkfkd
 				} else {
-					print(pw_status)
+					cat(paste(pw_status,collapse="\n"),"\n")
 				}
 			}
 			Sys.sleep(3)
