@@ -721,7 +721,9 @@ while (1) {
 				if (!is.null(attr(pw_status,"status"))){
 					print("PW Status 5 error")
 					dfkdskffkdkfkd
-				} 
+				} else {
+					print(pw_status)
+				}
 			}
 			Sys.sleep(3)
 			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/unfold1.py")){
