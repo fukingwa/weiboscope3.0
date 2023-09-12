@@ -707,6 +707,7 @@ while (1) {
 			one_df <- rbind(wb_df,rt_wb_df)
 			all_wb_df <- rbind(all_wb_df,one_df)
 		}
+		all_wb_df <- all_wb_df[order(nchar(all_wb_df$text),decreasing=TRUE),]
 		all_wb_df <- all_wb_df[!duplicated(all_wb_df$id),]
 		all_wb_df <- all_wb_df[all_wb_df$user_id != "",] 
 		all_wb_df <- all_wb_df[!is.na(all_wb_df$user_id),] 
