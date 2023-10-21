@@ -32,15 +32,15 @@ what_vm <- function(x){
 }
 
 go_home <- function(){
-	remDr$navigate("https://weibo.com/login.php")
-#	tryCatch({
+	tryCatch({
+		remDr$navigate("https://weibo.com/login.php")
 #		rb_url <- str_extract_all(grep('webSocket',strsplit(getURL("http://127.0.0.1:9222/json"),"\n")[[1]],value=T),"ws://[^\"]+")[[1]]
 #		ws <- WebSocket$new(rb_url)
 #		Sys.sleep(2)
 #		msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
 #		ws$send(msg)
 #		ws$close()
-#	}, error = function(e){
+	}, error = function(e){
 #		system("killall chrome",intern=FALSE)
 #		system("/home/fukingwa/Weibo/chrome.sh",intern=FALSE)
 #		Sys.sleep(10)
@@ -50,7 +50,8 @@ go_home <- function(){
 #		msg <- '{ "id":2, "method":"Page.navigate", "params":{"url": "http://weibo.com/login.php"} }'
 #		ws$send(msg)
 #		ws$close()
-#	})
+		stop("Can't home")
+	})
 }
 
 starting_now <- function(){
@@ -629,7 +630,8 @@ while (1) {
 	}	
 	previous_hr <- current_hr 
 	if (current_hr >= 2 & current_hr <= 6){
-		Sys.sleep(600)
+#		Sys.sleep(600)
+		stop("Stopped")
 		next
 	}
 	## Update source code at 7am everyday
@@ -644,7 +646,8 @@ while (1) {
 #			unzip(paste0(file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"),"/chromedriver_win32.zip"),exdir=file.path(Sys.getenv("USERPROFILE"),"Desktop","Selenium"))
 #		}
 		start_v <- 2
- 		source("run_weiboscope.R")
+		stop("Stopped 1")
+# 		source("run_weiboscope.R")
 	}
 # Remove all db connections
 	removedb <- lapply(dbListConnections(drv = dbDriver("PostgreSQL")), function(x) {dbDisconnect(conn = x)})
@@ -737,7 +740,8 @@ while (1) {
 			print("Send email error")
 		}
   		start_v <- 2
-  		source("run_weiboscope.R")
+		stop("Error first block")
+#  		source("run_weiboscope.R")
 	})
 	
 	threshold_chk <- 5
@@ -838,7 +842,8 @@ while (1) {
 			print("Send email error")
 		}
   		start_v <- 2
-  		source("run_weiboscope.R")
+		stop("Error second block")
+# 		source("run_weiboscope.R")
 	})
 }
 
