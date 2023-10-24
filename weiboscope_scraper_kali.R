@@ -744,7 +744,7 @@ while (1) {
 #  		source("run_weiboscope.R")
 	})
 	
-	threshold_chk <- 5
+	threshold_chk <- 10
 	need_to_chk <- unique(all_things$user_id[order(all_things$created_at)][1:ifelse(nrow(all_things)<threshold_chk,nrow(all_things),threshold_chk)])
 	print(paste0("Need to check: ",length(need_to_chk)," [",Sys.time(),"]"))
 	
