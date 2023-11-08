@@ -16,10 +16,12 @@ if (!require(websocket, lib.loc = Sys.getenv("R_LIBS_USER"))) {
 
 set.seed(as.numeric(Sys.time()))
 
-myip <- getURL("ifconfig.me/ip")
+#myip <- getURL("ifconfig.me/ip")
+myip <- system("/usr/bin/curl -4 -s 'https://ifconfig.me/ip'",intern=TRUE)
 
 if (myip == ""){
-	myip <- getURL("api.ipify.org")	
+	myip <- system("/usr/bin/curl -4 -s 'https://ifconfig.me/ip'",intern=TRUE)
+#	myip <- getURL("api.ipify.org")	
 }
 
 if (myip == ""){
