@@ -374,7 +374,7 @@ unfold_fn <- function(){
 	if (length(unfold_l) != 0){
 		for (i in 1:length(unfold_l)){
 			e <- suppressMessages(try(unfold_l[[i]]$clickElement(),silent=TRUE))
-			Sys.sleep(1)
+			Sys.sleep(2)
 		}
 	}
 }
@@ -742,6 +742,8 @@ while (1) {
 					print("Liking .......")
 				}
 			}
+			unfold_fn()   # unfold all shortened texts		
+			Sys.sleep(5)
 			unfold_fn()   # unfold all shortened texts		
 			whole_body <- remDr$findElement(using = "xpath","//body")
 			text_html <- whole_body$getElementAttribute("innerHTML")[[1]]
