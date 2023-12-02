@@ -480,6 +480,8 @@ InsertDB_NEW <- function(df){
 
 #  if (grepl("收起",df$text)){
   df1 <- df[grepl("收起",df$text),]
+  df1 <- df1[!is.na(df1$text),]
+  print("Inserting folded posts: ",nrow(df1))
   strSQL <- paste(
     'insert into rp_sinaweibo (id,text) values', paste(sprintf("(%s,'%s')",df1$id,gsub("'","''",df1$text)), collapse=', '),
     'on conflict (id) do update set text = EXCLUDED.text', sep = ' '
@@ -488,9 +490,9 @@ InsertDB_NEW <- function(df){
   strSQL <- gsub("\\(NA,","\\(NULL,",strSQL)
   strSQL <- gsub(",NA\\)",",NULL\\)",strSQL)
   strSQL <- gsub(",NA,",",NULL,",strSQL)
+  print(strSQL)
   tryCatch({
 	  dbSendQuery(con, strSQL)
-	  print("Inserting folded posts: ",nrow(df1))
   }, error = function(e) {
 	  Sys.sleep(10)
 	  print("Retrying dbsendquery ......")
