@@ -457,48 +457,50 @@ InsertDB_NEW <- function(df){
     x[x == ""] <- NA
     return(x)
   }
-  tryCatch({
-	Sys.sleep(5)
-  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-	on.exit(dbDisconnect(con))  
-  	dbGetQuery(con, "set client_encoding to 'utf-8'")
-  }, error = function(e) {
-	Sys.sleep(60)
-	print("Retrying InsertDB connection .....")
-	tryCatch({  
-  		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
-		on.exit(dbDisconnect(con))
-  		dbGetQuery(con, "set client_encoding to 'utf-8'")
-	}, error = function(e){
-		Sys.sleep(60)
-		print(e)
-		return(NA)
-	   }
-	)
-     }
-  )
-
 #  if (grepl("收起",df$text)){
-  df1 <- df[grepl("收起",df$text),]
-  df1 <- df1[!is.na(df1$text),]
-  print("Inserting folded posts: ",nrow(df1))
-  strSQL <- paste(
-    'insert into rp_sinaweibo (id,text) values', paste(sprintf("(%s,'%s')",df1$id,gsub("'","''",df1$text)), collapse=', '),
-    'on conflict (id) do update set text = EXCLUDED.text', sep = ' '
-  )
-  strSQL <- gsub(",NA,",",NULL,",strSQL)
-  strSQL <- gsub("\\(NA,","\\(NULL,",strSQL)
-  strSQL <- gsub(",NA\\)",",NULL\\)",strSQL)
-  strSQL <- gsub(",NA,",",NULL,",strSQL)
-  print(strSQL)
-  tryCatch({
-	  dbSendQuery(con, strSQL)
-  }, error = function(e) {
-	  Sys.sleep(10)
-	  print("Retrying dbsendquery ......")
-	  dbSendQuery(con, strSQL)
-     }
-  )
+  if (sum(grepl("收起",df$text))!=0) {
+	  tryCatch({
+		Sys.sleep(5)
+	  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+		on.exit(dbDisconnect(con))  
+	  	dbGetQuery(con, "set client_encoding to 'utf-8'")
+	  }, error = function(e) {
+		Sys.sleep(60)
+		print("Retrying InsertDB connection .....")
+		tryCatch({  
+	  		con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
+			on.exit(dbDisconnect(con))
+	  		dbGetQuery(con, "set client_encoding to 'utf-8'")
+		}, error = function(e){
+			Sys.sleep(60)
+			print(e)
+			return(NA)
+		   }
+		)
+	     }
+	  )	
+	  df1 <- df[grepl("收起",df$text),]
+	  df1 <- df1[!is.na(df1$text),]
+	  print("Inserting folded posts: ",nrow(df1))
+	  strSQL <- paste(
+	    'insert into rp_sinaweibo (id,text) values', paste(sprintf("(%s,'%s')",df1$id,gsub("'","''",df1$text)), collapse=', '),
+	    'on conflict (id) do update set text = EXCLUDED.text', sep = ' '
+	  )
+	  strSQL <- gsub(",NA,",",NULL,",strSQL)
+	  strSQL <- gsub("\\(NA,","\\(NULL,",strSQL)
+	  strSQL <- gsub(",NA\\)",",NULL\\)",strSQL)
+	  strSQL <- gsub(",NA,",",NULL,",strSQL)
+	  tryCatch({
+		  dbSendQuery(con, strSQL)
+	  }, error = function(e) {
+		  Sys.sleep(10)
+		  print("Retrying dbsendquery ......")
+		  dbSendQuery(con, strSQL)
+	     }
+	  )
+  } else {
+	  print("No folded posts")
+  }
 
 }
 
