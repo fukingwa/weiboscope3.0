@@ -394,7 +394,7 @@ check_censored <- function(id){
 	})
 }
 
-InsertDB <- function(df){
+InsertDB_OLD <- function(df){
   tona <- function(x){
     x[x == ""] <- NA
     return(x)
@@ -503,7 +503,7 @@ InsertDB <- function(df){
   Sys.sleep(3)
   df1 <- df[grepl("收起",df$text),]
   strSQL <- paste(
-    'insert into rp_sinaweibo (id,text) values', paste(sprintf("(%s,'%s')",df1$id,gsub("'","''",df1$text),), collapse=', '),
+    'insert into rp_sinaweibo (id,text) values', paste(sprintf("(%s,'%s')",df1$id,gsub("'","''",df1$text)), collapse=', '),
     'on conflict (id) do update set text = EXCLUDED.text', sep = ' '
   )
   strSQL <- gsub(",NA,",",NULL,",strSQL)
@@ -512,7 +512,7 @@ InsertDB <- function(df){
   strSQL <- gsub(",NA,",",NULL,",strSQL)
   tryCatch({
 	  dbSendQuery(con, strSQL)
-
+	  print("Inserting 收起 posts: ",nrow(df1))
   }, error = function(e) {
 	  Sys.sleep(10)
 	  print("Retrying dbsendquery ......")
