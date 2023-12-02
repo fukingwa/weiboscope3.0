@@ -394,7 +394,7 @@ check_censored <- function(id){
 	})
 }
 
-InsertDB_OLD <- function(df){
+InsertDB <- function(df){
   tona <- function(x){
     x[x == ""] <- NA
     return(x)
@@ -452,14 +452,13 @@ InsertDB_OLD <- function(df){
 #  dbDisconnect(con)
 }
 
-
-
-InsertDB <- function(df){
+InsertDB_NEW <- function(df){
   tona <- function(x){
     x[x == ""] <- NA
     return(x)
   }
   tryCatch({
+	Sys.sleep(5)
   	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
 	on.exit(dbDisconnect(con))  
   	dbGetQuery(con, "set client_encoding to 'utf-8'")
@@ -479,28 +478,7 @@ InsertDB <- function(df){
      }
   )
 
-  dbinserted_time <- rep(as.character(Sys.time()),nrow(df))
-
-  strSQL <- paste(
-    'insert into rp_sinaweibo (id,user_id,screen_name,retweeted_status_user_id,retweeted_status,created_at,text,original_pic,in_reply_to_screen_name,reposts_count,comments_count,attitudes_count,dbinserted,deleted_last_seen,myip) values',
-    paste(sprintf("(%s,%s,'%s',%s,%s,'%s','%s','%s','%s',%s,%s,%s,'%s','%s','%s')",df$id,tona(df$user_id),gsub("'","''",df$screen_name),df$retweeted_status_user_id,df$retweeted_status,df$created_at,gsub("'","''",df$text),df$original_pic,gsub("'","''",df$in_reply_to_screen_name),tona(df$reposts_count),tona(df$comments_count),tona(df$attitudes_count),dbinserted_time,dbinserted_time,myip), collapse=', '),
-    'on conflict (id) do update set permission_denied = FALSE, deleted = NULL, deleted_last_seen = EXCLUDED.deleted_last_seen, reposts_count = EXCLUDED.reposts_count, comments_count = EXCLUDED.comments_count, attitudes_count = EXCLUDED.attitudes_count', sep = ' '
-  )
-  strSQL <- gsub(",NA,",",NULL,",strSQL)
-  strSQL <- gsub("\\(NA,","\\(NULL,",strSQL)
-  strSQL <- gsub(",NA\\)",",NULL\\)",strSQL)
-  strSQL <- gsub(",NA,",",NULL,",strSQL)
-  tryCatch({
-	  dbSendQuery(con, strSQL)
-
-  }, error = function(e) {
-	  Sys.sleep(10)
-	  print("Retrying dbsendquery ......")
-	  dbSendQuery(con, strSQL)
-     }
-  )
 #  if (grepl("收起",df$text)){
-  Sys.sleep(3)
   df1 <- df[grepl("收起",df$text),]
   strSQL <- paste(
     'insert into rp_sinaweibo (id,text) values', paste(sprintf("(%s,'%s')",df1$id,gsub("'","''",df1$text)), collapse=', '),
@@ -512,7 +490,7 @@ InsertDB <- function(df){
   strSQL <- gsub(",NA,",",NULL,",strSQL)
   tryCatch({
 	  dbSendQuery(con, strSQL)
-	  print("Inserting 收起 posts: ",nrow(df1))
+	  print("Inserting folded posts: ",nrow(df1))
   }, error = function(e) {
 	  Sys.sleep(10)
 	  print("Retrying dbsendquery ......")
@@ -799,6 +777,7 @@ while (1) {
 		if (nrow(all_wb_df)!=0){
 			print(paste0("Inserting ",nrow(all_wb_df)," posts ......"))
 			InsertDB(all_wb_df)
+			InsertDB_NEW(all_wb_df)
 		}
 		if (nrow(all_things)==0){
 			all_things <- all_wb_df
