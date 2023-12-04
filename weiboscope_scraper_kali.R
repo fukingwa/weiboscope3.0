@@ -458,7 +458,9 @@ InsertDB_NEW <- function(df){
     return(x)
   }
 #  if (grepl("收起",df$text)){
-  if (sum(grepl("收起",df$text))!=0) {
+  folded <- "收起"
+  Encoding(folded) <- 'UTF-8'
+  if (sum(grepl(folded,df$text))!=0) {
 	  tryCatch({
 		Sys.sleep(5)
 	  	con <- dbConnect(dbDriver("PostgreSQL"), user=DB_UNAME, dbname=DB_NAME, host=HOSTIP)
