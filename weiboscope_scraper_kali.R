@@ -377,6 +377,13 @@ unfold_fn <- function(){
 			Sys.sleep(2)
 		}
 	}
+	unfold_l <- remDr$findElements("xpath","//div[@class='Feed_retweet_JqZJb']//span[@class='expand']")
+	if (length(unfold_l) != 0){
+		for (i in 1:length(unfold_l)){
+			e <- suppressMessages(try(unfold_l[[i]]$clickElement(),silent=TRUE))
+			Sys.sleep(2)
+		}
+	}
 }
 
 check_censored <- function(id){
