@@ -459,7 +459,9 @@ InsertDB_NEW <- function(df){
   }
 #  if (grepl("收起",df$text)){
   folded <- "收起"
+  expand <- "展开"
   Encoding(folded) <- 'UTF-8'
+  Encoding(expand) <- 'UTF-8'
   if (sum(grepl(folded,df$text))!=0) {
 	  tryCatch({
 		Sys.sleep(5)
@@ -484,6 +486,7 @@ InsertDB_NEW <- function(df){
 	  df1 <- df[grepl(folded,df$text),]
 	  df1 <- df1[!is.na(df1$text),]
 	  print(paste0("Inserting folded posts: ",nrow(df1)))
+	  print(paste0("Detected expand folded posts: ",sum(grepl(expand,df$text))))
 	  strSQL <- paste(
 	    'insert into rp_sinaweibo (id,text) values', paste(sprintf("(%s,'%s')",df1$id,gsub("'","''",df1$text)), collapse=', '),
 	    'on conflict (id) do update set text = EXCLUDED.text', sep = ' '
