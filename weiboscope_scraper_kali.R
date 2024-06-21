@@ -19,6 +19,10 @@ set.seed(as.numeric(Sys.time()))
 #myip <- getURL("ifconfig.me/ip")
 myip <- system("/usr/bin/curl -4 -s 'https://ifconfig.me/ip'",intern=TRUE)
 
+###
+system("/usr/bin/cp /home/fukingwa/Weibo/18T/weibo_scap/.pgpass /home/fukingwa")
+###
+
 if (myip == ""){
 	myip <- system("/usr/bin/curl -4 -s 'https://ifconfig.me/ip'",intern=TRUE)
 #	myip <- getURL("api.ipify.org")	
