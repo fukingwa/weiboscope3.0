@@ -125,10 +125,10 @@ if (!exists("all_things") & exists("all")){
 }
 
 ## Envirnoment constants
-if (file.exists("/home/fukingwa/Weibo/WB.RData")){
-	load("/home/fukingwa/Weibo/WB.RData")
-#if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")){
-#	load("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")
+#if (file.exists("/home/fukingwa/Weibo/WB.RData")){
+#	load("/home/fukingwa/Weibo/WB.RData")
+if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")){
+	load("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")
 } else {
 	print("Missing WB.RData")
 	quit()
