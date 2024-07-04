@@ -19,8 +19,8 @@ set.seed(as.numeric(Sys.time()))
 #myip <- getURL("ifconfig.me/ip")
 myip <- system("/usr/bin/curl -4 -s 'https://ifconfig.me/ip'",intern=TRUE)
 
-###
-system("/usr/bin/cp /home/fukingwa/Weibo/18T/weibo_scap/.pgpass /home/fukingwa")
+### changed on July 4 2024
+#system("/usr/bin/cp /home/fukingwa/Weibo/18T/weibo_scap/.pgpass /home/fukingwa")
 ###
 
 if (myip == ""){
@@ -125,8 +125,10 @@ if (!exists("all_things") & exists("all")){
 }
 
 ## Envirnoment constants
-if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")){
-	load("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")
+if (file.exists("/home/fukingwa/Weibo/WB.RData")){
+	load("/home/fukingwa/Weibo/WB.RData")
+#if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")){
+#	load("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")
 } else {
 	print("Missing WB.RData")
 	quit()
