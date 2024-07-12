@@ -224,6 +224,19 @@ parse_wb_rds <- function(txt){
 		## Created_at
 			created_at <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"title")
 			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
+			created_at_txt <- html_text(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'))
+			if (is.na(created_at) & grepl('小时前|分钟前',created_at_txt)){
+				txt_num <- as.integer(gsub('小时前|分钟前','',created_at_txt))
+				if (grepl('分钟前',created_at_txt)){
+					created_at <- Sys.time() - 60*txt_num
+				} else if (grepl('小时前',created_at_txt)){
+					created_at <- Sys.time() - 60*60*txt_num
+				} else {
+					created_at <- Sys.time()
+				}
+			} else {
+				created_at <- Sys.time()
+			}
 		## Href
 			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"href")
 			user_id <- as.character(strsplit(href,"/|\\?")[[1]][4])
@@ -323,6 +336,19 @@ rt_parse_wb_rds <- function(txt){
 		## RT created_at
 			rt_created_at <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"title")
 			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
+			rt_created_at_txt <- html_text(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'))
+			if (is.na(rt_created_at) & grepl('小时前|分钟前',rt_created_at_txt)){
+				txt_num <- as.integer(gsub('小时前|分钟前','',rt_created_at_txt))
+				if (grepl('分钟前',rt_created_at_txt)){
+					rt_created_at <- Sys.time() - 60*txt_num
+				} else if (grepl('小时前',rt_created_at_txt)){
+					rt_created_at <- Sys.time() - 60*60*txt_num
+				} else {
+					rt_created_at <- Sys.time()
+				}
+			} else {
+				rt_created_at <- Sys.time()
+			}
 		## RT href
 			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
 			if (is.na(rt_href)  | !grepl("http",rt_href)){
@@ -456,6 +482,8 @@ InsertDB <- function(df){
 	  dbSendQuery(con, strSQL)
 
   }, error = function(e) {
+	  print(e)
+	  print(strSQL)
 	  Sys.sleep(10)
 	  print("Retrying dbsendquery ......")
 	  dbSendQuery(con, strSQL)
@@ -511,6 +539,8 @@ InsertDB_NEW <- function(df){
 	  tryCatch({
 		  dbSendQuery(con, strSQL)
 	  }, error = function(e) {
+		  print(e)
+		  print(strSQL)
 		  Sys.sleep(10)
 		  print("Retrying dbsendquery ......")
 		  dbSendQuery(con, strSQL)
