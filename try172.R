@@ -850,7 +850,7 @@ while (1) {
 		}
 		print("Clear Cache")   # clear cache frequently to reduce chance of opp page
 #		clearCache()
-		system("/home/fukingwa/Weibo/18T/weibo_scap/clearcache.py",intern=FALSE)
+		system("/home/fukingwa/Weibo/18T/weibo_scap/clearcache_delete.py",intern=FALSE)
 	}, error = function(e){
 		print(e)
 		print("First block error")
