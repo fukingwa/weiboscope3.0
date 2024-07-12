@@ -125,9 +125,9 @@ if (!exists("all_things") & exists("all")){
 }
 
 ## Envirnoment constants
-#if (file.exists("/home/fukingwa/Weibo/WB_172.RData")){
+#if (file.exists("/home/fukingwa/Weibo/WB.RData")){
 #	load("/home/fukingwa/Weibo/WB.RData")
-if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/WB.RData")){
+if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/WB_172.RData")){
 	load("/home/fukingwa/Weibo/18T/weibo_scap/WB_172.RData")
 } else {
 	print("Missing WB.RData")
@@ -205,7 +205,12 @@ to10 <- function(num, base=62) {
 }
 
 parse_wb_rds <- function(txt){
-
+	hrs_txt <- "小时前"
+	min_txt <- "分钟前"
+	hrs_min <- '小时前|分钟前'
+	Encoding(hrs_txt) <- 'UTF-8'
+	Encoding(min_txt) <- 'UTF-8'
+	Encoding(hrs_min) <- 'UTF-8'
 	html_txt <- read_html(txt, options = "HUGE")
 	each_post <- html_nodes(html_txt,xpath = '//div[@class="vue-recycle-scroller__item-view"]')
 	all_p <- data.frame()
@@ -224,6 +229,19 @@ parse_wb_rds <- function(txt){
 		## Created_at
 			created_at <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"title")
 			created_at <- strptime(created_at,"%Y-%m-%d %H:%M")
+			created_at_txt <- html_text(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'))
+			if (is.na(created_at) & grepl(hrs_min,created_at_txt)){
+				txt_num <- as.integer(gsub(hrs_min,'',created_at_txt))
+				if (grepl(min_txt,created_at_txt)){
+					created_at <- Sys.time() - 60*txt_num
+				} else if (grepl(hrs_txt,created_at_txt)){
+					created_at <- Sys.time() - 60*60*txt_num
+				} else {
+					created_at <- Sys.time()
+				}
+			} else {
+				created_at <- Sys.time()
+			}
 		## Href
 			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"href")
 			user_id <- as.character(strsplit(href,"/|\\?")[[1]][4])
@@ -284,7 +302,12 @@ parse_wb_rds <- function(txt){
 }
 
 rt_parse_wb_rds <- function(txt){
-
+	hrs_txt <- "小时前"
+	min_txt <- "分钟前"
+	hrs_min <- '小时前|分钟前'
+	Encoding(hrs_txt) <- 'UTF-8'
+	Encoding(min_txt) <- 'UTF-8'
+	Encoding(hrs_min) <- 'UTF-8'
 	html_txt <- read_html(txt, options = "HUGE")
 	each_post <- html_nodes(html_txt,xpath = '//div[@class="vue-recycle-scroller__item-view"]')
 	all_p <- data.frame()
@@ -323,6 +346,19 @@ rt_parse_wb_rds <- function(txt){
 		## RT created_at
 			rt_created_at <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"title")
 			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
+			rt_created_at_txt <- html_text(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'))
+			if (is.na(rt_created_at) & grepl(hrs_min,rt_created_at_txt)){
+				txt_num <- as.integer(gsub(hrs_min,'',rt_created_at_txt))
+				if (grepl(min_txt,rt_created_at_txt)){
+					rt_created_at <- Sys.time() - 60*txt_num
+				} else if (grepl(hrs_txt,rt_created_at_txt)){
+					rt_created_at <- Sys.time() - 60*60*txt_num
+				} else {
+					rt_created_at <- Sys.time()
+				}
+			} else {
+				rt_created_at <- Sys.time()
+			}
 		## RT href
 			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
 			if (is.na(rt_href)  | !grepl("http",rt_href)){
@@ -456,11 +492,11 @@ InsertDB <- function(df){
 	  dbSendQuery(con, strSQL)
 
   }, error = function(e) {
+	  print(e)
+	  print(strSQL)
 	  Sys.sleep(10)
 	  print("Retrying dbsendquery ......")
-	  print(strSQL)
-	  exit(0)
-#	  dbSendQuery(con, strSQL)
+	  dbSendQuery(con, strSQL)
      }
   )
 #  dbSendQuery(con, strSQL)
@@ -513,6 +549,8 @@ InsertDB_NEW <- function(df){
 	  tryCatch({
 		  dbSendQuery(con, strSQL)
 	  }, error = function(e) {
+		  print(e)
+		  print(strSQL)
 		  Sys.sleep(10)
 		  print("Retrying dbsendquery ......")
 		  dbSendQuery(con, strSQL)
