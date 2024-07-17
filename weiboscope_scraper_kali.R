@@ -750,7 +750,7 @@ while (1) {
 	}	
 	previous_hr <- current_hr 
 	if (current_hr >= 2 & current_hr <= 6){
-#		Sys.sleep(600)
+		Sys.sleep(3600)
 		stop("Stopped")
 		next
 	}
