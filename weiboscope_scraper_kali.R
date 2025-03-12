@@ -736,7 +736,14 @@ download_latest <- function(){
 		}	
 }
 
-
+add_follower <- function(uid){
+	link <- paste0("https://weibo.com/u/",uid)
+	remDr$navigate(link)
+	Sys.sleep(10)
+	add_button <- remDr$findElement(using = "xpath","//button//span[contains(text(),'关注')]")
+	add_button$clickElement()
+	Sys.sleep(10)
+}
 
 previous_hr <- as.integer(format(Sys.time(),"%H"))
 
