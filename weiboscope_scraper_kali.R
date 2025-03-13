@@ -775,8 +775,9 @@ while (1) {
 #		clearCache()
 	}	
 	previous_hr <- current_hr 
-	if (current_hr >= 2 & current_hr <= 6){
-		Sys.sleep(3600)
+	if (current_hr >= 2 & current_hr <= 5){
+		Sys.sleep(7200) # sleep 2 hours
+		add_follower() # add one follower
 		stop("Stopped")
 		next
 	}
