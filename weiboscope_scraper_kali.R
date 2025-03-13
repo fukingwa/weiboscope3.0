@@ -736,7 +736,22 @@ download_latest <- function(){
 		}	
 }
 
-add_follower <- function(uid){
+add_follower <- function(){
+	tryCatch({
+	  uid <- system("/home/fukingwa/Weibo/18T/weibo_scap/read_redis.sh",intern=TRUE)
+	}, error=function(e){
+		print(e)
+		return("Error 1")
+	})	
+	if (is.null(uid)){
+	  return("Error 2")
+	}
+	if (is.na(uid)){
+	  return("Error 3")
+	}
+	if (nchar(gsub(' ','',uid)) == 0){
+	  return("Error 4")
+	}	
 	link <- paste0("https://weibo.com/u/",uid)
 	remDr$navigate(link)
 	Sys.sleep(10)
@@ -745,7 +760,7 @@ add_follower <- function(uid){
 		add_button$clickElement()
 		Sys.sleep(10)
 	}, error = function(e){
-		print("Forget about it")
+		print("Error 5")
 	})
 }
 
