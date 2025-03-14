@@ -776,7 +776,17 @@ while (1) {
 	}	
 	previous_hr <- current_hr 
 	if (current_hr >= 2 & current_hr <= 5){
-		Sys.sleep(7200) # sleep 2 hours
+		Sys.sleep(1200) # sleep 0.5 hours
+		add_follower() # add one follower
+		Sys.sleep(1200) # sleep 0.5 hours
+		add_follower() # add one follower
+		Sys.sleep(1200) # sleep 0.5 hours
+		add_follower() # add one follower
+		Sys.sleep(1200) # sleep 0.5 hours
+		add_follower() # add one follower
+		Sys.sleep(1200) # sleep 0.5 hours
+		add_follower() # add one follower
+		Sys.sleep(1200) # sleep 0.5 hours
 		add_follower() # add one follower
 		stop("Stopped")
 		next
