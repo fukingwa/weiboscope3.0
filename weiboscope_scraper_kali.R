@@ -766,6 +766,8 @@ add_follower <- function(){
 
 previous_hr <- as.integer(format(Sys.time(),"%H"))
 
+add_follower() # add one follower
+
 while (1) {
 	## Sleep between 2-6am
 	current_hr <- as.integer(format(Sys.time(),"%H"))
