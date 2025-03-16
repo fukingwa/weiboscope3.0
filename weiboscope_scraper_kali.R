@@ -758,7 +758,7 @@ add_follower <- function(){
 	remDr$navigate(link)
 	Sys.sleep(10)
 	tryCatch({
-		add_button <- remDr$findElement(using = "xpath","//button//span[contains(text(),followed)]//..//..//..")
+		add_button <- remDr$findElement(using = "xpath",paste0("//button//span[contains(text(),'",followed,"')]//..//..//.."))
 		add_button$clickElement()
 		Sys.sleep(10)
 	}, error = function(e){
