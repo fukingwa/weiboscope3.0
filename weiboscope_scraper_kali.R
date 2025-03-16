@@ -737,6 +737,8 @@ download_latest <- function(){
 }
 
 add_follower <- function(){
+	followed <- '关注'
+  	Encoding(followed) <- 'UTF-8'		
 	tryCatch({
 	  uid <- system("/home/fukingwa/Weibo/18T/weibo_scap/read_redis.sh",intern=TRUE)
 	}, error=function(e){
@@ -756,10 +758,11 @@ add_follower <- function(){
 	remDr$navigate(link)
 	Sys.sleep(10)
 	tryCatch({
-		add_button <- remDr$findElement(using = "xpath","//button//span[contains(text(),'关注')]//..//..//..")
+		add_button <- remDr$findElement(using = "xpath","//button//span[contains(text(),followed)]//..//..//..")
 		add_button$clickElement()
 		Sys.sleep(10)
 	}, error = function(e){
+		print(e)
 		print("Error 5")
 	})
 }
