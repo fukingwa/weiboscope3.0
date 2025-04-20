@@ -266,12 +266,12 @@ parse_wb_rds <- function(txt){
 				img <- substr(img,1,4096)
 			}			
 		## RT name
-			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//span[@class='detail_nick_u-ffy']"))
+			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//span[@class='detail_nick_u-ffy']"))
 		## RT created_at
-			rt_created_at <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"title")
+			rt_created_at <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"title")
 			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
 		## RT href
-			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
+			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
 			if (is.na(rt_href) | !grepl("http",rt_href)){
 				retweeted_status_user_id <- NA
 				retweeted_status <- NA
@@ -280,7 +280,7 @@ parse_wb_rds <- function(txt){
 				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][5]))
 			}
 		## RT text
-#			rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
+#			rt_text <- html_text(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
 			rt_text <- ""
 		## numbers
 			num1 <- html_text(html_node(hs,xpath = "//div[@class='woo-box-flex woo-box-alignCenter toolbar_left_2vlsY toolbar_main_3Mxwo']"))
@@ -334,17 +334,17 @@ rt_parse_wb_rds <- function(txt){
 #			text <- html_text(html_node(hs,xpath = "//div[@class='WB_text W_f14']"))
 			text <- ""
 		## Img
-			img <- html_attr(html_nodes(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='picture picture-box_row_30Iwo']//img"),"src")
-#			img <- html_attr(html_nodes(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='picture content_row_-r5Tk']//img"),"src")
+			img <- html_attr(html_nodes(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='picture picture-box_row_30Iwo']//img"),"src")
+#			img <- html_attr(html_nodes(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='picture content_row_-r5Tk']//img"),"src")
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
 			img <- paste(img,collapse=",")
 			if (nchar(img) > 4096 & !is.na(img)){
 				img <- substr(img,1,4096)
 			}
 		## RT name
-			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//span[@class='detail_nick_u-ffy']"))
+			rt_screen_name <- html_text(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//span[@class='detail_nick_u-ffy']"))
 		## RT created_at
-			rt_created_at <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"title")
+			rt_created_at <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"title")
 			rt_created_at <- strptime(rt_created_at,"%Y-%m-%d %H:%M")
 			rt_created_at_txt <- html_text(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'))
 			if (is.na(rt_created_at) & grepl(hrs_min,rt_created_at_txt)){
@@ -360,7 +360,7 @@ rt_parse_wb_rds <- function(txt){
 				rt_created_at <- Sys.time()
 			}
 		## RT href
-			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
+			rt_href <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//a[@class='head-info_time_6sFQg']"),"href")
 			if (is.na(rt_href)  | !grepl("http",rt_href)){
 				retweeted_status_user_id <- NA
 				retweeted_status <- NA
@@ -369,14 +369,14 @@ rt_parse_wb_rds <- function(txt){
 				retweeted_status <- as.character(mid2id(strsplit(rt_href,"/|\\?")[[1]][5]))
 			}
 		## RT text
-			rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
+			rt_text <- html_text(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
 #			rt_text <- ""
 			if (is.na(rt_text)){
-				rt_text <- html_text(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
-				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank']"),"href")
+				rt_text <- html_text(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
+				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank']"),"href")
 				rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"*** External link:",rt_link))
 			} else {
-				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank']"),"href")
+				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank']"),"href")
 				rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"***External link:",rt_link))
 			}
 
@@ -419,7 +419,7 @@ unfold_fn <- function(){
 			Sys.sleep(2)
 		}
 	}
-	unfold_l <- remDr$findElements("xpath","//div[@class='Feed_retweet_JqZJb']//span[@class='expand']")
+	unfold_l <- remDr$findElements("xpath","//div[@class='retweet Feed_retweet_JqZJb']//span[@class='expand']")
 	if (length(unfold_l) != 0){
 		for (i in 1:length(unfold_l)){
 			e <- suppressMessages(try(unfold_l[[i]]$clickElement(),silent=TRUE))
