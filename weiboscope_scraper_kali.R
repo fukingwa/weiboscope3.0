@@ -779,10 +779,10 @@ lessthan5k <- function(){
 		followers_count <- remDr$findElement(using = "xpath","//div[@class='woo-box-item-flex']//span[contains(text(),'关注')]//span")
 		fc <- as.integer(followers_count$getElementText()[[1]])
 		print(paste0("My followers count: ",fc))
-		return (fc < 5000)
+		return(fc < 5000)
 	}, error = function(e){
 		print(e)
-		return TRUE
+		return(TRUE)
 	})
 }
 
