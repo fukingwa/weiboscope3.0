@@ -795,7 +795,7 @@ lt5k <- lessthan5k()
 if (lt5k){
 	print("Less than 5k")
 } else {
-	print("more thab+n 5k")
+	print("more than 5k")
 }
 
 while (1) {
