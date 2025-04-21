@@ -776,7 +776,7 @@ lessthan5k <- function(){
 		home_link <- paste0("https://weibo.com",home_link)
 		remDr$navigate(home_link)
 		Sys.sleep(10)
-		followers_count <- remDr$findElement(using = "xpath","//div[@class='woo-box-item-flex']//span[contains(text(),'关注')]//span")
+		followers_count <- remDr$findElement(using = "xpath",paste0("//div[@class='woo-box-item-flex']//span[contains(text(),'",followed,"')]//span")
 		fc <- as.integer(followers_count$getElementText()[[1]])
 		print(paste0("My followers count: ",fc))
 		return(fc < 5000)
