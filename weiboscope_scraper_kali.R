@@ -767,9 +767,36 @@ add_follower <- function(){
 	})
 }
 
+lessthan5k <- function(){
+	tryCatch({
+		followed <- '关注'
+	  	Encoding(followed) <- 'UTF-8'		
+		home_button <- remDr$findElement(using = "xpath","//div[@role='navigation']//a[contains(@href,'/u/')]")
+		home_link <- home_button$getElementAttribute("href")[[1]]
+		home_link <- paste0("https://weibo.com",homelink)
+		remDr$navigate(home_link)
+		Sys.sleep(10)
+		followers_count <- remDr$findElement(using = "xpath","//div[@class='woo-box-item-flex']//span[contains(text(),'关注')]//span")
+		fc <- as.integer(followers_count$getElementText()[[1]])
+		print(paste0("My followers count: ",fc))
+		return (fc < 5000)
+	}, error = function(e){
+		print(e)
+		return TRUE
+	})
+}
+
 previous_hr <- as.integer(format(Sys.time(),"%H"))
 
-add_follower() # add one follower
+#add_follower() # add one follower
+
+lt5k <- lessthan5k()
+
+if (lt5k){
+	print("Less than 5k")
+} else {
+	print("more thab+n 5k")
+}
 
 while (1) {
 	## Sleep between 2-6am
@@ -780,7 +807,7 @@ while (1) {
 #		clearCache()
 	}	
 	previous_hr <- current_hr 
-	if (current_hr >= 2 & current_hr < 5){
+	if (current_hr >= 2 & current_hr < 5 & lt5k){
 		Sys.sleep(900) # sleep 0.25 hours
 		add_follower() # add one follower
 		Sys.sleep(900) # sleep 0.25 hours
