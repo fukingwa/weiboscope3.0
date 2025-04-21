@@ -773,7 +773,7 @@ lessthan5k <- function(){
 	  	Encoding(followed) <- 'UTF-8'		
 		home_button <- remDr$findElement(using = "xpath","//div[@role='navigation']//a[contains(@href,'/u/')]")
 		home_link <- home_button$getElementAttribute("href")[[1]]
-		home_link <- paste0("https://weibo.com",homelink)
+		home_link <- paste0("https://weibo.com",home_link)
 		remDr$navigate(home_link)
 		Sys.sleep(10)
 		followers_count <- remDr$findElement(using = "xpath","//div[@class='woo-box-item-flex']//span[contains(text(),'关注')]//span")
