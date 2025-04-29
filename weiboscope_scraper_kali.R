@@ -250,10 +250,10 @@ parse_wb_rds <- function(txt){
 			text <- html_text(html_node(hs,xpath = "//div[@class='wbpro-feed-content']"))
 			if (is.na(text)){
 				text <- html_text(html_node(hs,xpath = "//div[@class='wbpro-feed-content']"))
-				link <- html_attr(html_node(hs,xpath = "//div[@class='wbpro-feed-content']//a[@target='_blank' and contains(@href,"video")]"),"href")
+				link <- html_attr(html_node(hs,xpath = "//div[@class='wbpro-feed-content']//a[@target='_blank' and contains(@href,'video')]"),"href")
 				text <- ifelse(is.na(link),text,paste(text,"***External link:",link))
 			} else {
-				link <- html_attr(html_node(hs,xpath = "//div[@class='wbpro-feed-content']//a[@target='_blank' and contains(@href,"video")]"),"href")
+				link <- html_attr(html_node(hs,xpath = "//div[@class='wbpro-feed-content']//a[@target='_blank' and contains(@href,'video')]"),"href")
 				text <- ifelse(is.na(link),text,paste(text,"***External link:",link))
 			}
 
@@ -373,10 +373,10 @@ rt_parse_wb_rds <- function(txt){
 #			rt_text <- ""
 			if (is.na(rt_text)){
 				rt_text <- html_text(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
-				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank' and contains(@href,"video")]"),"href")
+				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank' and contains(@href,'video')]"),"href")
 				rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"*** External link:",rt_link))
 			} else {
-				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank' and contains(@href,"video")]"),"href")
+				rt_link <- html_attr(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']//a[@target='_blank' and contains(@href,'video')]"),"href")
 				rt_text <- ifelse(is.na(rt_link),rt_text,paste(rt_text,"***External link:",rt_link))
 			}
 
