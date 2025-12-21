@@ -900,10 +900,12 @@ while (1) {
 			one_df <- rbind(wb_df,rt_wb_df)
 			all_wb_df <- rbind(all_wb_df,one_df)
 #			}
-			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
-				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
-				system(cmd,intern=FALSE)
-			}
+#
+# need modify
+#			if (file.exists("/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py")){
+#				cmd <- "/home/fukingwa/Weibo/18T/weibo_scap/pw_ss2c.py '' '//div[@class=\"vue-recycle-scroller__item-view\"]'"
+#				system(cmd,intern=FALSE)
+#			}
 			Sys.sleep(2)
 			unfold_fn()   # unfold all shortened texts		
 			whole_body <- remDr$findElement(using = "xpath","//body")
@@ -1183,5 +1185,6 @@ while (1) {
 #		myswitch(all_h[[1]])
 #	}
 #}
+
 
 
