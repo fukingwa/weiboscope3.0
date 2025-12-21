@@ -259,7 +259,8 @@ parse_wb_rds <- function(txt){
 			}
 
 		## Img
-			img <- html_attr(html_nodes(hs,xpath = "//div[@class='picture picture-box_row_30Iwo']//img"),"src")
+			img <- html_attr(html_nodes(hs,xpath = "//div[@class='woo-picture-slot']//img"),"src")
+#			img <- html_attr(html_nodes(hs,xpath = "//div[@class='picture picture-box_row_30Iwo']//img"),"src")
 #			img <- html_attr(html_nodes(hs,xpath = "//div[@class='picture content_row_-r5Tk']//img"),"src")
 			img <- gsub('^[^\\=]+\\=[^\\=]+\\=[^\\=]+\\=','',img)
 			img <- paste(img,collapse=",")
@@ -1182,4 +1183,5 @@ while (1) {
 #		myswitch(all_h[[1]])
 #	}
 #}
+
 
