@@ -243,8 +243,9 @@ parse_wb_rds <- function(txt){
 				created_at <- Sys.time()
 			}
 		## Href
-#			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"href")
-			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="_time_1tpft_33"]'),"href")
+			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"href")
+# Dec 22, 2025
+#			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="_time_1tpft_33"]'),"href")
 			user_id <- as.character(strsplit(href,"/|\\?")[[1]][4])
 			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][5]))
 		## text
@@ -285,8 +286,9 @@ parse_wb_rds <- function(txt){
 #			rt_text <- html_text(html_node(hs,xpath = "//div[@class='retweet Feed_retweet_JqZJb']//div[@class='detail_wbtext_4CRf9']"),trim=T)
 			rt_text <- ""
 		## numbers
-#			num1 <- html_text(html_node(hs,xpath = "//div[@class='woo-box-flex woo-box-alignCenter toolbar_left_2vlsY toolbar_main_3Mxwo']"))
-			num1 <- html_text(html_node(hs,xpath = "//div[@class='woo-box-item-flex']"))
+			num1 <- html_text(html_node(hs,xpath = "//div[@class='woo-box-flex woo-box-alignCenter toolbar_left_2vlsY toolbar_main_3Mxwo']"))
+# Dec 22, 2025
+#			num1 <- html_text(html_node(hs,xpath = "//div[@class='woo-box-item-flex']"))
 			num2 <- strsplit(gsub('[ ]+',',',trimws(gsub('[^0-9]',' ',num1))),',')[[1]]
 			reposts_count <- num2[1]
 			comments_count <- num2[2]
@@ -1185,6 +1187,7 @@ while (1) {
 #		myswitch(all_h[[1]])
 #	}
 #}
+
 
 
 
