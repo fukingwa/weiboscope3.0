@@ -876,7 +876,7 @@ while (1) {
 		while (i < scrolling_times){
 			Sys.sleep(abs(rnorm(1,10,3)))
 			print(paste0("Scrolling loop: ",i+1,"/",scrolling_times))
-#			Scrolling4Posts_New(1)   
+			Scrolling4Posts_New(1)   
 			i <- i + 1
 			### Random liking - 12.5%
 			if (sample(1:8,1) == 2){
@@ -1148,13 +1148,13 @@ while (1) {
 #		}
 #}
 
-#Scrolling4Posts_New <- function(times){
-#	for (i in 1:times){
-#		webElem <- remDr$findElement("css", "body")
-#		webElem$sendKeysToElement(list("\uE010"))
-#		Sys.sleep(5)
-#	}
-#}
+Scrolling4Posts_New <- function(times){
+	for (i in 1:times){
+		webElem <- remDr$findElement("css", "body")
+		webElem$sendKeysToElement(list("\uE010"))
+		Sys.sleep(5)
+	}
+}
 
 #remDr$navigate("https://weibo.com/login.php")
 
@@ -1187,6 +1187,7 @@ while (1) {
 #		myswitch(all_h[[1]])
 #	}
 #}
+
 
 
 
