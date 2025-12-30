@@ -791,6 +791,14 @@ lessthan5k <- function(){
 	})
 }
 
+Scrolling4Posts_New <- function(times){
+	for (i in 1:times){
+		webElem <- remDr$findElement("css", "body")
+		webElem$sendKeysToElement(list("\uE010"))
+		Sys.sleep(5)
+	}
+}
+
 previous_hr <- as.integer(format(Sys.time(),"%H"))
 
 #add_follower() # add one follower
@@ -1148,13 +1156,7 @@ while (1) {
 #		}
 #}
 
-Scrolling4Posts_New <- function(times){
-	for (i in 1:times){
-		webElem <- remDr$findElement("css", "body")
-		webElem$sendKeysToElement(list("\uE010"))
-		Sys.sleep(5)
-	}
-}
+
 
 #remDr$navigate("https://weibo.com/login.php")
 
@@ -1187,6 +1189,7 @@ Scrolling4Posts_New <- function(times){
 #		myswitch(all_h[[1]])
 #	}
 #}
+
 
 
 
