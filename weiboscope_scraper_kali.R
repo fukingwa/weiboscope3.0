@@ -244,8 +244,14 @@ parse_wb_rds <- function(txt){
 			}
 		## Href
 			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="head-info_time_6sFQg"]'),"href")
-# Dec 22, 2025
+# Jan 14, 2026
 #			href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="_time_1tpft_33"]'),"href")
+			if (is.na(href)){
+				href <- html_attr(html_node(hs,xpath = '//header[@class="woo-box-flex"]//a[@class="_time_1tpft_33"]'),"href")
+			}
+			if (is.na(href)){
+				print("href is NA!!!!!")
+			}
 			user_id <- as.character(strsplit(href,"/|\\?")[[1]][4])
 			id <- as.character(mid2id(strsplit(href,"/|\\?")[[1]][5]))
 		## text
@@ -1189,6 +1195,7 @@ while (1) {
 #		myswitch(all_h[[1]])
 #	}
 #}
+
 
 
 
