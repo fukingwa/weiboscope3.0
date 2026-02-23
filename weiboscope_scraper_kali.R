@@ -827,30 +827,10 @@ while (1) {
 	}	
 	previous_hr <- current_hr 
 	if (current_hr >= 2 & current_hr < 5 & lt5k){
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
-		Sys.sleep(900) # sleep 0.25 hours
-		add_follower() # add one follower
+		for (add_time in 1:25){ # add 25 accounts 
+			Sys.sleep(300) # sleep 5 minutes
+			add_follower() # add one follower
+		}	
 		stop("Stopped")
 		next
 	}
@@ -1195,6 +1175,7 @@ while (1) {
 #		myswitch(all_h[[1]])
 #	}
 #}
+
 
 
 
