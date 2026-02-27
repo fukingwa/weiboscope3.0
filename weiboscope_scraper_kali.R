@@ -829,7 +829,7 @@ while (1) {
 	if (current_hr >= 2 & current_hr < 5 & lt5k){
 		for (add_time in 1:25){ # add 25 accounts 
 			Sys.sleep(300) # sleep 5 minutes
-			add_follower() # add one follower
+#			add_follower() # add one follower
 		}	
 		stop("Stopped")
 		next
@@ -1175,6 +1175,7 @@ while (1) {
 #		myswitch(all_h[[1]])
 #	}
 #}
+
 
 
 
